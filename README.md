@@ -8,11 +8,8 @@ This repository will serve to set up a different continuous integration process 
 
 ### Tech
 
-Talent! uses a number of open source projects to work properly:
-
 
 ### Structure
 
 
 #### Building for source
-
