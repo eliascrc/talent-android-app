@@ -2,8 +2,11 @@ package cr.talent;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
 import javax.inject.Singleton;
+
 import icepick.State;
+
 import static icepick.Icepick.restoreInstanceState;
 import static icepick.Icepick.saveInstanceState;
 
@@ -16,7 +19,8 @@ import static icepick.Icepick.saveInstanceState;
 @Singleton
 public class SessionStorage extends AppCompatActivity {
 
-    @State String cookieValue;
+    @State
+    String cookieValue;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
