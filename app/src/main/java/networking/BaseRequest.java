@@ -1,16 +1,10 @@
 package networking;
 
-import android.os.Bundle;
-
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
-import com.android.volley.ParseError;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonRequest;
-
-import java.io.UnsupportedEncodingException;
-import java.net.HttpCookie;
 
 import common.SessionStorage;
 
@@ -22,26 +16,29 @@ import common.SessionStorage;
 
 public abstract class BaseRequest<T> extends JsonRequest<T> {
 
-    private static final int DEFAULT_TIMEOUT_MS = 2500;
-    private static final int DEFAULT_MAX_RETRIES = 0;
-    private static final float DEFAULT_BACKOFF = 1f;
-    private SessionStorage sessionStorage;
+    public static final int DEFAULT_TIMEOUT_MS = 2500;
+    public static final int DEFAULT_MAX_RETRIES = 0;
+    public static final float DEFAULT_BACKOFF = 1f;
+    protected SessionStorage sessionStorage;
+    protected Response.Listener<T> listener;
+    protected Response.ErrorListener errorListener;
 
     public BaseRequest(int method, String url, String requestBody, Response.Listener<T> listener, Response.ErrorListener errorListener) {
         super(method, url, requestBody, listener, errorListener);
+        DefaultRetryPolicy defaultRetryPolicy = new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        this.setRetryPolicy(defaultRetryPolicy);
+        this.listener = listener;
+        this.errorListener = errorListener;
         this.sessionStorage = new SessionStorage();
     }
 
-    public static int getDefaultTimeout() {
-        return DEFAULT_TIMEOUT_MS;
-    }
-
-    public static int getDefaultMaxRetries() {
-        return DEFAULT_MAX_RETRIES;
-    }
-
-    public static float getDefaultBackoff() {
-        return DEFAULT_BACKOFF;
+    public BaseRequest(int method, String url, String requestBody, Response.Listener<T> listener, Response.ErrorListener errorListener, SessionStorage sessionStorage) {
+        super(method, url, requestBody, listener, errorListener);
+        DefaultRetryPolicy defaultRetryPolicy = new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        this.setRetryPolicy(defaultRetryPolicy);
+        this.listener = listener;
+        this.errorListener = errorListener;
+        this.sessionStorage = sessionStorage;
     }
 
     public SessionStorage getSessionStorage() {
@@ -50,24 +47,6 @@ public abstract class BaseRequest<T> extends JsonRequest<T> {
 
     public void setSessionStorage(SessionStorage sessionStorage) {
         this.sessionStorage = sessionStorage;
-    }
-
-    /**
-     * Restore and save a old state of the sessionStorage cookieValue.
-     *
-     * @param savedInstanceState, the old state to restore of the sessionStorage cookieValue.
-     */
-    public void restoreSessionStorageState(Bundle savedInstanceState) {
-        this.sessionStorage.restoreState(savedInstanceState);
-    }
-
-    /**
-     * Save a new state in the sessionStorage cookieValue.
-     *
-     * @param outState, the new state to save in the sessionStorage cookieValue.
-     */
-    public void saveSessionStorageState(Bundle outState) {
-        this.sessionStorage.saveState(outState);
     }
 
     /**
