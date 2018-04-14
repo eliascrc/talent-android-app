@@ -9,9 +9,9 @@ import java.util.HashMap;
  */
 public abstract class BaseResponse<T> {
 
-    private HashMap<String, String> httpHeaders;
-    private String httpStatusCode;
-    private T response;
+    protected HashMap<String, String> httpHeaders;
+    protected String httpStatusCode;
+    protected T response;
 
     public BaseResponse() {
         this.httpHeaders = new HashMap<>();
