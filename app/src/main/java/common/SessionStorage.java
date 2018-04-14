@@ -20,7 +20,7 @@ import static icepick.Icepick.saveInstanceState;
 public class SessionStorage {
 
     @State
-    private String cookieValue;
+    protected String cookieValue;
 
     public String getCookieValue() {
         return cookieValue;
