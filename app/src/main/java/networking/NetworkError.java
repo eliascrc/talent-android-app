@@ -8,14 +8,14 @@ package networking;
 public class NetworkError {
 
     private String errorMessage;
-    private String errorCode;
+    private int errorCode;
 
     public NetworkError(){
         this.errorMessage = "";
-        this.errorCode = "";
+        this.errorCode = 0;
     }
 
-    public NetworkError(String errorMessage, String errorCode) {
+    public NetworkError(String errorMessage, int errorCode) {
         this.errorMessage = errorMessage;
         this.errorCode = errorCode;
     }
@@ -28,11 +28,11 @@ public class NetworkError {
         this.errorMessage = errorMessage;
     }
 
-    public String getErrorCode() {
+    public int getErrorCode() {
         return errorCode;
     }
 
-    public void setErrorCode(String errorCode) {
+    public void setErrorCode(int errorCode) {
         this.errorCode = errorCode;
     }
 }
