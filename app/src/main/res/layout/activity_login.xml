@@ -10,9 +10,9 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="cr.talent.LoginActivity">
 
-
-    <include layout="@layout/activity_no_network_connection_error"/>
-
+    <include
+        layout="@layout/activity_no_network_connection_error"
+        android:id="@+id/no_network_connection_error_layout"/>
 
     <!-- Login progress -->
     <ProgressBar
