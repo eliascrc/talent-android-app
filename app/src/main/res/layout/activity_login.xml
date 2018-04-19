@@ -11,7 +11,7 @@
     tools:context="cr.talent.LoginActivity">
 
     <include
-        layout="@layout/activity_no_network_connection_error"
+        layout="@layout/no_network_connection_error"
         android:id="@+id/no_network_connection_error_layout"/>
 
     <!-- Login progress -->
