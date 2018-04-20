@@ -5,9 +5,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
+import java.lang.reflect.Type;
 
 import common.SessionStorage;
 import networking.BaseRequest;
@@ -33,21 +34,17 @@ public class AuthenticatedRequest extends BaseRequest<BaseResponse<Object>> {
     protected Response<BaseResponse<Object>> parseNetworkResponse(NetworkResponse networkResponse) {
         super.parseNetworkResponse(networkResponse);
         try {
-            String jsonHeaders = new String(networkResponse.data, HttpHeaderParser.parseCharset(networkResponse.headers));
+            String json = new String(networkResponse.data, HttpHeaderParser.parseCharset(networkResponse.headers));
+            Type baseResponseType = new TypeToken<BaseResponse<Object>>() {
+            }.getType();
             Gson gson = new Gson();
-            HashMap hashMap = gson.fromJson(jsonHeaders, HashMap.class);
-            BaseResponse<Object> baseResponse = new BaseResponse<Object>() {
-                @Override
-                public void setHttpHeaders(HashMap<String, String> httpHeaders) {
-                    super.setHttpHeaders(httpHeaders);
-                }
-            };
-            baseResponse.setHttpHeaders(hashMap);
+            BaseResponse<Object> baseResponse = gson.fromJson(json, baseResponseType);
             Response<BaseResponse<Object>> response = Response.success(baseResponse,
                     HttpHeaderParser.parseCacheHeaders(networkResponse));
             return response;
         } catch (UnsupportedEncodingException e) {
             VolleyError volleyError = new VolleyError(e);
+            volleyError = parseNetworkError(volleyError);
             Response<BaseResponse<Object>> response = Response.error(volleyError);
             return response;
         }
