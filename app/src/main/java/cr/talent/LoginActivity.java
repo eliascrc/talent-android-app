@@ -229,9 +229,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
 
+            mEmailLoginFormView.setVisibility(View.GONE);
+            mNoNetworkConnectionErrorLayout.setVisibility(View.VISIBLE);
+            /*
             showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void) null);
+            mAuthTask.execute((Void) null);*/
         }
     }
 
