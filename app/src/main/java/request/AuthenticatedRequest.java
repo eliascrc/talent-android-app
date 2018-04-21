@@ -1,6 +1,7 @@
 package request;
 
 import com.android.volley.NetworkResponse;
+import com.android.volley.ParseError;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
@@ -43,8 +44,7 @@ public class AuthenticatedRequest extends BaseRequest<BaseResponse<Object>> {
                     HttpHeaderParser.parseCacheHeaders(networkResponse));
             return response;
         } catch (UnsupportedEncodingException e) {
-            VolleyError volleyError = new VolleyError(e);
-            volleyError = parseNetworkError(volleyError);
+            VolleyError volleyError = new ParseError(e);
             Response<BaseResponse<Object>> response = Response.error(volleyError);
             return response;
         }

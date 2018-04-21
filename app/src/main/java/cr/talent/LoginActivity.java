@@ -19,6 +19,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,6 +32,11 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import networking.BaseResponse;
+import networking.NetworkError;
+import request.AuthenticatedRequest;
+import request.ServiceCallback;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -61,9 +67,36 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private View mEmailLoginFormView;
+    private View mNoNetworkConnectionErrorLayout;
+
+    private ServiceCallback serviceCallback;
+    // Constant TAG, for the DEBUG log messages
+    private static final String TAG = "LoginActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        serviceCallback = new ServiceCallback<BaseResponse<Object>, NetworkError>() {
+            @Override
+            public void onPreExecute() {
+                Log.d(TAG, "The method onPreExecute was executed.");
+            }
+
+            @Override
+            public void onSuccessResponse(BaseResponse<Object> baseResponse) {
+                Log.d(TAG, "The method onSuccessResponse was executed.");
+                Log.d(TAG, "The method onSuccessResponse receive \"" + baseResponse.getHttpStatusCode() + "\" as response.");
+            }
+
+            @Override
+            public boolean onErrorResponse(NetworkError error) {
+                Log.d(TAG, "The method onErrorResponse was executed.");
+                Log.d(TAG, error.getErrorMessage());
+                // verify if the error is due to no network connection
+                return error.getErrorCode() == 7;
+            }
+        };
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Set up the login form.
@@ -92,6 +125,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+        mEmailLoginFormView = findViewById(R.id.email_login_form);
+        mNoNetworkConnectionErrorLayout = findViewById(R.id.no_network_connection_error_layout);
+
+        Button mRetryConnectionButton = (Button) findViewById(R.id.retry_connection_button);
+        mRetryConnectionButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mNoNetworkConnectionErrorLayout.setVisibility(View.GONE);
+                mEmailLoginFormView.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     private void populateAutoComplete() {
@@ -184,6 +228,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
+
             showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
