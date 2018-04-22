@@ -6,7 +6,7 @@ package request;
  * @author Renato Mainieri Sáenz.
  */
 public interface ServiceCallback<T, E> {
-    public void onPreExecute();
+    public void onPreExecute(T listener);
     public void onSuccessResponse(T response);
     public boolean onErrorResponse(E error);
 }

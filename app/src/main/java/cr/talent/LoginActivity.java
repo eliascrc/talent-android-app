@@ -30,9 +30,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.android.volley.NetworkResponse;
+import com.android.volley.Response;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import common.SessionStorage;
 import networking.BaseResponse;
 import networking.NetworkError;
 import request.AuthenticatedRequest;
@@ -77,9 +81,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         serviceCallback = new ServiceCallback<BaseResponse<Object>, NetworkError>() {
+
+            private BaseResponse<Object> listener;
+
             @Override
-            public void onPreExecute() {
+            public void onPreExecute(BaseResponse<Object> listener) {
                 Log.d(TAG, "The method onPreExecute was executed.");
+                this.listener = listener;
             }
 
             @Override
@@ -94,6 +102,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 Log.d(TAG, error.getErrorMessage());
                 // verify if the error is due to no network connection
                 return error.getErrorCode() == 7;
+            }
+
+            public BaseResponse<Object> getListener() {
+                return listener;
             }
         };
 
@@ -228,13 +240,20 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-
-            mEmailLoginFormView.setVisibility(View.GONE);
-            mNoNetworkConnectionErrorLayout.setVisibility(View.VISIBLE);
-            /*
-            showProgress(true);
+            /*showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);*/
+
+            //AuthenticatedRequest authenticatedRequest = new AuthenticatedRequest
+            // ("url", "requestBody", listener, errorListener, sessionStorage);
+
+            // NetworkError networkError = new NetworkError(response.error.getMessage(), response.error.networkResponse.statusCode);
+            NetworkError networkError = new NetworkError("ERROR", 7);
+
+            if (this.serviceCallback.onErrorResponse(networkError)) {
+                mEmailLoginFormView.setVisibility(View.GONE);
+                mNoNetworkConnectionErrorLayout.setVisibility(View.VISIBLE);
+            }
         }
     }
 

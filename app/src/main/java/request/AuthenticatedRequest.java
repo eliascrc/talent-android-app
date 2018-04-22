@@ -36,8 +36,7 @@ public class AuthenticatedRequest extends BaseRequest<BaseResponse<Object>> {
         super.parseNetworkResponse(networkResponse);
         try {
             String json = new String(networkResponse.data, HttpHeaderParser.parseCharset(networkResponse.headers));
-            Type baseResponseType = new TypeToken<BaseResponse<Object>>() {
-            }.getType();
+            Type baseResponseType = new TypeToken<BaseResponse<Object>>() {}.getType();
             Gson gson = new Gson();
             BaseResponse<Object> baseResponse = gson.fromJson(json, baseResponseType);
             Response<BaseResponse<Object>> response = Response.success(baseResponse,
