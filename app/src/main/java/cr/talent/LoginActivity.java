@@ -31,7 +31,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.android.volley.NetworkResponse;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,9 +102,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             @Override
             public boolean onErrorResponse(NetworkError error) {
                 Log.d(TAG, "The method onErrorResponse was executed.");
-                Log.d(TAG, error.getErrorMessage());
-                // verify if the error is due to no network connection
-                return error.getErrorCode() == 7;
+                Log.d(TAG, "ERROR: NO NETWORK CONNECTION");
+                return error.getErrorCode() == 444;
             }
 
             public BaseResponse<Object> getListener() {
@@ -244,16 +246,31 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);*/
 
-            //AuthenticatedRequest authenticatedRequest = new AuthenticatedRequest
-            // ("url", "requestBody", listener, errorListener, sessionStorage);
+            Response.Listener<BaseResponse<Object>> listener = new Response.Listener<BaseResponse<Object>>() {
+                @Override
+                public void onResponse(BaseResponse<Object> response) {
+                    serviceCallback.onSuccessResponse(response);
+                }
+            };
 
-            // NetworkError networkError = new NetworkError(response.error.getMessage(), response.error.networkResponse.statusCode);
-            NetworkError networkError = new NetworkError("ERROR", 7);
+            Response.ErrorListener errorListener = new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    NetworkError networkError = new NetworkError(error.getMessage(), error.networkResponse.statusCode);
+                    if (serviceCallback.onErrorResponse(networkError)) {
+                        mEmailLoginFormView.setVisibility(View.GONE);
+                        mNoNetworkConnectionErrorLayout.setVisibility(View.VISIBLE);
+                    }
+                }
+            };
 
-            if (this.serviceCallback.onErrorResponse(networkError)) {
-                mEmailLoginFormView.setVisibility(View.GONE);
-                mNoNetworkConnectionErrorLayout.setVisibility(View.VISIBLE);
-            }
+            serviceCallback.onPreExecute(listener);
+
+            AuthenticatedRequest authenticatedRequest =
+                    new AuthenticatedRequest("http://ws.talent.cr/talent-ws-0.1", "", listener, errorListener, new SessionStorage());
+
+            RequestQueue requestQueue = Volley.newRequestQueue(this);
+            requestQueue.add(authenticatedRequest);
         }
     }
 
