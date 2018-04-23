@@ -8,5 +8,5 @@ package request;
 public interface ServiceCallback<T, E> {
     public void onPreExecute(T listener);
     public void onSuccessResponse(T response);
-    public boolean onErrorResponse(E error);
+    public void onErrorResponse(E error);
 }

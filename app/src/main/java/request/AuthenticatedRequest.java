@@ -5,7 +5,7 @@ import com.android.volley.ParseError;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
-import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.UnsupportedEncodingException;
@@ -37,8 +37,8 @@ public class AuthenticatedRequest extends BaseRequest<BaseResponse<Object>> {
         try {
             String json = new String(networkResponse.data, HttpHeaderParser.parseCharset(networkResponse.headers));
             Type baseResponseType = new TypeToken<BaseResponse<Object>>() {}.getType();
-            Gson gson = new Gson();
-            BaseResponse<Object> baseResponse = gson.fromJson(json, baseResponseType);
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            BaseResponse<Object> baseResponse = gsonBuilder.create().fromJson(json, baseResponseType);
             Response<BaseResponse<Object>> response = Response.success(baseResponse,
                     HttpHeaderParser.parseCacheHeaders(networkResponse));
             return response;

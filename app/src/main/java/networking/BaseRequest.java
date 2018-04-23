@@ -73,9 +73,6 @@ public abstract class BaseRequest<T> extends JsonRequest<T> {
      */
     @Override
     protected VolleyError parseNetworkError(VolleyError volleyError) {
-        if (volleyError.networkResponse != null && volleyError.networkResponse.data != null) {
-            return new VolleyError(new String(volleyError.networkResponse.data));
-        }
         return volleyError;
     }
 }

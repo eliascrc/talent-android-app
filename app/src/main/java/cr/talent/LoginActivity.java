@@ -30,7 +30,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.android.volley.NetworkResponse;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -100,10 +99,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
 
             @Override
-            public boolean onErrorResponse(NetworkError error) {
+            public void onErrorResponse(NetworkError error) {
                 Log.d(TAG, "The method onErrorResponse was executed.");
                 Log.d(TAG, "ERROR: NO NETWORK CONNECTION");
-                return error.getErrorCode() == 503;
             }
 
             public BaseResponse<Object> getListener() {
@@ -256,16 +254,18 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             Response.ErrorListener errorListener = new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    NetworkError networkError = new NetworkError(error.getMessage(), error.networkResponse.statusCode);
-                    if (serviceCallback.onErrorResponse(networkError)) {
+                    NetworkError networkError = new NetworkError();
+                    if (error.networkResponse != null) {
+                        networkError.setErrorCode(error.networkResponse.statusCode);
+                        networkError.setErrorMessage(error.getMessage());
+                    }
+                    serviceCallback.onErrorResponse(networkError);
+                    if (networkError.getErrorCode() == 503) {
                         mEmailLoginFormView.setVisibility(View.GONE);
                         mNoNetworkConnectionErrorLayout.setVisibility(View.VISIBLE);
                     }
                 }
             };
-
-            serviceCallback.onPreExecute(listener);
-
             AuthenticatedRequest authenticatedRequest =
                     new AuthenticatedRequest("http://ws.talent.cr/talent-ws-0.1", "", listener, errorListener, new SessionStorage());
 
