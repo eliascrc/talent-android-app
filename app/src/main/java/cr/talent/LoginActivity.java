@@ -103,7 +103,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             public boolean onErrorResponse(NetworkError error) {
                 Log.d(TAG, "The method onErrorResponse was executed.");
                 Log.d(TAG, "ERROR: NO NETWORK CONNECTION");
-                return error.getErrorCode() == 444;
+                return error.getErrorCode() == 503;
             }
 
             public BaseResponse<Object> getListener() {
