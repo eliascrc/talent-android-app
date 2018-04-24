@@ -260,14 +260,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         networkError.setErrorMessage(error.getMessage());
                     }
                     serviceCallback.onErrorResponse(networkError);
-                    if (networkError.getErrorCode() == 503) {
-                        mEmailLoginFormView.setVisibility(View.GONE);
-                        mNoNetworkConnectionErrorLayout.setVisibility(View.VISIBLE);
-                    }
+                    mEmailLoginFormView.setVisibility(View.GONE);
+                    mNoNetworkConnectionErrorLayout.setVisibility(View.VISIBLE);
+
                 }
             };
             AuthenticatedRequest authenticatedRequest =
-                    new AuthenticatedRequest("http://ws.talent.cr/talent-ws-0.1", "", listener, errorListener, new SessionStorage());
+                    new AuthenticatedRequest("http://www.talent.cr/talent/ws/admin/test", "", listener, errorListener, new SessionStorage());
 
             RequestQueue requestQueue = Volley.newRequestQueue(this);
             requestQueue.add(authenticatedRequest);
