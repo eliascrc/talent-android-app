@@ -102,6 +102,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             public void onErrorResponse(NetworkError error) {
                 Log.d(TAG, "The method onErrorResponse was executed.");
                 Log.d(TAG, "ERROR: NO NETWORK CONNECTION");
+                if (error.getErrorCode() == 0) {
+                    mEmailLoginFormView.setVisibility(View.GONE);
+                    mNoNetworkConnectionErrorLayout.setVisibility(View.VISIBLE);
+                }
             }
 
             public BaseResponse<Object> getListener() {
@@ -260,9 +264,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         networkError.setErrorMessage(error.getMessage());
                     }
                     serviceCallback.onErrorResponse(networkError);
-                    mEmailLoginFormView.setVisibility(View.GONE);
-                    mNoNetworkConnectionErrorLayout.setVisibility(View.VISIBLE);
-
                 }
             };
             AuthenticatedRequest authenticatedRequest =
