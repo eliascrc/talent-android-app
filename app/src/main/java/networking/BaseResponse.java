@@ -7,7 +7,7 @@ import java.util.HashMap;
  *
  * @author Renato Mainieri Sáenz.
  */
-public abstract class BaseResponse<T> {
+public class BaseResponse<T> {
 
     protected HashMap<String, String> httpHeaders;
     protected String httpStatusCode;

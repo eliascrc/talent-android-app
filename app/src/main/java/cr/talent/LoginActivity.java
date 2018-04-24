@@ -19,6 +19,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,8 +30,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import common.SessionStorage;
+import networking.BaseResponse;
+import networking.NetworkError;
+import request.AuthenticatedRequest;
+import request.ServiceCallback;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -61,9 +73,46 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private View mEmailLoginFormView;
+    private View mNoNetworkConnectionErrorLayout;
+
+    private ServiceCallback serviceCallback;
+    // Constant TAG, for the DEBUG log messages
+    private static final String TAG = "LoginActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        serviceCallback = new ServiceCallback<BaseResponse<Object>, NetworkError>() {
+
+            private BaseResponse<Object> listener;
+
+            @Override
+            public void onPreExecute(BaseResponse<Object> listener) {
+                Log.d(TAG, "The method onPreExecute was executed.");
+                this.listener = listener;
+            }
+
+            @Override
+            public void onSuccessResponse(BaseResponse<Object> baseResponse) {
+                Log.d(TAG, "The method onSuccessResponse was executed.");
+                Log.d(TAG, "The method onSuccessResponse receive \"" + baseResponse.getHttpStatusCode() + "\" as response.");
+            }
+
+            @Override
+            public void onErrorResponse(NetworkError error) {
+                Log.d(TAG, "The method onErrorResponse was executed.");
+                Log.d(TAG, "ERROR: NO NETWORK CONNECTION");
+                if (error.getErrorCode() == 0) {
+                    mEmailLoginFormView.setVisibility(View.GONE);
+                    mNoNetworkConnectionErrorLayout.setVisibility(View.VISIBLE);
+                }
+            }
+
+            public BaseResponse<Object> getListener() {
+                return listener;
+            }
+        };
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Set up the login form.
@@ -92,6 +141,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+        mEmailLoginFormView = findViewById(R.id.email_login_form);
+        mNoNetworkConnectionErrorLayout = findViewById(R.id.no_network_connection_error_layout);
+
+        Button mRetryConnectionButton = (Button) findViewById(R.id.retry_connection_button);
+        mRetryConnectionButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mNoNetworkConnectionErrorLayout.setVisibility(View.GONE);
+                mEmailLoginFormView.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     private void populateAutoComplete() {
@@ -184,9 +244,33 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            showProgress(true);
+            /*showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void) null);
+            mAuthTask.execute((Void) null);*/
+
+            Response.Listener<BaseResponse<Object>> listener = new Response.Listener<BaseResponse<Object>>() {
+                @Override
+                public void onResponse(BaseResponse<Object> response) {
+                    serviceCallback.onSuccessResponse(response);
+                }
+            };
+
+            Response.ErrorListener errorListener = new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    NetworkError networkError = new NetworkError();
+                    if (error.networkResponse != null) {
+                        networkError.setErrorCode(error.networkResponse.statusCode);
+                        networkError.setErrorMessage(error.getMessage());
+                    }
+                    serviceCallback.onErrorResponse(networkError);
+                }
+            };
+            AuthenticatedRequest authenticatedRequest =
+                    new AuthenticatedRequest("http://www.talent.cr/talent/ws/admin/test", "", listener, errorListener, new SessionStorage());
+
+            RequestQueue requestQueue = Volley.newRequestQueue(this);
+            requestQueue.add(authenticatedRequest);
         }
     }
 
