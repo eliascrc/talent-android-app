@@ -1,11 +1,9 @@
 package cr.talent;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.view.View;
 
 
 /**
@@ -21,13 +19,14 @@ public class SplashActivity extends AppCompatActivity {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-
-        View view = findViewById(R.id.item_logo);
+        // Stores the metrics of the actual dispositive in run time
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        // Stores the new metrics to the Talent! logo in the launch_screen
         int width = (int) (metrics.widthPixels * 0.85);
         int height = (int) (metrics.heightPixels * 0.40);
-        view.setLayoutParams(new ActionBar.LayoutParams(width, height));
+
+        // TODO: assign the new metrics to the Talent! logo
 
         Intent loginActivity = new Intent(SplashActivity.this, LoginActivity.class);
         SplashActivity.this.startActivity(loginActivity);
