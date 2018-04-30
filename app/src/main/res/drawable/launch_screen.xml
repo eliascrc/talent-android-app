@@ -7,11 +7,10 @@
     <!-- The background color, preferably the same as your normal theme -->
     <item android:drawable="@android:color/white" />
 
-
     <item
         android:id="@+id/item_logo"
         android:gravity="center">
-        <bitmap android:src="@drawable/logo" />
+        <bitmap android:src="@drawable/logo"/>
 
     </item>
 
