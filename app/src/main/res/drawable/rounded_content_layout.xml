@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+        <size android:height="720dp"
+            android:width="320dp">
 
-</selector>
+        </size>
+        <solid
+            android:color="@color/colorClean">
+
+        </solid>
+    // The desired corner radius. reduce it to keep it less rounded
+    <corners android:radius="8dp" />
+
+</shape>
