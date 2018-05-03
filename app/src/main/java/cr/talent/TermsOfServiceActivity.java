@@ -1,0 +1,129 @@
+package cr.talent;
+
+import android.annotation.SuppressLint;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
+
+import common.SessionStorage;
+import networking.BaseResponse;
+import networking.NetworkError;
+import request.ContentRequest;
+import request.ServiceCallback;
+
+/**
+ * This class displays Talent’s active Terms of Service information.
+ *
+ * @author Renato Mainieri Sáenz.
+ */
+public class TermsOfServiceActivity extends AppCompatActivity {
+
+    private String htmlCode;
+    private View mContentTemplate;
+    private View mNoNetworkConnectionErrorLayout;
+    private ServiceCallback serviceCallback;
+    private TextView webView;
+    private TextView contentTitle;
+
+    // Constant TAG, for the DEBUG log messages
+    private static final String TAG = "TermsOfServiceActivity";
+
+    @SuppressLint("SetTextI18n")
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        serviceCallback = new ServiceCallback<BaseResponse<String>, NetworkError>() {
+
+            private BaseResponse<String> listener;
+
+            @Override
+            public void onPreExecute(BaseResponse<String> listener) {
+                Log.d(TAG, "The method onPreExecute was executed.");
+                this.listener = listener;
+            }
+
+            @Override
+            public void onSuccessResponse(BaseResponse<String> baseResponse) {
+                Log.d(TAG, "The method onSuccessResponse was executed.");
+                Log.d(TAG, "The method onSuccessResponse receive:\n" + baseResponse.getResponse());
+                htmlCode = baseResponse.getResponse();
+                webView.setText(Html.fromHtml(htmlCode));
+            }
+
+            @Override
+            public void onErrorResponse(NetworkError error) {
+                Log.d(TAG, "The method onErrorResponse was executed.");
+                if (error.getErrorCode() == 0) {
+                    Log.d(TAG, "ERROR: NO NETWORK CONNECTION");
+                    mContentTemplate    .setVisibility(View.GONE);
+                    mNoNetworkConnectionErrorLayout.setVisibility(View.VISIBLE);
+                }
+            }
+
+            public BaseResponse<String> getListener() {
+                return listener;
+            }
+        };
+
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.content_template);
+        mContentTemplate = findViewById(R.id.content_template_layout);
+        mNoNetworkConnectionErrorLayout = findViewById(R.id.no_network_connection_error_layout);
+        mContentTemplate = findViewById(R.id.content_template_layout);
+        webView = (TextView) findViewById(R.id.content_web_view);
+        contentTitle = (TextView) findViewById(R.id.content_title);
+        contentTitle.setText("Terms of Service");
+        htmlCode = "";
+
+        Button mRetryConnectionButton = (Button) findViewById(R.id.retry_connection_button);
+        mRetryConnectionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mNoNetworkConnectionErrorLayout.setVisibility(View.GONE);
+                mContentTemplate.setVisibility(View.VISIBLE);
+                requestContent();
+            }
+        });
+
+        requestContent();
+    }
+
+    /**
+     * Makes the request to the page that contains the terms of service of Talent !.
+     * Checks also if there is a network connection error.
+     */
+    private void requestContent(){
+        Response.Listener<BaseResponse<String>> listener = new Response.Listener<BaseResponse<String>>() {
+            @Override
+            public void onResponse(BaseResponse<String> response) {
+                serviceCallback.onSuccessResponse(response);
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                NetworkError networkError = new NetworkError();
+                if (error.networkResponse != null) {
+                    networkError.setErrorCode(error.networkResponse.statusCode);
+                    networkError.setErrorMessage(error.getMessage());
+                }
+                serviceCallback.onErrorResponse(networkError);
+            }
+        };
+        ContentRequest contentRequest =
+                new ContentRequest("http://ws.talent.cr/talent-ws-0.1/ws/content/termsOfService", "", listener, errorListener, new SessionStorage());
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(contentRequest);
+    }
+}
