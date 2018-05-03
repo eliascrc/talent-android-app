@@ -1,6 +1,8 @@
 package cr.talent;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
@@ -33,6 +35,7 @@ public class TermsOfServiceActivity extends AppCompatActivity {
     private ServiceCallback serviceCallback;
     private TextView webView;
     private TextView contentTitle;
+    private TextView contactUs;
 
     // Constant TAG, for the DEBUG log messages
     private static final String TAG = "TermsOfServiceActivity";
@@ -82,6 +85,7 @@ public class TermsOfServiceActivity extends AppCompatActivity {
         webView = (TextView) findViewById(R.id.content_web_view);
         contentTitle = (TextView) findViewById(R.id.content_title);
         contentTitle.setText("Terms of Service");
+        contactUs = (TextView) findViewById(R.id.contact_us);
         htmlCode = "";
 
         Button mRetryConnectionButton = (Button) findViewById(R.id.retry_connection_button);
@@ -91,6 +95,15 @@ public class TermsOfServiceActivity extends AppCompatActivity {
                 mNoNetworkConnectionErrorLayout.setVisibility(View.GONE);
                 mContentTemplate.setVisibility(View.VISIBLE);
                 requestContent();
+            }
+        });
+
+        contactUs.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+                emailIntent.setData(Uri.parse("mailto:contact@talent.cr"));
+                startActivity(emailIntent);
             }
         });
 
