@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -83,6 +84,7 @@ public class TermsOfServiceActivity extends AppCompatActivity {
         mNoNetworkConnectionErrorLayout = findViewById(R.id.no_network_connection_error_layout);
         mContentTemplate = findViewById(R.id.content_template_layout);
         webView = (TextView) findViewById(R.id.content_web_view);
+        webView.setMovementMethod(new ScrollingMovementMethod());
         contentTitle = (TextView) findViewById(R.id.content_title);
         contentTitle.setText("Terms of Service");
         contactUs = (TextView) findViewById(R.id.contact_us);

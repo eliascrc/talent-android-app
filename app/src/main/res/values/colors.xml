@@ -4,5 +4,6 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorClean">#FFFFFF</color>
-    <color name="hrefText">#0099CC</color>
+    <color name="hrefText">#FF4083FF</color>
+    <color name="background_content">#294261</color>
 </resources>
