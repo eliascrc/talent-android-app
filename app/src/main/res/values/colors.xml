@@ -5,6 +5,8 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorClean">#FFFFFF</color>
 
+    <color name="hint_text">#FFB9BBBE</color>
+
     <!-- Color palette -->
     <!-- Primary colors -->
     <color name="beige">#E7E6D1</color>

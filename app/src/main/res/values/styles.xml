@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorHint">@color/hint_text</item>
     </style>
 
     <style name="AppTheme.Launcher">
@@ -33,7 +34,7 @@
         name="EnterOrganizationIdEditText"
         parent="@style/Text">
         <item name="android:fontFamily">Source Sans Pro</item>
-        <item name="android:textColor">#FFB9BBBE</item>
+        <item name="android:textColor">#FF495057</item>
         <item name="android:textSize">14sp</item>
     </style>
 

@@ -56,6 +56,7 @@
     <EditText
         android:id="@+id/et_organization_id"
         style="@style/EnterOrganizationIdEditText"
+        android:background="@drawable/rounded_orange_rectangle"
         android:lineSpacingMultiplier="1.29"
         android:layout_width="0dp"
         android:layout_height="41dp"
@@ -63,19 +64,15 @@
         android:layout_marginEnd="108dp"
         android:layout_marginStart="32dp"
         android:paddingLeft="14dp"
-        android:paddingRight="105.7dp"
+        android:paddingRight="14dp"
         android:paddingTop="10.5dp"
         android:paddingBottom="12.5dp"
-        android:background="@drawable/rounded_orange_rectangle"
+
         android:ems="10"
         android:hint="@string/prompt_organization_id"
         android:inputType="textAutoCorrect|textPersonName"
         android:selectAllOnFocus="false"
 
-        android:shadowColor="#000"
-        android:shadowDx="600"
-        android:shadowDy="50"
-        android:shadowRadius="50"
 
         app:layout_constraintBottom_toTopOf="@+id/btn_next"
         app:layout_constraintEnd_toEndOf="parent"
