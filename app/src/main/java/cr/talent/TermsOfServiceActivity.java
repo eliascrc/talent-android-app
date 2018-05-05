@@ -9,6 +9,7 @@ import android.text.Html;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -34,7 +35,7 @@ public class TermsOfServiceActivity extends AppCompatActivity {
     private View mContentTemplate;
     private View mNoNetworkConnectionErrorLayout;
     private ServiceCallback serviceCallback;
-    private TextView webView;
+    private WebView webView;
     private TextView contentTitle;
     private TextView contactUs;
 
@@ -59,7 +60,7 @@ public class TermsOfServiceActivity extends AppCompatActivity {
                 Log.d(TAG, "The method onSuccessResponse was executed.");
                 Log.d(TAG, "The method onSuccessResponse receive:\n" + baseResponse.getResponse());
                 htmlCode = baseResponse.getResponse();
-                webView.setText(Html.fromHtml(htmlCode));
+                webView.loadData(htmlCode, "text/html; charset=UTF-8", null);
             }
 
             @Override
@@ -67,7 +68,7 @@ public class TermsOfServiceActivity extends AppCompatActivity {
                 Log.d(TAG, "The method onErrorResponse was executed.");
                 if (error.getErrorCode() == 0) {
                     Log.d(TAG, "ERROR: NO NETWORK CONNECTION");
-                    mContentTemplate    .setVisibility(View.GONE);
+                    mContentTemplate.setVisibility(View.GONE);
                     mNoNetworkConnectionErrorLayout.setVisibility(View.VISIBLE);
                 }
             }
@@ -83,12 +84,12 @@ public class TermsOfServiceActivity extends AppCompatActivity {
         mContentTemplate = findViewById(R.id.content_template_layout);
         mNoNetworkConnectionErrorLayout = findViewById(R.id.no_network_connection_error_layout);
         mContentTemplate = findViewById(R.id.content_template_layout);
-        webView = (TextView) findViewById(R.id.content_web_view);
-        webView.setMovementMethod(new ScrollingMovementMethod());
+        webView = (WebView) findViewById(R.id.content_web_view);
         contentTitle = (TextView) findViewById(R.id.content_title);
         contentTitle.setText("Terms of Service");
         contactUs = (TextView) findViewById(R.id.contact_us);
         htmlCode = "";
+        getSupportActionBar().hide();
 
         Button mRetryConnectionButton = (Button) findViewById(R.id.retry_connection_button);
         mRetryConnectionButton.setOnClickListener(new View.OnClickListener() {
@@ -109,7 +110,7 @@ public class TermsOfServiceActivity extends AppCompatActivity {
             }
         });
 
-        //requestContent();
+        requestContent();
     }
 
     /**
