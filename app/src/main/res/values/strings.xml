@@ -4,7 +4,7 @@
 
     <!-- Strings related to login -->
     <string name="talent_logo">Talent! Logo</string>string>
-    <string name="action_enter_organization_id">Next</string>string>
+
 
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>
@@ -18,4 +18,10 @@
     <string name="error_no_network_connection">There\'s no network connection</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."</string>
+
+    <!-- Strings related entering organization id during login -->
+    <string name="label_enter_organization_id">Enter the organization\'s id</string>
+    <string name="label_organization_id">.talent.cr</string>
+    <string name="prompt_organization_id">Organization\'s id</string>
+    <string name="action_enter_organization_id">Next</string>string>
 </resources>

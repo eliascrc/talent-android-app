@@ -14,7 +14,43 @@
     <!-- <item name="colorPrimaryDark">@android:color/white</item> -->
     </style>
 
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 
+    <style name="Text"/>
 
+    <style
+        name="EnterOrganizationIdTextView"
+        parent="@style/Text">
+        <item name="android:fontFamily">Source Sans Pro</item>
+        <item name="android:textColor">#FF495057</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style
+        name="EnterOrganizationIdEditText"
+        parent="@style/Text">
+        <item name="android:fontFamily">Source Sans Pro</item>
+        <item name="android:textColor">#FFB9BBBE</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style
+        name="EnterOrganizationIdNextButton"
+        parent="@style/Text">
+        <item name="android:fontFamily">Roboto</item>
+        <item name="android:textColor">#FFFFFFFF</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style
+        name="EnterOrganizationIdEnding"
+        parent="@style/Text">
+        <item name="android:fontFamily">Source Sans Pro</item>
+        <item name="android:textColor">#FF495057</item>
+        <item name="android:textSize">20sp</item>
+    </style>
 
 </resources>
