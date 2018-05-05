@@ -4,4 +4,20 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorClean">#FFFFFF</color>
+
+    <!-- Color palette -->
+    <!-- Primary colors -->
+    <color name="beige">#E7E6D1</color>
+    <color name="orange">#F8C143</color>
+    <color name="dark_orange">#efa42f</color>
+    <color name="grey">#B6B7B2</color>
+    <color name="blue">#294261</color>
+
+    <!-- Secondary colors -->
+    <color name="light_beige">#F6FBF5</color>
+    <color name="light_orange">#FBDE9D</color>
+    <color name="aqua_blue">#BEDEDB</color>
+    <color name="light_blue">#016A91</color>
+    <color name="dark_blue">#010E3B</color>
+
 </resources>
