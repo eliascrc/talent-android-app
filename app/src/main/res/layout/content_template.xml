@@ -15,11 +15,11 @@
         android:id="@+id/content_template_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/content_margin_bottom"
         android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/layout_margin_top"
-        android:layout_marginBottom="@dimen/content_margin_bottom"
-        android:orientation="vertical"
-        android:background="@drawable/rounded_content_layout">
+        android:background="@drawable/rounded_content_layout"
+        android:orientation="vertical">
 
         <ImageView
             android:id="@+id/imageView"
@@ -34,23 +34,29 @@
 
         <TextView
             android:id="@+id/content_title"
+            android:textColor="@color/content_title"
+            android:fontFamily="@font/source_sans"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginTop="78dp"
             android:gravity="center"
+            android:textSize="18sp"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="MissingConstraints"
             tools:layout_editor_absoluteX="0dp" />
 
         <TextView
             android:id="@+id/content_web_view"
+            android:fontFamily="@font/source_sans"
+            android:textColor="@color/content_body"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginBottom="50dp"
+            android:layout_marginBottom="27dp"
             android:layout_marginEnd="14dp"
             android:layout_marginStart="14dp"
-            android:layout_marginTop="41dp"
+            android:layout_marginTop="27dp"
             android:scrollbars="vertical"
+            android:text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. "
             app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -61,7 +67,7 @@
             android:id="@+id/linearLayout4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="90dp"
+            android:layout_marginBottom="40dp"
             android:layout_marginEnd="14dp"
             android:layout_marginStart="14dp"
             android:orientation="horizontal"
@@ -72,6 +78,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:textColor="@color/content_body"
                 android:text="@string/have_any_questions" />
 
             <TextView
@@ -79,6 +87,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/contact_us"
+                android:fontFamily="@font/roboto"
                 android:textColor="@color/hrefText" />
 
         </LinearLayout>

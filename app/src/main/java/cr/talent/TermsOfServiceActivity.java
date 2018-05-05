@@ -109,7 +109,7 @@ public class TermsOfServiceActivity extends AppCompatActivity {
             }
         });
 
-        requestContent();
+        //requestContent();
     }
 
     /**

@@ -27,6 +27,7 @@
         <activity
             android:name=".TermsOfServiceActivity"
             android:label="@string/title_activity_terms_of_service" />
+        <meta-data android:name="preloaded_fonts" android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
