@@ -11,7 +11,7 @@
         layout="@layout/no_network_connection_error"
         android:visibility="gone" />
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:id="@+id/content_template_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -25,37 +25,49 @@
             android:id="@+id/imageView"
             android:layout_width="60dp"
             android:layout_height="64dp"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/logo"
             tools:ignore="MissingConstraints" />
 
         <TextView
             android:id="@+id/content_title"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/layout_margin_top"
-            android:layout_marginBottom="@dimen/content_margin_bottom"
-            android:gravity="center"/>
+            android:layout_height="30dp"
+            android:layout_marginTop="78dp"
+            android:gravity="center"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="0dp" />
 
         <TextView
             android:id="@+id/content_web_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="50dp"
+            android:layout_marginEnd="14dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="41dp"
             android:scrollbars="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_vertical_margin"
-            android:layout_marginRight="@dimen/activity_vertical_margin"
-            android:layout_marginTop="@dimen/layout_margin_top"
-            android:layout_marginBottom="@dimen/content_margin_bottom">
-
-
-        </TextView>
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/content_title" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/content_margin_top"
-            android:orientation="horizontal">
+            android:id="@+id/linearLayout4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="90dp"
+            android:layout_marginEnd="14dp"
+            android:layout_marginStart="14dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -66,9 +78,9 @@
                 android:id="@+id/contact_us"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/hrefText"
-                android:text="@string/contact_us"/>
+                android:text="@string/contact_us"
+                android:textColor="@color/hrefText" />
 
         </LinearLayout>
-    </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
 </android.support.constraint.ConstraintLayout>
