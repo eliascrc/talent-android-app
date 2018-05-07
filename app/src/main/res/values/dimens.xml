@@ -4,6 +4,20 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="layout_margin_bottom">8dp</dimen>
     <dimen name="layout_margin_top">16dp</dimen>
+    <dimen name="layout_zero">0dp</dimen>
+
+    <!-- Content Template margins -->
     <dimen name="content_margin_top">26dp</dimen>
     <dimen name="content_margin_bottom">26dp</dimen>
+    <dimen name="content_logo_layout_width">60dp</dimen>
+    <dimen name="content_logo_layout_height">64dp</dimen>
+    <dimen name="content_layout_marginStart">14dp</dimen>
+    <dimen name="content_layout_marginTop">10dp</dimen>
+    <dimen name="content_title_marginTop">78dp</dimen>
+    <dimen name="content_title_height">30dp</dimen>
+    <dimen name="content_bottom_layout_marginBottom">40dp</dimen>
+
+    <!-- Font Sizes-->
+    <dimen name="font_content_title">18sp</dimen>
+
 </resources>
