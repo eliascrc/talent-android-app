@@ -25,8 +25,8 @@
             android:id="@+id/content_logo"
             android:layout_width="@dimen/content_logo_layout_width"
             android:layout_height="@dimen/content_logo_layout_height"
-            android:layout_marginStart="@dimen/content_layout_marginStart"
-            android:layout_marginTop="@dimen/content_layout_marginTop"
+            android:layout_marginStart="@dimen/content_logo_marginStart"
+            android:layout_marginTop="@dimen/content_logo_marginTop"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/logo"
@@ -34,12 +34,12 @@
 
         <TextView
             android:id="@+id/content_title"
-            android:textColor="@color/content_title"
-            android:fontFamily="@font/source_sans"
             android:layout_width="match_parent"
             android:layout_height="@dimen/content_title_height"
             android:layout_marginTop="@dimen/content_title_marginTop"
+            android:fontFamily="@font/source_sans"
             android:gravity="center"
+            android:textColor="@color/content_title"
             android:textSize="@dimen/font_content_title"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="MissingConstraints"
@@ -47,15 +47,15 @@
 
         <WebView
             android:id="@+id/content_web_view"
-            android:fontFamily="@font/source_sans"
-            android:textColor="@color/content_body"
             android:layout_width="@dimen/layout_zero"
             android:layout_height="@dimen/layout_zero"
             android:layout_marginBottom="@dimen/content_margin_bottom"
             android:layout_marginEnd="@dimen/content_layout_marginStart"
             android:layout_marginStart="@dimen/content_layout_marginStart"
             android:layout_marginTop="@dimen/content_layout_marginTop"
+            android:fontFamily="@font/source_sans"
             android:scrollbars="vertical"
+            android:textColor="@color/content_body"
             app:layout_constraintBottom_toTopOf="@+id/content_bottom"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -78,15 +78,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto"
-                android:textColor="@color/content_body"
-                android:text="@string/have_any_questions" />
+                android:text="@string/have_any_questions"
+                android:textColor="@color/content_body" />
 
             <TextView
                 android:id="@+id/contact_us"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/contact_us"
                 android:fontFamily="@font/roboto"
+                android:text="@string/contact_us"
                 android:textColor="@color/hrefText" />
 
         </LinearLayout>
