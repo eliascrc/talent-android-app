@@ -8,4 +8,5 @@
     <color name="background_content">#294261</color>
     <color name="content_title">#FF294261</color>
     <color name="content_body">#FF595959</color>
+    <color name="landing_view_title">#FF4E4E4E</color>
 </resources>

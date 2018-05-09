@@ -15,7 +15,11 @@
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
     <string name="error_no_network_connection">There\'s no network connection</string>
+    <string name="explore_app">Not ready to Sign up? Explore the app.</string>
     <string name="have_any_questions">"Have any questions? "</string>
+    <string name="landing_view_title">Your company\'s biggest assets</string>
+    <string name="landing_view_subtitle">Let us help you keep track on the talent of your company.</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."</string>
+
 </resources>
