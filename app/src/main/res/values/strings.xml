@@ -2,6 +2,9 @@
     <string name="app_name">Talent!</string>
     <string name="title_activity_login">Sign in</string>
     <string name="title_activity_terms_of_service">Terms of Service</string>
+    <string name="title_activity_sign_up">Sign up</string>
+    <string name="title_activity_log_in">Log in</string>
+    <string name="title_activity_landing_view">Landing View</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
