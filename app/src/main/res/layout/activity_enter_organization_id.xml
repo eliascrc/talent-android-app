@@ -10,7 +10,7 @@
         android:id="@+id/iv_talent_logo"
         android:layout_width="0dp"
         android:layout_height="194dp"
-        android:layout_marginEnd="66dp"
+        android:layout_marginEnd="64dp"
         android:layout_marginStart="66dp"
         android:layout_marginTop="39dp"
         android:contentDescription="@string/talent_logo"
@@ -22,7 +22,6 @@
 
     <Button
         android:id="@+id/btn_next"
-        android:textAllCaps="false"
         style="@style/EnterOrganizationIdNextButton"
         android:layout_width="0dp"
         android:layout_height="56dp"
@@ -32,7 +31,9 @@
         android:background="@drawable/rounded_orange_rectangle"
         android:backgroundTint="@color/dark_orange"
         android:lineSpacingMultiplier="1.17"
+        android:onClick="enterOrganizationId"
         android:text="@string/action_enter_organization_id"
+        android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -41,7 +42,7 @@
         android:id="@+id/tv_organization_id"
         style="@style/EnterOrganizationIdTextView"
         android:layout_width="0dp"
-        android:layout_height="19dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="25dp"
         android:layout_marginEnd="107dp"
         android:layout_marginStart="37dp"
@@ -50,27 +51,26 @@
         app:layout_constraintBottom_toTopOf="@+id/et_organization_id"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.006"
-        app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/et_organization_id"
         style="@style/EnterOrganizationIdEditText"
-        android:background="@drawable/rounded_orange_rectangle"
-        android:lineSpacingMultiplier="1.29"
         android:layout_width="0dp"
-        android:layout_height="41dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="58dp"
         android:layout_marginEnd="108dp"
         android:layout_marginStart="32dp"
-        android:paddingLeft="14dp"
-        android:paddingRight="14dp"
-        android:paddingTop="10.5dp"
-        android:paddingBottom="12.5dp"
-
+        android:background="@drawable/rounded_orange_rectangle"
         android:ems="10"
         android:hint="@string/prompt_organization_id"
         android:inputType="textAutoCorrect|textPersonName"
+        android:lineSpacingMultiplier="1.29"
+        android:paddingBottom="12.5dp"
+
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp"
+        android:paddingTop="10.5dp"
         android:selectAllOnFocus="false"
 
 
@@ -82,7 +82,7 @@
         android:id="@+id/tv_orgnization_id_ending"
         style="@style/EnterOrganizationIdEnding"
         android:layout_width="wrap_content"
-        android:layout_height="25dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="56dp"
         android:layout_marginEnd="31dp"
         android:layout_marginStart="6dp"
