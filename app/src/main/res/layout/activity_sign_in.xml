@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SignInActivity"
-    android:background="@color/colorClean">
+    android:background="@color/white">
 
     <ImageView
         android:id="@+id/iv_talent_logo"
@@ -107,6 +107,7 @@
         android:layout_marginBottom="32dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:onClick="startForgotPasswordActivity"
         android:text="@string/label_forgot_password"
         app:layout_constraintBottom_toTopOf="@+id/btn_enter"
         app:layout_constraintEnd_toEndOf="parent"

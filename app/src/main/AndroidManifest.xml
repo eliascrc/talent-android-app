@@ -25,15 +25,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".EnterOrganizationIdActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".SignInActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
+        <activity android:name=".SignUpFirstStepActivity" />
+        <activity android:name=".ForgotPassword"></activity>
     </application>
 
 </manifest>

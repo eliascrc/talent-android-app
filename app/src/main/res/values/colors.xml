@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="textColorLink">#4083ff</color>
-    <color name="colorClean">#FFFFFF</color>
 
+    <!-- Common -->
+    <color name="white">#FFFFFF</color>
+    <color name="link_text">#4083ff</color>
     <color name="hint_text">#FFB9BBBE</color>
+    <color name="text">#495057</color>
 
     <!-- Color palette -->
     <!-- Primary colors -->
