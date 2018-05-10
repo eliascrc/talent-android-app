@@ -5,6 +5,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+/**
+ * The screen in which the user enters the id of the organization they want to sign in to.
+ *
+ * @author Fabián Roberto Leandro.
+ */
+
 public class EnterOrganizationIdActivity extends AppCompatActivity {
 
     @Override

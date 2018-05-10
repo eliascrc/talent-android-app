@@ -24,7 +24,7 @@
     <style name="Text"/>
 
     <style
-        name="EnterOrganizationIdTextView"
+        name="SignInPromptLabel"
         parent="@style/Text">
         <item name="android:fontFamily">Source Sans Pro</item>
         <item name="android:textColor">#FF495057</item>
@@ -32,19 +32,28 @@
     </style>
 
     <style
-        name="EnterOrganizationIdEditText"
+        name="SignInEditText"
         parent="@style/Text">
         <item name="android:fontFamily">Source Sans Pro</item>
         <item name="android:textColor">#FF495057</item>
         <item name="android:textSize">14sp</item>
+        <item name="android:paddingBottom">12.5dp</item>
+        <item name="android:paddingLeft">14dp</item>
+        <item name="android:paddingRight">14dp</item>
+        <item name="android:paddingTop">10.5dp</item>
     </style>
 
     <style
-        name="EnterOrganizationIdNextButton"
+        name="SignInButton"
         parent="@style/Text">
         <item name="android:fontFamily">Roboto</item>
         <item name="android:textColor">#FFFFFFFF</item>
         <item name="android:textSize">18sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:paddingBottom">18dp</item>
+        <item name="android:paddingLeft">14dp</item>
+        <item name="android:paddingRight">14dp</item>
+        <item name="android:paddingTop">14dp</item>
     </style>
 
     <style
@@ -53,6 +62,14 @@
         <item name="android:fontFamily">Source Sans Pro</item>
         <item name="android:textColor">#FF495057</item>
         <item name="android:textSize">20sp</item>
+    </style>
+
+    <style
+        name="SignInForgotPassword"
+        parent="@style/Text">
+        <item name="android:fontFamily">Roboto</item>
+        <item name="android:textColor">@color/textColorLink</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
 </resources>
