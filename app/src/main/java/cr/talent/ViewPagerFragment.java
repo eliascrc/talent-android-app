@@ -17,7 +17,7 @@ public class ViewPagerFragment extends PagerAdapter {
 
     private Context context;
     private LayoutInflater layoutInflater;
-    private Integer[] images = {R.drawable.logo, R.drawable.logo, R.drawable.logo};
+    private Integer[] images = {R.drawable.landing_view, R.drawable.landing_view, R.drawable.landing_view};
 
     public ViewPagerFragment(Context context) {
         this.context = context;
