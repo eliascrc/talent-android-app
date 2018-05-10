@@ -32,7 +32,7 @@
             android:name=".SignInActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".SignUpFirstStepActivity" />
-        <activity android:name=".ForgotPassword"></activity>
+        <activity android:name=".ForgotPasswordActivity"></activity>
     </application>
 
 </manifest>

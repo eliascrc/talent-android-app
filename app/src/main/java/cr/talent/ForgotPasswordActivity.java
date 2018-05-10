@@ -9,7 +9,7 @@ import android.os.Bundle;
  * @author Fabián Roberto Leandro.
  */
 
-public class ForgotPassword extends AppCompatActivity {
+public class ForgotPasswordActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
