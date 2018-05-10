@@ -15,6 +15,8 @@ public class LandingViewActivity extends AppCompatActivity {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing_view);
+
+
         getSupportActionBar().hide();
     }
 }

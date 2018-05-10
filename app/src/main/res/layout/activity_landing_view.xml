@@ -1,11 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorClean">
+    android:layout_height="match_parent">
 
+
+<android.support.constraint.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorClean"
+    android:scrollbars="vertical">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="420dp"
+        android:layout_height="322dp"
+        android:layout_marginBottom="31dp"
+        app:layout_constraintBottom_toTopOf="@+id/landing_view_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.727"
+        app:srcCompat="@drawable/logo" />
 
     <TextView
         android:id="@+id/landing_view_title"
@@ -25,47 +43,15 @@
         android:id="@+id/landing_view_subtitle"
         android:layout_width="232dp"
         android:layout_height="37dp"
-        android:layout_marginBottom="157dp"
+        android:layout_marginBottom="33dp"
         android:layout_marginEnd="77dp"
         android:layout_marginStart="47dp"
         android:text="@string/landing_view_subtitle"
         android:textColor="@color/landing_view_title"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/sign_up_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
-        android:layout_marginEnd="189dp"
-        android:layout_marginStart="47dp"
-        android:textAllCaps="false"
-        android:background="@drawable/landing_primary_button"
-        android:text="@string/title_activity_sign_up"
-        android:textColor="@color/colorClean"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/explore_the_app"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/log_in_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginStart="14dp"
-        android:background="@drawable/landing_secondary_button"
-        android:text="@string/title_activity_log_in"
-        android:textAllCaps="false"
-        android:textColor="@color/landing_view_title"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/explore_the_app"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/sign_up_button" />
 
     <TextView
         android:id="@+id/explore_the_app"
@@ -81,7 +67,47 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="78dp"
+        android:layout_marginEnd="26dp"
+        android:layout_marginStart="47dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
+        <Button
+            android:id="@+id/sign_up_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/landing_primary_button"
+            android:text="@string/title_activity_sign_up"
+            android:textAllCaps="false"
+            android:textColor="@color/colorClean"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/log_in_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="14dp"
+            android:background="@drawable/landing_secondary_button"
+            android:text="@string/title_activity_log_in"
+            android:textAllCaps="false"
+            android:textColor="@color/landing_view_title"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/sign_up_button"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
 
 
 </android.support.constraint.ConstraintLayout>
+
+</ScrollView>
