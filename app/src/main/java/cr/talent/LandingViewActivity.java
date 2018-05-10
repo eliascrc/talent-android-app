@@ -1,6 +1,7 @@
 package cr.talent;
 
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 /**
@@ -10,13 +11,18 @@ import android.support.v7.app.AppCompatActivity;
  */
 public class LandingViewActivity extends AppCompatActivity {
 
+    ViewPager viewPager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing_view);
-
-
         getSupportActionBar().hide();
+
+        viewPager = (ViewPager) findViewById(R.id.landing_view_pager);
+
+        ViewPagerFragment viewPagerFragment = new ViewPagerFragment(this);
+        viewPager.setAdapter(viewPagerFragment);
     }
 }
