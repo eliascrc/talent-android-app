@@ -9,24 +9,28 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@color/colorClean"
         android:scrollbars="vertical">
 
         <android.support.v4.view.ViewPager
             android:id="@+id/landing_view_pager"
             android:layout_width="0dp"
-            android:layout_height="234dp"
+            android:layout_height="316dp"
+            android:layout_marginBottom="28dp"
+            app:layout_constraintBottom_toTopOf="@+id/landing_view_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
+            android:id="@+id/landing_view_index"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="31dp"
             android:layout_marginEnd="159dp"
             android:layout_marginStart="166dp"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toTopOf="@+id/landing_view_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.448"
@@ -35,19 +39,19 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/circle_carousel_index"
-                android:layout_marginEnd="11dp"/>
+                android:layout_marginEnd="11dp"
+                android:background="@drawable/circle_carousel_active" />
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/circle_carousel_index"
-                android:layout_marginEnd="11dp"/>
+                android:layout_marginEnd="11dp"
+                android:background="@drawable/circle_carousel_active" />
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/circle_carousel_index" />
+                android:background="@drawable/circle_carousel_active" />
 
 
         </LinearLayout>
@@ -59,14 +63,12 @@
             android:layout_marginBottom="6dp"
             android:layout_marginEnd="77dp"
             android:layout_marginStart="47dp"
-            android:layout_marginTop="32dp"
             android:text="@string/landing_view_title"
             android:textColor="@color/landing_view_title"
             android:textSize="36sp"
             app:layout_constraintBottom_toTopOf="@+id/landing_view_subtitle"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/landing_view_pager" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/landing_view_subtitle"
