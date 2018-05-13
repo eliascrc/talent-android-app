@@ -26,7 +26,8 @@ public class ViewPagerFragment extends PagerAdapter {
 
     /**
      * This constructor instantiates the indexes to indicate in what position the "carousel" starts.
-     * @param context, Context in which the "carousel" will be contained.
+     *
+     * @param context,     Context in which the "carousel" will be contained.
      * @param indexLayout, LinearLayout that contains the indexes.
      */
     public ViewPagerFragment(Context context, LinearLayout indexLayout) {
@@ -35,8 +36,7 @@ public class ViewPagerFragment extends PagerAdapter {
         for (int i = 0; i < this.getCount(); i++) {
             if (i == 0) {
                 indexLayout.getChildAt(i).setBackgroundResource(R.drawable.circle_carousel_active);
-            }
-            else {
+            } else {
                 indexLayout.getChildAt(i).setBackgroundResource(R.drawable.circle_carousel_inactive);
             }
         }
@@ -57,7 +57,7 @@ public class ViewPagerFragment extends PagerAdapter {
      * Also assigns values ​​to the indices to indicate in what position the "carousel" is currently.
      *
      * @param container, The containing View in which the page will be shown.
-     * @param position, The page position to be instantiated.
+     * @param position,  The page position to be instantiated.
      * @return Returns an Object representing the new page.
      */
     @Override
@@ -74,18 +74,19 @@ public class ViewPagerFragment extends PagerAdapter {
                 for (int i = 0; i < getCount(); i++) {
                     if (i == position) {
                         indexLayout.getChildAt(i).setBackgroundResource(R.drawable.circle_carousel_active);
-                    }
-                    else {
+                    } else {
                         indexLayout.getChildAt(i).setBackgroundResource(R.drawable.circle_carousel_inactive);
                     }
                 }
             }
 
             @Override
-            public void onPageSelected(int position) {}
+            public void onPageSelected(int position) {
+            }
 
             @Override
-            public void onPageScrollStateChanged(int state) {}
+            public void onPageScrollStateChanged(int state) {
+            }
         });
         viewPager.addView(view, 0);
         return view;
