@@ -42,16 +42,11 @@
     </style>
 
     <style
-        name="SignInButton"
+        name="SignInButtonText"
         parent="AppTheme">
         <item name="android:fontFamily">Roboto</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">18sp</item>
-        <item name="android:textAllCaps">false</item>
-        <item name="android:paddingBottom">18dp</item>
-        <item name="android:paddingLeft">14dp</item>
-        <item name="android:paddingRight">14dp</item>
-        <item name="android:paddingTop">14dp</item>
     </style>
 
     <style
@@ -67,6 +62,15 @@
         <item name="android:fontFamily">Roboto</item>
         <item name="android:textColor">@color/link_text</item>
         <item name="android:textSize">14sp</item>
+    </style>
+
+    <style
+        name="SignInErrorMessage"
+        parent="AppTheme">
+        <item name="android:fontFamily">Source Sans Pro</item>
+        <item name="android:textColor">@color/error_text</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingMultiplier">1.29</item>
     </style>
 
 </resources>

@@ -1,90 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white"
+    tools:context=".EnterOrganizationIdActivity">
 
-    <ImageView
-        android:id="@+id/iv_talent_logo"
-        android:layout_width="0dp"
-        android:layout_height="194dp"
-        android:layout_marginEnd="64dp"
-        android:layout_marginStart="66dp"
-        android:layout_marginTop="39dp"
-        android:contentDescription="@string/talent_logo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo" />
+    <include
+        android:id="@+id/no_network_connection_error_layout"
+        layout="@layout/no_network_connection_error"
+        android:visibility="gone" />
 
-    <Button
-        android:id="@+id/btn_next"
-        style="@style/SignInButton"
+    <ScrollView
+        android:id="@+id/sv_enter_organization_id"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="38dp"
-        android:layout_marginEnd="31dp"
-        android:layout_marginStart="31dp"
-        android:background="@drawable/rounded_solid_orange_rectangle"
-        android:lineSpacingMultiplier="1.17"
-        android:onClick="enterOrganizationId"
-        android:text="@string/action_enter_organization_id"
+        android:layout_height="0dp"
+        android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/tv_organization_id"
-        style="@style/SignInPromptLabel"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="25dp"
-        android:layout_marginEnd="107dp"
-        android:layout_marginStart="37dp"
-        android:lineSpacingMultiplier="1.29"
-        android:text="@string/label_enter_organization_id"
-        app:layout_constraintBottom_toTopOf="@+id/et_organization_id"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.006"
-        app:layout_constraintStart_toStartOf="parent" />
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <EditText
-        android:id="@+id/et_organization_id"
-        style="@style/SignInEditText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="58dp"
-        android:layout_marginEnd="108dp"
-        android:layout_marginStart="32dp"
-        android:background="@drawable/rounded_orange_border_rectangle"
-        android:ems="10"
-        android:hint="@string/prompt_organization_id"
-        android:inputType="textAutoCorrect|textPersonName"
-        android:lineSpacingMultiplier="1.29"
-        android:paddingBottom="12.5dp"
-        android:paddingLeft="14dp"
-        android:paddingRight="14dp"
-        android:paddingTop="10.5dp"
-        android:selectAllOnFocus="false"
-        app:layout_constraintBottom_toTopOf="@+id/btn_next"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+            <ImageView
+                android:id="@+id/iv_talent_logo"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="64dp"
+                android:layout_marginStart="66dp"
+                android:layout_marginTop="39dp"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/talent_logo"
+                android:maxHeight="194dp"
+                app:layout_constraintBottom_toTopOf="@+id/tv_organization_id"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@drawable/logo" />
 
-    <TextView
-        android:id="@+id/tv_orgnization_id_ending"
-        style="@style/EnterOrganizationIdEnding"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="56dp"
-        android:layout_marginEnd="31dp"
-        android:layout_marginStart="6dp"
-        android:lineSpacingMultiplier="1.25"
-        android:text="@string/label_organization_id"
-        app:layout_constraintBottom_toTopOf="@+id/btn_next"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/et_organization_id" />
+            <Button
+                android:id="@+id/btn_action_enter_organization_id"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="38dp"
+                android:layout_marginEnd="31dp"
+                android:layout_marginStart="31dp"
+                android:background="@drawable/rounded_solid_orange_rectangle"
+                android:lineSpacingMultiplier="1.17"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
+            <TextView
+                android:id="@+id/tv_organization_id"
+                style="@style/SignInPromptLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="25dp"
+                android:layout_marginEnd="107dp"
+                android:layout_marginStart="37dp"
+                android:lineSpacingMultiplier="1.29"
+                android:text="@string/label_enter_organization_id"
+                app:layout_constraintBottom_toTopOf="@+id/et_organization_id"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.006"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <EditText
+                android:id="@+id/et_organization_id"
+                style="@style/SignInEditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="58dp"
+                android:layout_marginEnd="108dp"
+                android:layout_marginStart="32dp"
+                android:background="@drawable/rounded_orange_border_rectangle"
+                android:ems="10"
+                android:hint="@string/prompt_organization_id"
+                android:inputType="textAutoCorrect|textPersonName"
+                android:lineSpacingMultiplier="1.29"
+                android:paddingBottom="12.5dp"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp"
+                android:paddingTop="10.5dp"
+                android:selectAllOnFocus="false"
+                app:layout_constraintBottom_toTopOf="@+id/btn_action_enter_organization_id"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_organization_id_ending"
+                style="@style/EnterOrganizationIdEnding"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="56dp"
+                android:layout_marginEnd="31dp"
+                android:layout_marginStart="6dp"
+                android:lineSpacingMultiplier="1.25"
+                android:text="@string/label_organization_id"
+                app:layout_constraintBottom_toTopOf="@+id/btn_action_enter_organization_id"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/et_organization_id" />
+
+            <ImageView
+                android:id="@+id/iv_button_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="8dp"
+                android:elevation="10dp"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_action_enter_organization_id"
+                app:layout_constraintEnd_toEndOf="@+id/btn_action_enter_organization_id"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/tv_button_next"
+                app:layout_constraintTop_toTopOf="@+id/btn_action_enter_organization_id"
+                app:layout_constraintVertical_bias="0.6"
+                app:srcCompat="@drawable/icon_arrow_right" />
+
+            <TextView
+                android:id="@+id/tv_button_next"
+                style="@style/SignInButtonText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:elevation="10dp"
+                android:text="@string/action_enter_organization_id"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_action_enter_organization_id"
+                app:layout_constraintEnd_toEndOf="@+id/btn_action_enter_organization_id"
+                app:layout_constraintStart_toStartOf="@+id/btn_action_enter_organization_id"
+                app:layout_constraintTop_toTopOf="@+id/btn_action_enter_organization_id" />
+
+
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
 </android.support.constraint.ConstraintLayout>

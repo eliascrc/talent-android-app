@@ -5,7 +5,6 @@
     <!-- Strings related to login -->
     <string name="action_sign_in_short">Sign in</string>
     <string name="action_retry_connection">Tap to Retry</string>
-    <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
@@ -26,5 +25,7 @@
     <string name="prompt_password">Password</string>
     <string name="prompt_email">Email</string>
     <string name="action_sign_in">Enter</string>
+    <string name="error_bad_email_password">Wrong email or password.</string>
+    <string name="error_invalid_email">Invalid email.</string>
 
 </resources>

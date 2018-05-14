@@ -2,10 +2,12 @@
 <resources>
 
     <!-- Common -->
-    <color name="white">#FFFFFF</color>
+    <color name="white">#ffffff</color>
+    <color name="error_text">#C4183C</color>
     <color name="link_text">#4083ff</color>
     <color name="hint_text">#FFB9BBBE</color>
     <color name="text">#495057</color>
+
 
     <!-- Color palette -->
     <!-- Primary colors -->
@@ -13,6 +15,7 @@
     <color name="orange">#F8C143</color>
     <color name="dark_orange">#EFA42F</color>
     <color name="grey">#B6B7B2</color>
+    <color name="test">#9A9A9A</color>
     <color name="blue">#294261</color>
 
     <!-- Secondary colors -->

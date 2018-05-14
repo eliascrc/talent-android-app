@@ -22,7 +22,6 @@ public class SplashActivity extends AppCompatActivity {
         //Intent loginActivity = new Intent(SplashActivity.this, LoginActivity.class);
         //SplashActivity.this.startActivity(loginActivity);
         Intent enterOrgIDActivity = new Intent(SplashActivity.this, EnterOrganizationIdActivity.class);
-        SplashActivity.this.startActivity(enterOrgIDActivity);
-
+        startActivity(enterOrgIDActivity);
     }
 }
