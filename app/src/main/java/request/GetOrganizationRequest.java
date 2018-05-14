@@ -35,9 +35,9 @@ public class GetOrganizationRequest extends BaseRequest<BaseResponse<String>> {
     protected Response<BaseResponse<String>> parseNetworkResponse(NetworkResponse networkResponse) {
         super.parseNetworkResponse(networkResponse);
         try {
-            String htmlRequest = new String(networkResponse.data, HttpHeaderParser.parseCharset(networkResponse.headers));
+            String json = new String(networkResponse.data, HttpHeaderParser.parseCharset(networkResponse.headers));
             BaseResponse<String> baseResponse = new BaseResponse<>();
-            baseResponse.setResponse(htmlRequest);
+            baseResponse.setResponse(json);
             Response<BaseResponse<String>> response = Response.success(baseResponse,
                     HttpHeaderParser.parseCacheHeaders(networkResponse));
             return response;
