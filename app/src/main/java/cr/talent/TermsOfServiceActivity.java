@@ -57,6 +57,7 @@ public class TermsOfServiceActivity extends AppCompatActivity {
                 Log.d(TAG, "The method onSuccessResponse was executed.");
                 Log.d(TAG, "The method onSuccessResponse receive:\n" + baseResponse.getResponse());
                 htmlCode = baseResponse.getResponse();
+                htmlCode = htmlCode.replace("h1", "h3");
                 webView.loadData(htmlCode, "text/html; charset=UTF-8", null);
             }
 
