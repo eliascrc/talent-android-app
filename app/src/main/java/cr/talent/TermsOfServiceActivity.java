@@ -1,12 +1,9 @@
 package cr.talent;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Html;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
@@ -20,6 +17,7 @@ import com.android.volley.toolbox.Volley;
 
 import common.SessionStorage;
 import networking.BaseResponse;
+import networking.NetworkConstants;
 import networking.NetworkError;
 import request.ContentRequest;
 import request.ServiceCallback;
@@ -32,8 +30,8 @@ import request.ServiceCallback;
 public class TermsOfServiceActivity extends AppCompatActivity {
 
     private String htmlCode;
-    private View mContentTemplate;
-    private View mNoNetworkConnectionErrorLayout;
+    private View contentTemplate;
+    private View noNetworkConnectionErrorLayout;
     private ServiceCallback serviceCallback;
     private WebView webView;
     private TextView contentTitle;
@@ -42,7 +40,6 @@ public class TermsOfServiceActivity extends AppCompatActivity {
     // Constant TAG, for the DEBUG log messages
     private static final String TAG = "TermsOfServiceActivity";
 
-    @SuppressLint("SetTextI18n")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         serviceCallback = new ServiceCallback<BaseResponse<String>, NetworkError>() {
@@ -68,8 +65,8 @@ public class TermsOfServiceActivity extends AppCompatActivity {
                 Log.d(TAG, "The method onErrorResponse was executed.");
                 if (error.getErrorCode() == 0) {
                     Log.d(TAG, "ERROR: NO NETWORK CONNECTION");
-                    mContentTemplate.setVisibility(View.GONE);
-                    mNoNetworkConnectionErrorLayout.setVisibility(View.VISIBLE);
+                    contentTemplate.setVisibility(View.GONE);
+                    noNetworkConnectionErrorLayout.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -81,12 +78,11 @@ public class TermsOfServiceActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_template);
-        mContentTemplate = findViewById(R.id.content_template_layout);
-        mNoNetworkConnectionErrorLayout = findViewById(R.id.no_network_connection_error_layout);
-        mContentTemplate = findViewById(R.id.content_template_layout);
+        contentTemplate = findViewById(R.id.content_template_layout);
+        noNetworkConnectionErrorLayout = findViewById(R.id.no_network_connection_error_layout);
         webView = (WebView) findViewById(R.id.content_web_view);
         contentTitle = (TextView) findViewById(R.id.content_title);
-        contentTitle.setText("Terms of Service");
+        contentTitle.setText(R.string.title_activity_terms_of_service);
         contactUs = (TextView) findViewById(R.id.contact_us);
         htmlCode = "";
         getSupportActionBar().hide();
@@ -95,17 +91,18 @@ public class TermsOfServiceActivity extends AppCompatActivity {
         mRetryConnectionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mNoNetworkConnectionErrorLayout.setVisibility(View.GONE);
-                mContentTemplate.setVisibility(View.VISIBLE);
+                noNetworkConnectionErrorLayout.setVisibility(View.GONE);
+                contentTemplate.setVisibility(View.VISIBLE);
                 requestContent();
             }
         });
 
-        contactUs.setOnClickListener(new View.OnClickListener(){
+        contactUs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
-                emailIntent.setData(Uri.parse("mailto:contact@talent.cr"));
+                String email = getResources().getString(R.string.contact_us_email);
+                emailIntent.setData(Uri.parse("mailto:" + email));
                 startActivity(emailIntent);
             }
         });
@@ -117,7 +114,7 @@ public class TermsOfServiceActivity extends AppCompatActivity {
      * Makes the request to the page that contains the terms of service of Talent !.
      * Checks also if there is a network connection error.
      */
-    private void requestContent(){
+    private void requestContent() {
         Response.Listener<BaseResponse<String>> listener = new Response.Listener<BaseResponse<String>>() {
             @Override
             public void onResponse(BaseResponse<String> response) {
@@ -137,7 +134,7 @@ public class TermsOfServiceActivity extends AppCompatActivity {
             }
         };
         ContentRequest contentRequest =
-                new ContentRequest("http://ws.talent.cr/talent-ws-0.1/ws/content/termsOfService", "", listener, errorListener, new SessionStorage());
+                new ContentRequest(NetworkConstants.termsOfServiceURL, "", listener, errorListener, new SessionStorage());
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(contentRequest);

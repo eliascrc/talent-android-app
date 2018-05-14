@@ -9,7 +9,5 @@
             android:color="@color/colorClean">
 
         </solid>
-    // The desired corner radius. reduce it to keep it less rounded
     <corners android:radius="8dp" />
-
 </shape>
