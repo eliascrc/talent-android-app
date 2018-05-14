@@ -4,4 +4,8 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorClean">#FFFFFF</color>
+    <color name="hrefText">#FF4083FF</color>
+    <color name="background_content">#294261</color>
+    <color name="content_title">#FF294261</color>
+    <color name="content_body">#FF595959</color>
 </resources>
