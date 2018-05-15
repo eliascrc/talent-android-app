@@ -23,7 +23,7 @@ import request.ContentRequest;
 import request.ServiceCallback;
 
 /**
- * This class displays Talent’s active Terms of Service information.
+ * This class displays Talent’s active Privacy Policy information.
  *
  * @author Renato Mainieri Sáenz.
  */
@@ -57,7 +57,6 @@ public class PrivacyPolicyActivity extends AppCompatActivity {
                 Log.d(TAG, "The method onSuccessResponse was executed.");
                 Log.d(TAG, "The method onSuccessResponse receive:\n" + baseResponse.getResponse());
                 htmlCode = baseResponse.getResponse();
-                htmlCode = htmlCode.replace("h1", "h3");
                 webView.loadData(htmlCode, "text/html; charset=UTF-8", null);
             }
 
@@ -135,7 +134,7 @@ public class PrivacyPolicyActivity extends AppCompatActivity {
             }
         };
         ContentRequest contentRequest =
-                new ContentRequest(NetworkConstants.privacyPolicyURL, "", listener, errorListener, new SessionStorage());
+                new ContentRequest(NetworkConstants.PRIVACY_POLICY_URL, "", listener, errorListener, new SessionStorage());
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(contentRequest);
