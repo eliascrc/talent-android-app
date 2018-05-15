@@ -6,7 +6,6 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
-
 import java.io.UnsupportedEncodingException;
 
 import common.SessionStorage;
@@ -14,20 +13,18 @@ import networking.BaseRequest;
 import networking.BaseResponse;
 
 /**
- * This class makes a request to the server get an organization's information in Json format
+ * This class makes a request to the server to recover a html content.
  *
- * @author Fabián Roberto Leandro
+ * @author Renato Mainieri Sáenz.
  */
-
-
-public class GetOrganizationRequest extends BaseRequest<BaseResponse<String>> {
+public class ContentRequest extends BaseRequest<BaseResponse<String>> {
 
     /**
-     * This constructor creates a GetOrganizationRequest, specifying the URL, request body, listener, error listener and session storage.
+     * This constructor creates a ContentRequest, specifying the URL, request body, listener, error listener and session storage.
      * The HTTP method is defined to be GET.
      */
-    public GetOrganizationRequest(String url, String requestBody, Response.Listener<BaseResponse<String>> listener,
-                         Response.ErrorListener errorListener, SessionStorage sessionStorage) {
+    public ContentRequest(String url, String requestBody, Response.Listener<BaseResponse<String>> listener,
+                                Response.ErrorListener errorListener, SessionStorage sessionStorage) {
         super(Request.Method.GET, url, requestBody, listener, errorListener, sessionStorage);
     }
 
@@ -35,9 +32,9 @@ public class GetOrganizationRequest extends BaseRequest<BaseResponse<String>> {
     protected Response<BaseResponse<String>> parseNetworkResponse(NetworkResponse networkResponse) {
         super.parseNetworkResponse(networkResponse);
         try {
-            String json = new String(networkResponse.data, HttpHeaderParser.parseCharset(networkResponse.headers));
+            String htmlRequest = new String(networkResponse.data, HttpHeaderParser.parseCharset(networkResponse.headers));
             BaseResponse<String> baseResponse = new BaseResponse<>();
-            baseResponse.setResponse(json);
+            baseResponse.setResponse(htmlRequest);
             Response<BaseResponse<String>> response = Response.success(baseResponse,
                     HttpHeaderParser.parseCacheHeaders(networkResponse));
             return response;

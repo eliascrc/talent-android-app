@@ -1,14 +1,18 @@
 <resources>
     <string name="app_name">Talent!</string>
     <string name="title_activity_login">Sign in</string>
+    <string name="title_activity_terms_of_service">Terms of Service</string>
 
     <!-- Strings related to login -->
     <string name="action_sign_in_short">Sign in</string>
     <string name="action_retry_connection">Tap to Retry</string>
+    <string name="contact_us"><u>Contact us</u></string>
+    <string name="contact_us_email">contact@talent.cr</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
     <string name="error_no_network_connection">There\'s no network connection</string>
+    <string name="have_any_questions">"Have any questions? "</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."</string>
 
