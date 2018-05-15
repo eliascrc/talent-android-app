@@ -35,6 +35,7 @@
             android:name=".PrivacyPolicyActivity"
             android:label="@string/title_activity_privacy_policy" />
         <meta-data android:name="preloaded_fonts" android:resource="@array/preloaded_fonts" />
+        <activity android:name=".ContentOptionActivity"/>
     </application>
 
 </manifest>
