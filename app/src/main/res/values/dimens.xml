@@ -19,7 +19,7 @@
     <dimen name="content_title_height">30dp</dimen>
     <dimen name="content_bottom_layout_marginBottom">40dp</dimen>
     <dimen name="content_bottom_layout_marginEnd">145dp</dimen>
-    <dimen name="content_bottom_layout_marginStart">32dp</dimen>
+    <dimen name="content_bottom_layout_marginStart">14dp</dimen>
 
     <!-- Font Sizes-->
     <dimen name="font_content_title">18sp</dimen>

@@ -70,6 +70,7 @@
             android:layout_marginEnd="@dimen/content_bottom_layout_marginEnd"
             android:layout_marginStart="@dimen/content_bottom_layout_marginStart"
             android:orientation="horizontal"
+            android:paddingLeft="@dimen/layout_margin_bottom"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
