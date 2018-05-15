@@ -23,11 +23,11 @@ import request.ContentRequest;
 import request.ServiceCallback;
 
 /**
- * This class displays Talent’s active Terms of Service information.
+ * This class displays Talent’s active Privacy Policy information.
  *
  * @author Renato Mainieri Sáenz.
  */
-public class TermsOfServiceActivity extends AppCompatActivity {
+public class PrivacyPolicyActivity extends AppCompatActivity {
 
     private String htmlCode;
     private View contentTemplate;
@@ -38,7 +38,7 @@ public class TermsOfServiceActivity extends AppCompatActivity {
     private TextView contactUs;
 
     // Constant TAG, for the DEBUG log messages
-    private static final String TAG = "TermsOfServiceActivity";
+    private static final String TAG = "PrivacyPolicyActivity";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,7 +82,7 @@ public class TermsOfServiceActivity extends AppCompatActivity {
         noNetworkConnectionErrorLayout = findViewById(R.id.no_network_connection_error_layout);
         webView = (WebView) findViewById(R.id.content_web_view);
         contentTitle = (TextView) findViewById(R.id.content_title);
-        contentTitle.setText(R.string.title_activity_terms_of_service);
+        contentTitle.setText(R.string.title_activity_privacy_policy);
         contactUs = (TextView) findViewById(R.id.contact_us);
         htmlCode = "";
         getSupportActionBar().hide();
@@ -134,7 +134,7 @@ public class TermsOfServiceActivity extends AppCompatActivity {
             }
         };
         ContentRequest contentRequest =
-                new ContentRequest(NetworkConstants.TERMS_OF_SERVICE_URL, "", listener, errorListener, new SessionStorage());
+                new ContentRequest(NetworkConstants.PRIVACY_POLICY_URL, "", listener, errorListener, new SessionStorage());
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(contentRequest);

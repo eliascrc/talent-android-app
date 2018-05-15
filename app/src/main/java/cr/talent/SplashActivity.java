@@ -18,8 +18,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_splash);
-        //Intent loginActivity = new Intent(SplashActivity.this, LoginActivity.class);
-        Intent loginActivity = new Intent(SplashActivity.this, TermsOfServiceActivity.class);
+        Intent loginActivity = new Intent(SplashActivity.this, PrivacyPolicyActivity.class);
         SplashActivity.this.startActivity(loginActivity);
     }
 }

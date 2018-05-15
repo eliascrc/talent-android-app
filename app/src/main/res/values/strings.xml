@@ -2,6 +2,7 @@
     <string name="app_name">Talent!</string>
     <string name="title_activity_login">Sign in</string>
     <string name="title_activity_terms_of_service">Terms of Service</string>
+    <string name="title_activity_privacy_policy">Privacy Policy</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
