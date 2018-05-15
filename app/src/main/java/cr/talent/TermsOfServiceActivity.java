@@ -57,7 +57,6 @@ public class TermsOfServiceActivity extends AppCompatActivity {
                 Log.d(TAG, "The method onSuccessResponse was executed.");
                 Log.d(TAG, "The method onSuccessResponse receive:\n" + baseResponse.getResponse());
                 htmlCode = baseResponse.getResponse();
-                htmlCode = htmlCode.replace("h1", "h3");
                 webView.loadData(htmlCode, "text/html; charset=UTF-8", null);
             }
 
@@ -135,7 +134,7 @@ public class TermsOfServiceActivity extends AppCompatActivity {
             }
         };
         ContentRequest contentRequest =
-                new ContentRequest(NetworkConstants.termsOfServiceURL, "", listener, errorListener, new SessionStorage());
+                new ContentRequest(NetworkConstants.TERMS_OF_SERVICE_URL, "", listener, errorListener, new SessionStorage());
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(contentRequest);
