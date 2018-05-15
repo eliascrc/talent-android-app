@@ -7,7 +7,7 @@
     <color name="link_text">#4083ff</color>
     <color name="hint_text">#FFB9BBBE</color>
     <color name="text">#495057</color>
-    <color name="content_body">#595959</color>
+    <color name="content_text">#595959</color>
 
 
     <!-- Color palette -->
@@ -15,8 +15,7 @@
     <color name="beige">#E7E6D1</color>
     <color name="orange">#F8C143</color>
     <color name="dark_orange">#EFA42F</color>
-    <color name="grey">#B6B7B2</color>
-    <color name="test">#9A9A9A</color>
+    <color name="grey">#b6b7b2</color>
     <color name="blue">#294261</color>
 
     <!-- Secondary colors -->

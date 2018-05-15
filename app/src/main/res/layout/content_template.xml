@@ -55,7 +55,7 @@
             android:layout_marginTop="@dimen/content_layout_marginTop"
             android:fontFamily="@font/source_sans"
             android:scrollbars="vertical"
-            android:textColor="@color/content_body"
+            android:textColor="@color/content_text"
             app:layout_constraintBottom_toTopOf="@+id/content_bottom"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -79,7 +79,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto"
                 android:text="@string/have_any_questions"
-                android:textColor="@color/content_body" />
+                android:textColor="@color/content_text" />
 
             <TextView
                 android:id="@+id/contact_us"

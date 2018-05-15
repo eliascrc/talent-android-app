@@ -13,7 +13,7 @@ import networking.BaseRequest;
 import networking.BaseResponse;
 
 /**
- * This class makes a request to the server to recover a html content.
+ * This class makes a request to the server to recover an html content.
  *
  * @author Renato Mainieri Sáenz.
  */

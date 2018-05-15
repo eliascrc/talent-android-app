@@ -15,13 +15,13 @@ import networking.BaseResponse;
  * @author Fabián Roberto Leandro
  */
 
-public class SignInRequest extends BaseRequest<BaseResponse<String>> {
+public class EncodedPostRequest extends BaseRequest<BaseResponse<String>> {
     /**
      * This constructor creates a SignInRequest, specifying the URL, request body, listener, error listener and session storage.
      * The HTTP method is defined to be POST.
      */
-    public SignInRequest(String url, String requestBody, Response.Listener<BaseResponse<String>> listener,
-                         Response.ErrorListener errorListener, SessionStorage sessionStorage) {
+    public EncodedPostRequest(String url, String requestBody, Response.Listener<BaseResponse<String>> listener,
+                              Response.ErrorListener errorListener, SessionStorage sessionStorage) {
         super(Request.Method.POST, url, requestBody, listener, errorListener, sessionStorage);
     }
 
@@ -48,6 +48,5 @@ public class SignInRequest extends BaseRequest<BaseResponse<String>> {
         Response<BaseResponse<String>> response = Response.success(baseResponse,
                 HttpHeaderParser.parseCacheHeaders(networkResponse));
         return response;
-
     }
 }

@@ -6,18 +6,14 @@
     <string name="title_activity_sign_in">Sign In</string>
     <string name="title_activity_enter_organization_id">Enter Organization Id</string>
 
-    <!-- Strings related to login -->
-    <string name="action_sign_in_short">Sign in</string>
+    <!-- Strings related to the no network connection layout -->
+    <string name="error_no_network_connection">There\'s no network connection</string>
     <string name="action_retry_connection">Tap to Retry</string>
+
+    <!-- Strings related to the terms of service activity -->
     <string name="contact_us"><u>Contact us</u></string>
     <string name="contact_us_email">contact@talent.cr</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_field_required">This field is required</string>
-    <string name="error_no_network_connection">There\'s no network connection</string>
     <string name="have_any_questions">"Have any questions? "</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."</string>
 
     <!-- Strings related to entering organization id during sign in -->
     <string name="talent_logo">Talent! Logo</string>string>
@@ -34,5 +30,11 @@
     <string name="action_sign_in">Enter</string>
     <string name="error_bad_email_password">Wrong email or password.</string>
     <string name="error_invalid_email">Invalid email.</string>
+
+    <!-- Strings related to the forgot password activity -->
+    <string name="label_recover_password">Recover password</string>
+    <string name="label_enter_email">Enter your email</string>
+    <string name="action_send_email">Send email</string>
+    <string name="label_email_sent">If the provided email matches our records you\'ll receive an email. Please check your email to recover your password.</string>
 
 </resources>

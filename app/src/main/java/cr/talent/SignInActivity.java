@@ -3,6 +3,7 @@ package cr.talent;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,16 +28,15 @@ import org.json.JSONObject;
 
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.HashMap;
-import java.util.Map;
 
+import common.ParameterEncoder;
 import common.SessionStorage;
 import networking.BaseResponse;
 import networking.NetworkConstants;
 import networking.NetworkError;
 import request.ServiceCallback;
-import request.SignInRequest;
+import request.EncodedPostRequest;
 
 /**
  * The screen in which the user signs in to an organization
@@ -67,6 +67,8 @@ public class SignInActivity extends AppCompatActivity {
     private static final String TAG = "SignInActivity";
 
     private static final int SPAN_EXCLUSIVE = Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
+
+    // Visibility constants
     private static final int GONE = View.GONE;
     private static final int VISIBLE = View.VISIBLE;
     private static final int INVISIBLE = View.INVISIBLE;
@@ -75,6 +77,65 @@ public class SignInActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_sign_in);
+        organizationLogoImageView = findViewById(R.id.sign_in_iv_organization_logo);
+        organizationLogoImageView.setVisibility(INVISIBLE);
+        // Set the organization's logo in the appropriate ImageView
+        // For this, first access the organization sent by the previous activity
+        String organizationJson = getIntent().getStringExtra("ORGANIZATION_JSON");
+        // Then get the link to the organization's logo
+        String logoUrl = "";
+        try {
+            JSONObject organizationJsonObject = new JSONObject(organizationJson);
+            logoUrl = organizationJsonObject.getString("logo");
+        } catch (org.json.JSONException e) {
+            e.printStackTrace();
+        }
+        Log.d(TAG, "Organization's logo is "+logoUrl);
+        // Load the logo asynchronously
+        new GetOrganizationLogoTask(organizationLogoImageView).execute(logoUrl);
+
+        signInView = findViewById(R.id.sign_in_sv_sign_in_form);
+        emailEditText = findViewById(R.id.sign_in_et_email);
+        passwordEditText = findViewById(R.id.sign_in_et_password);
+        signUpTextView = findViewById(R.id.sign_in_tv_no_account_sign_up);
+        signInButton = findViewById(R.id.sign_in_btn_action_sign_in);
+        signInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signIn(v);
+            }
+        });
+
+        forgotPasswordTextView = findViewById(R.id.sign_in_tv_forgot_password);
+        forgotPasswordTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startForgotPasswordActivity(v);
+            }
+        });
+
+        badEmailOrPasswordTextView = findViewById(R.id.sign_in_tv_bad_login);
+        invalidEmailTextView = findViewById(R.id.sign_in_tv_invalid_email);
+        // Hide the error messages
+        badEmailOrPasswordTextView.setVisibility(INVISIBLE);
+        invalidEmailTextView.setVisibility(INVISIBLE);
+
+        // Makes the "Sign Up" part of the TextView clickable
+        SpannableString noAccountSignIn = new SpannableString(getString(R.string.label_no_account_sign_up));
+        noAccountSignIn.setSpan(new ClickableSpan(){
+            // Anonymous class that extends ClickableSpan
+            // Need this to start the sign up activity in the custom implementation of onClick()
+            @Override
+            public void onClick(View textView) {
+                // start the sign up activity here
+                Intent signUpActivity = new Intent(SignInActivity.this, SignUpFirstStepActivity.class);
+                SignInActivity.this.startActivity(signUpActivity);
+            }
+        }, 23,30, SPAN_EXCLUSIVE);
+        signUpTextView.setMovementMethod(LinkMovementMethod.getInstance());
+        signUpTextView.setText(noAccountSignIn);
 
         // Implement inline the onPreExecute, onSuccess and onFailure methods of the ServiceCallback instance
         // They will be called when the sign in webservice returns
@@ -107,72 +168,14 @@ public class SignInActivity extends AppCompatActivity {
                     // Display invalid credentials error message
                     badEmailOrPasswordTextView.setVisibility(VISIBLE);
                     invalidEmailTextView.setVisibility(INVISIBLE);
+                    setEmailEditTextColor(R.color.dark_orange);
                 }
             }
         };
 
-        // Access the organization sent by the previous activity
-        String organizationJson = getIntent().getStringExtra("ORGANIZATION_JSON");
-
-        setContentView(R.layout.activity_sign_in);
-        organizationLogoImageView = findViewById(R.id.iv_organization_logo);
-        organizationLogoImageView.setVisibility(INVISIBLE);
-        // Set the organization's logo in the appropriate ImageView
-        // For this, first get the link to the organization's logo
-        String logoUrl = "";
-        try {
-            JSONObject organizationJsonObject = new JSONObject(organizationJson);
-            logoUrl = organizationJsonObject.getString("logo");
-        } catch (org.json.JSONException e) {
-            e.printStackTrace();
-        }
-        Log.d(TAG, "logo is "+logoUrl);
-        new GetOrganizationLogoTask(organizationLogoImageView).execute(logoUrl);
-
-        signInView = findViewById(R.id.sv_sign_in_form);
-        emailEditText = findViewById(R.id.et_email);
-        passwordEditText = findViewById(R.id.et_password);
-        signUpTextView = findViewById(R.id.tv_no_account_sign_up);
         noNetworkConnectionErrorLayout = findViewById(R.id.no_network_connection_error_layout);
         retryConnectionButton = findViewById(R.id.retry_connection_button);
-        signInButton = findViewById(R.id.btn_action_sign_in);
-        signInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signIn(v);
-            }
-        });
-
-        forgotPasswordTextView = findViewById(R.id.tv_forgot_password);
-        forgotPasswordTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startForgotPasswordActivity(v);
-            }
-        });
-
-        badEmailOrPasswordTextView = findViewById(R.id.tv_bad_login);
-        invalidEmailTextView = findViewById(R.id.tv_invalid_email);
-        // Hide the error messages
-        badEmailOrPasswordTextView.setVisibility(GONE);
-        invalidEmailTextView.setVisibility(GONE);
-
-        // Makes the "Sign Up" part of the TextView clickable
-        SpannableString noAccountSignIn = new SpannableString(getString(R.string.label_no_account_sign_up));
-        noAccountSignIn.setSpan(new ClickableSpan(){
-            // Anonymous class that extends ClickableSpan
-            // Need this to start the sign up activity in the custom implementation of onClick()
-            @Override
-            public void onClick(View textView) {
-                // start the sign up activity here
-                Intent signUpActivity = new Intent(SignInActivity.this, SignUpFirstStepActivity.class);
-                SignInActivity.this.startActivity(signUpActivity);
-            }
-        }, 23,30, SPAN_EXCLUSIVE);
-        signUpTextView.setMovementMethod(LinkMovementMethod.getInstance());
-        signUpTextView.setText(noAccountSignIn);
-
-        // Implements a method for the button in the no network connectivity layout
+        // Implement a method for the button in the no network connectivity layout
         retryConnectionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -180,18 +183,19 @@ public class SignInActivity extends AppCompatActivity {
                 noNetworkConnectionErrorLayout.setVisibility(GONE);
                 badEmailOrPasswordTextView.setVisibility(INVISIBLE);
                 invalidEmailTextView.setVisibility(INVISIBLE);
+                setEmailEditTextColor(R.color.dark_orange);
                 signInView.setVisibility(VISIBLE);
             }
         });
     }
 
-    public void startForgotPasswordActivity(View view){
+    private void startForgotPasswordActivity(View view){
         Intent forgotPasswordActivity = new Intent(SignInActivity.this, ForgotPasswordActivity.class);
         startActivity(forgotPasswordActivity);
     }
 
     // Get data in the et_email and et_password EditTexts and attempt to sign in with it
-    public void signIn(View view) {
+    private void signIn(View view) {
         String email = emailEditText.getText().toString();
         String password = passwordEditText.getText().toString();
 
@@ -200,11 +204,12 @@ public class SignInActivity extends AppCompatActivity {
             if(!email.contains("@")) {
                 // Show invalid email error message, hide others and return
                 invalidEmailTextView.setVisibility(VISIBLE);
+                setEmailEditTextColor(R.color.error_text);
                 badEmailOrPasswordTextView.setVisibility(INVISIBLE);
                 return;
             }
 
-            // Instantiate listeners to send to a SignInRequest instance
+            // Instantiate listeners to send to the request instance
             Response.Listener<BaseResponse<String>> listener = new Response.Listener<BaseResponse<String>>() {
                 @Override
                 public void onResponse(BaseResponse<String> response) {
@@ -230,13 +235,14 @@ public class SignInActivity extends AppCompatActivity {
             parameters.put("password",password);
             String body = "";
             try {
-                body = encodeParameters(parameters);
+                // Encodes the parameters with the ParameterEncoder class declared in common
+                body = ParameterEncoder.encodeHashmap(parameters);
             } catch (UnsupportedEncodingException e) {
-
+                e.printStackTrace();
             }
 
             // Create and send request
-            SignInRequest signInRequest = new SignInRequest(NetworkConstants.SIGN_IN_URL, body,
+            EncodedPostRequest signInRequest = new EncodedPostRequest(NetworkConstants.SIGN_IN_URL, body,
                     listener, errorListener, new SessionStorage());
 
             RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -244,22 +250,10 @@ public class SignInActivity extends AppCompatActivity {
         }
     }
 
-    // Receives a hashmap and encodes its key,value pairs to be sent in an http request
-    private String encodeParameters(HashMap<String, String> params) throws UnsupportedEncodingException {
-        StringBuilder result = new StringBuilder();
-        boolean first = true;
-        for(Map.Entry<String, String> entry : params.entrySet()){
-            if (first) {
-                first = false;
-            } else {
-                result.append("&");
-            }
-
-            result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
-            result.append("=");
-            result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
-        }
-        return result.toString();
+    // Set the email edit text's color
+    private void setEmailEditTextColor(int color) {
+        GradientDrawable drawable = (GradientDrawable) emailEditText.getBackground();
+        drawable.setStroke(1, getResources().getColor(color));
     }
 
     // Used to get the organization-s log asynchronously 

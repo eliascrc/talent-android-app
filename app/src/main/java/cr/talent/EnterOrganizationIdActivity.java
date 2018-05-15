@@ -43,6 +43,7 @@ public class EnterOrganizationIdActivity extends AppCompatActivity {
     // Constant TAG, for the DEBUG log messages
     private static final String TAG = "EnterOrganizationId";
 
+    // Visibility constants
     private static final int GONE = View.GONE;
     private static final int VISIBLE = View.VISIBLE;
 
@@ -89,11 +90,9 @@ public class EnterOrganizationIdActivity extends AppCompatActivity {
         };
 
         setContentView(R.layout.activity_enter_organization_id);
-        enterOrganizationIdView = findViewById(R.id.sv_enter_organization_id);
-        retryConnectionButton = findViewById(R.id.retry_connection_button);
-        noNetworkConnectionErrorLayout = findViewById(R.id.no_network_connection_error_layout);
-        organizationIdEditText = findViewById(R.id.et_organization_id);
-        enterOrganizationIdButton = findViewById(R.id.btn_action_enter_organization_id);
+        enterOrganizationIdView = findViewById(R.id.enter_organization_id_sv_enter_organization_id);
+        organizationIdEditText = findViewById(R.id.enter_organization_id_et_organization_id);
+        enterOrganizationIdButton = findViewById(R.id.enter_organization_id_btn_action_enter_organization_id);
         enterOrganizationIdButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,7 +100,9 @@ public class EnterOrganizationIdActivity extends AppCompatActivity {
             }
         });
 
-        // Implements a method for the button in the no network connectivity layout
+        retryConnectionButton = findViewById(R.id.retry_connection_button);
+        noNetworkConnectionErrorLayout = findViewById(R.id.no_network_connection_error_layout);
+        // Implement a method for the button in the no network connectivity layout
         retryConnectionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -112,7 +113,7 @@ public class EnterOrganizationIdActivity extends AppCompatActivity {
         });
     }
 
-    public void enterOrganizationId(View view) {
+    private void enterOrganizationId(View view) {
         String organizationId = organizationIdEditText.getText().toString();
 
         if(!TextUtils.isEmpty(organizationId)) {
