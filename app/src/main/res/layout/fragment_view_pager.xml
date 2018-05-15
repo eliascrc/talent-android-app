@@ -13,19 +13,18 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
             android:id="@+id/image_view_pager"
             android:layout_width="641dp"
             android:layout_height="427dp"
-            android:src="@drawable/landing_view_1" />
+            android:scaleType="centerCrop" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/gradient_landing_view"></View>
+            android:background="@drawable/gradient_landing_view"/>
 
 
     </FrameLayout>
