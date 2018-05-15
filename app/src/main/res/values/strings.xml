@@ -5,6 +5,8 @@
     <string name="title_activity_sign_up">Sign up</string>
     <string name="title_activity_log_in">Log in</string>
     <string name="title_activity_landing_view">Landing View</string>
+    <string name="title_activity_privacy_policy">Privacy Policy</string>
+
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
@@ -13,6 +15,7 @@
     <string name="action_sign_in_short">Sign in</string>
     <string name="action_retry_connection">Tap to Retry</string>
     <string name="contact_us"><u>Contact us</u></string>
+    <string name="contact_us_email">contact@talent.cr</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>

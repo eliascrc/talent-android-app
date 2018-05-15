@@ -31,6 +31,10 @@
         <activity android:name=".LandingViewActivity"
             android:label="@string/title_activity_landing_view">
         </activity>
+        <activity
+            android:name=".PrivacyPolicyActivity"
+            android:label="@string/title_activity_privacy_policy" />
+        <meta-data android:name="preloaded_fonts" android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
