@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_content">
+    android:background="@color/blue">
 
     <include
         android:id="@+id/no_network_connection_error_layout"
@@ -39,7 +39,7 @@
             android:layout_marginTop="@dimen/content_title_marginTop"
             android:fontFamily="@font/source_sans"
             android:gravity="center"
-            android:textColor="@color/content_title"
+            android:textColor="@color/blue"
             android:textSize="@dimen/font_content_title"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="MissingConstraints"
@@ -87,7 +87,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto"
                 android:text="@string/contact_us"
-                android:textColor="@color/hrefText" />
+                android:textColor="@color/link_text" />
 
         </LinearLayout>
     </android.support.constraint.ConstraintLayout>

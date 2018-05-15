@@ -17,6 +17,7 @@ import networking.BaseResponse;
  *
  * @author Renato Mainieri Sáenz.
  */
+
 public class ContentRequest extends BaseRequest<BaseResponse<String>> {
 
     /**
@@ -32,9 +33,9 @@ public class ContentRequest extends BaseRequest<BaseResponse<String>> {
     protected Response<BaseResponse<String>> parseNetworkResponse(NetworkResponse networkResponse) {
         super.parseNetworkResponse(networkResponse);
         try {
-            String htmlRequest = new String(networkResponse.data, HttpHeaderParser.parseCharset(networkResponse.headers));
+            String content = new String(networkResponse.data, HttpHeaderParser.parseCharset(networkResponse.headers));
             BaseResponse<String> baseResponse = new BaseResponse<>();
-            baseResponse.setResponse(htmlRequest);
+            baseResponse.setResponse(content);
             Response<BaseResponse<String>> response = Response.success(baseResponse,
                     HttpHeaderParser.parseCacheHeaders(networkResponse));
             return response;

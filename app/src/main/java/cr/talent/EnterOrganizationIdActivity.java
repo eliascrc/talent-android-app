@@ -18,7 +18,7 @@ import common.SessionStorage;
 import networking.BaseResponse;
 import networking.NetworkConstants;
 import networking.NetworkError;
-import request.GetOrganizationRequest;
+import request.ContentRequest;
 import request.ServiceCallback;
 
 /**
@@ -141,7 +141,7 @@ public class EnterOrganizationIdActivity extends AppCompatActivity {
             String url = NetworkConstants.GET_ORGANIZATION_URL+organizationId;
 
             // Create and send request
-            GetOrganizationRequest getOrganizationRequest = new GetOrganizationRequest(url, "", listener, errorListener, new SessionStorage());
+            ContentRequest getOrganizationRequest = new ContentRequest(url, "", listener, errorListener, new SessionStorage());
             RequestQueue requestQueue = Volley.newRequestQueue(this);
             requestQueue.add(getOrganizationRequest);
         }

@@ -135,7 +135,7 @@ public class TermsOfServiceActivity extends AppCompatActivity {
             }
         };
         ContentRequest contentRequest =
-                new ContentRequest(NetworkConstants.termsOfServiceURL, "", listener, errorListener, new SessionStorage());
+                new ContentRequest(NetworkConstants.TERMS_OF_SERVICE_URL, "", listener, errorListener, new SessionStorage());
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(contentRequest);

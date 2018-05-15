@@ -11,7 +11,6 @@ import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
-import android.util.JsonReader;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,7 +22,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
-import com.google.gson.JsonObject;
 
 import org.json.JSONObject;
 
@@ -118,6 +116,7 @@ public class SignInActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_sign_in);
         organizationLogoImageView = findViewById(R.id.iv_organization_logo);
+        organizationLogoImageView.setVisibility(INVISIBLE);
         // Set the organization's logo in the appropriate ImageView
         // For this, first get the link to the organization's logo
         String logoUrl = "";
@@ -128,7 +127,6 @@ public class SignInActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         Log.d(TAG, "logo is "+logoUrl);
-
         new GetOrganizationLogoTask(organizationLogoImageView).execute(logoUrl);
 
         signInView = findViewById(R.id.sv_sign_in_form);
@@ -156,8 +154,8 @@ public class SignInActivity extends AppCompatActivity {
         badEmailOrPasswordTextView = findViewById(R.id.tv_bad_login);
         invalidEmailTextView = findViewById(R.id.tv_invalid_email);
         // Hide the error messages
-        badEmailOrPasswordTextView.setVisibility(INVISIBLE);
-        invalidEmailTextView.setVisibility(INVISIBLE);
+        badEmailOrPasswordTextView.setVisibility(GONE);
+        invalidEmailTextView.setVisibility(GONE);
 
         // Makes the "Sign Up" part of the TextView clickable
         SpannableString noAccountSignIn = new SpannableString(getString(R.string.label_no_account_sign_up));
@@ -246,7 +244,7 @@ public class SignInActivity extends AppCompatActivity {
         }
     }
 
-    // Receives a key and value hashmap and encodes its values to be sent in an http request
+    // Receives a hashmap and encodes its key,value pairs to be sent in an http request
     private String encodeParameters(HashMap<String, String> params) throws UnsupportedEncodingException {
         StringBuilder result = new StringBuilder();
         boolean first = true;
@@ -266,27 +264,28 @@ public class SignInActivity extends AppCompatActivity {
 
     // Used to get the organization-s log asynchronously 
     private class GetOrganizationLogoTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
+        ImageView logoImageView;
 
-        public GetOrganizationLogoTask(ImageView bmImage) {
-            this.bmImage = bmImage;
+        public GetOrganizationLogoTask(ImageView logoImageView) {
+            this.logoImageView = logoImageView;
         }
 
         protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
+            String urlDisplay = urls[0];
+            Bitmap logo = null;
             try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
+                InputStream in = new java.net.URL(urlDisplay).openStream();
+                logo = BitmapFactory.decodeStream(in);
             } catch (Exception e) {
                 Log.e("Error", e.getMessage());
                 e.printStackTrace();
             }
-            return mIcon11;
+            return logo;
         }
 
         protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
+            logoImageView.setImageBitmap(result);
+            logoImageView.setVisibility(VISIBLE);
         }
     }
 }
