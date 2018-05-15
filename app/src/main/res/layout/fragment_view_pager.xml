@@ -7,7 +7,6 @@
     android:orientation="vertical"
     android:gravity="center">
 
-
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,16 +16,14 @@
 
         <ImageView
             android:id="@+id/image_view_pager"
-            android:layout_width="641dp"
-            android:layout_height="427dp"
+            android:layout_width="@dimen/view_pager_image_width"
+            android:layout_height="@dimen/view_pager_image_height"
             android:scaleType="centerCrop" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/gradient_landing_view"/>
-
-
     </FrameLayout>
 
 </android.support.constraint.ConstraintLayout>

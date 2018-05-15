@@ -21,8 +21,29 @@
     <dimen name="content_bottom_layout_marginEnd">145dp</dimen>
     <dimen name="content_bottom_layout_marginStart">14dp</dimen>
 
+    <!-- Fragment View Pager -->
+    <dimen name="view_pager_image_width">641dp</dimen>
+    <dimen name="view_pager_image_height">427dp</dimen>
+    <dimen name="view_pager_height">316dp</dimen>
+    <dimen name="view_pager_index_marginEnd">11dp</dimen>
+
+    <dimen name="landing_view_index_marginBottom">31dp</dimen>
+    <dimen name="landing_view_index_marginEnd">159dp</dimen>
+    <dimen name="landing_view_index_marginStart">171dp</dimen>
+    
+    <dimen name="landing_view_buttons">78dp</dimen>
+    <dimen name="landing_view_bottom_marginBottom">31dp</dimen>
+    <dimen name="landing_view_title_marginBottom">6dp</dimen>
+    <dimen name="landing_view_title_width">237dp</dimen>
+    <dimen name="landing_view_subtitle_marginBottom">33dp</dimen>
+    <dimen name="landing_view_subtitle_width">232dp</dimen>
+    <dimen name="landing_view_subtitle_height">37dp</dimen>
+
     <!-- Font Sizes-->
     <dimen name="font_content_title">18sp</dimen>
-    <dimen name="content_web_view_text_size">11sp</dimen>
+    <dimen name="font_landing_view_bottom">14sp</dimen>
+    <dimen name="font_landing_view_title">36sp</dimen>
+
+
 
 </resources>
