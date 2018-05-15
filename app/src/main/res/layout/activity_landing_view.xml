@@ -67,11 +67,12 @@
         <TextView
             android:id="@+id/landing_view_subtitle"
             android:layout_width="@dimen/landing_view_subtitle_width"
-            android:layout_height="@dimen/landing_view_subtitle_height"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/landing_view_subtitle_marginBottom"
+            android:layout_marginStart="@dimen/layout_margin_bottom"
             android:text="@string/landing_view_subtitle"
             android:textColor="@color/dark_grey"
-            android:textSize="@dimen/font_content_title"
+            android:textSize="@dimen/font_landing_view_bottom"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

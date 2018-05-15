@@ -36,8 +36,8 @@
     <dimen name="landing_view_title_marginBottom">6dp</dimen>
     <dimen name="landing_view_title_width">237dp</dimen>
     <dimen name="landing_view_subtitle_marginBottom">33dp</dimen>
-    <dimen name="landing_view_subtitle_width">232dp</dimen>
-    <dimen name="landing_view_subtitle_height">37dp</dimen>
+    <dimen name="landing_view_subtitle_width">241dp</dimen>
+    <dimen name="landing_view_subtitle_height">47dp</dimen>
 
     <!-- Font Sizes-->
     <dimen name="font_content_title">18sp</dimen>
