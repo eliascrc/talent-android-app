@@ -45,4 +45,10 @@
     <dimen name="font_landing_view_title">36sp</dimen>
     <dimen name="font_content_web_view_text_size">11sp</dimen>
 
+    <!-- Buttons -->
+    <dimen name="sign_up_button_width">139dp</dimen>
+    <dimen name="sign_up_button_height">46dp</dimen>
+    <dimen name="radius_button">10dp</dimen>
+    <dimen name="stroke_button_width">2dp</dimen>
+
 </resources>

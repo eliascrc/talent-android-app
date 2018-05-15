@@ -1,12 +1,26 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="colorClean">#FFFFFF</color>
-    <color name="hrefText">#FF4083FF</color>
-    <color name="background_content">#294261</color>
-    <color name="content_title">#FF294261</color>
-    <color name="content_body">#FF595959</color>
-    <color name="landing_view_title">#FF4E4E4E</color>
+    <!-- Common -->
+    <color name="white">#ffffff</color>
+    <color name="error_text">#C4183C</color>
+    <color name="link_text">#4083ff</color>
+    <color name="hint_text">#FFB9BBBE</color>
+    <color name="text">#495057</color>
+    <color name="dark_grey">#FF4E4E4E</color>
+    <color name="medium_grey">#D7D7D7</color>
+    <color name="content_body">#595959</color>
+    <!-- Color palette -->
+    <!-- Primary colors -->
+    <color name="beige">#E7E6D1</color>
+    <color name="orange">#F8C143</color>
+    <color name="dark_orange">#EFA42F</color>
+    <color name="grey">#B6B7B2</color>
+    <color name="test">#9A9A9A</color>
+    <color name="blue">#294261</color>
+    <!-- Secondary colors -->
+    <color name="light_beige">#F6FBF5</color>
+    <color name="light_orange">#FBDE9D</color>
+    <color name="aqua_blue">#BEDEDB</color>
+    <color name="light_blue">#016A91</color>
+    <color name="dark_blue">#010E3B</color>
 </resources>

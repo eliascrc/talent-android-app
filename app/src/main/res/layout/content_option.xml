@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorClean">
+    android:background="@color/white">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -33,7 +33,7 @@
             android:background="@drawable/landing_primary_button"
             android:text="@string/title_activity_terms_of_service"
             android:textAllCaps="false"
-            android:textColor="@color/colorClean"
+            android:textColor="@color/white"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -47,7 +47,7 @@
             android:background="@drawable/landing_secondary_button"
             android:text="@string/title_activity_privacy_policy"
             android:textAllCaps="false"
-            android:textColor="@color/landing_view_title"
+            android:textColor="@color/dark_grey"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/option_terms_of_service"
