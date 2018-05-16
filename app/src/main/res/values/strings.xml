@@ -35,6 +35,15 @@
     <string name="label_recover_password">Recover password</string>
     <string name="label_enter_email">Enter your email</string>
     <string name="action_send_email">Send email</string>
-    <string name="label_email_sent">If the provided email matches our records you\'ll receive an email. Please check your email to recover your password.</string>
+    <string name="email_sent_message_conent">
+<![CDATA[
+<html>
+ <head></head>
+ <body style="text-align:justify;color:#595959">
+  If the provided email matches our records you\'ll receive an email. Please check your email to recover your password.
+ </body>
+</html>
+]]>
+</string>
 
 </resources>

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -26,6 +27,8 @@ import networking.NetworkError;
 import request.ServiceCallback;
 import request.EncodedPostRequest;
 
+import static android.text.Layout.JUSTIFICATION_MODE_INTER_WORD;
+
 /**
  * The screen in which the user can reset their password.
  *
@@ -38,6 +41,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     private View forgotPasswordView;
     private EditText emailEditText;
     private TextView invalidEmailTextView;
+    private WebView sentEmailMessageContent;
     private Button sendEmailButton;
 
     // UI reference to forgot_password_email_sent.xml
@@ -72,6 +76,10 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                 sendEmail(v);
             }
         });
+
+        sentEmailMessageContent = findViewById(R.id.forgot_password_wv_sent_email_message_content);
+        sentEmailMessageContent.setVerticalScrollBarEnabled(false);
+        sentEmailMessageContent.loadData(getString(R.string.email_sent_message_conent), "text/html; charset=utf-8", "utf-8");
 
         // Hide error message
         invalidEmailTextView = findViewById(R.id.forgot_password_tv_invalid_email);
