@@ -40,5 +40,9 @@
             android:name=".TermsOfServiceActivity"
             android:label="@string/title_activity_terms_of_service" />
         <meta-data android:name="preloaded_fonts" android:resource="@array/preloaded_fonts" />
+        <activity
+            android:name=".PrivacyPolicyActivity"
+            android:label="@string/title_activity_privacy_policy" />
+        <meta-data android:name="preloaded_fonts" android:resource="@array/preloaded_fonts" />
     </application>
 </manifest>

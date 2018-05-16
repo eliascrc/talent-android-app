@@ -3,6 +3,7 @@
 
     <!-- Activity titles -->
     <string name="title_activity_terms_of_service">Terms of Service</string>
+    <string name="title_activity_privacy_policy">Privacy Policy</string>
     <string name="title_activity_sign_in">Sign In</string>
     <string name="title_activity_enter_organization_id">Enter Organization Id</string>
 
