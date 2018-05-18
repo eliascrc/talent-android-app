@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_content">
+    android:background="@color/blue">
 
     <include
         android:id="@+id/no_network_connection_error_layout"
@@ -39,7 +39,7 @@
             android:layout_marginTop="@dimen/content_title_marginTop"
             android:fontFamily="@font/source_sans"
             android:gravity="center"
-            android:textColor="@color/content_title"
+            android:textColor="@color/blue"
             android:textSize="@dimen/font_content_title"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="MissingConstraints"
@@ -55,7 +55,7 @@
             android:layout_marginTop="@dimen/content_layout_marginTop"
             android:fontFamily="@font/source_sans"
             android:scrollbars="vertical"
-            android:textColor="@color/content_body"
+            android:textColor="@color/content_text"
             app:layout_constraintBottom_toTopOf="@+id/content_bottom"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -77,8 +77,8 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto"
                 android:text="@string/have_any_questions"
-                android:textColor="@color/content_body"
                 android:textSize="@dimen/font_content_web_view_text_size" />
+                android:textColor="@color/content_text" />
 
             <TextView
                 android:id="@+id/contact_us"
@@ -86,6 +86,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto"
                 android:text="@string/contact_us"
+                android:textColor="@color/link_text" />
                 android:textColor="@color/hrefText"
                 android:textSize="@dimen/font_content_web_view_text_size" />
 
