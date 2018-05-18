@@ -8,5 +8,5 @@
     <solid android:color="@color/dark_orange" />
     <stroke
         android:width="@dimen/stroke_button_width"
-        android:color="#33FFFFFF" />
+        android:color="@color/white" />
 </shape>

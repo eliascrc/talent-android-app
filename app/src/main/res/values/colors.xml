@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
     <!-- Common -->
+    <color name="light_white">#00FFFFFF</color>
     <color name="white">#ffffff</color>
     <color name="error_text">#C4183C</color>
     <color name="link_text">#4083ff</color>

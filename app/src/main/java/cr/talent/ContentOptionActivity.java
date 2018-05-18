@@ -7,7 +7,9 @@ import android.view.View;
 import android.widget.Button;
 
 /**
- * Created by b54076 on 14/05/2018.
+ * This class is for accessing to Talent! Terms of Service or Privacy Policy.
+ *
+ * @author Renato Mainieri Sáenz.
  */
 
 public class ContentOptionActivity extends AppCompatActivity {
