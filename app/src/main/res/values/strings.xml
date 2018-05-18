@@ -1,26 +1,28 @@
 <resources>
     <string name="app_name">Talent!</string>
-    <string name="title_activity_login">Sign in</string>
+
+    <!-- Activity titles -->
     <string name="title_activity_terms_of_service">Terms of Service</string>
     <string name="title_activity_sign_up">Sign up</string>
     <string name="title_activity_log_in">Log in</string>
     <string name="title_activity_landing_view">Landing View</string>
     <string name="title_activity_privacy_policy">Privacy Policy</string>
-
+    <string name="title_activity_sign_in">Sign In</string>
+    <string name="title_activity_enter_organization_id">Enter Organization Id</string>
 
     <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password (optional)</string>
-    <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
+
+    <!-- Strings related to the no network connection layout -->
+    <string name="error_no_network_connection">There\'s no network connection</string>
     <string name="action_retry_connection">Tap to Retry</string>
+
+    <!-- Strings related to the terms of service activity -->
     <string name="contact_us"><u>Contact us</u></string>
     <string name="contact_us_email">contact@talent.cr</string>
-    <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
-    <string name="error_no_network_connection">There\'s no network connection</string>
     <string name="explore_app">Not ready to Sign up? Explore the app.</string>
     <string name="have_any_questions">"Have any questions? "</string>
     <string name="landing_view_title">Your company\'s biggest assets</string>
@@ -28,4 +30,34 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."</string>
 
+    <!-- Strings related to entering organization id during sign in -->
+    <string name="talent_logo">Talent! Logo</string>string>
+    <string name="label_enter_organization_id">Enter the organization\'s id</string>
+    <string name="label_organization_id">.talent.cr</string>
+    <string name="prompt_organization_id">Organization\'s id</string>
+    <string name="action_enter_organization_id">Next</string>string>
+
+    <!-- Strings related to the sign in activity -->
+    <string name="label_no_account_sign_up">Don\'t have an account? Sign up</string>
+    <string name="label_forgot_password">Forgot your password?</string>
+    <string name="prompt_password">Password</string>
+    <string name="prompt_email">Email</string>
+    <string name="action_sign_in">Enter</string>
+    <string name="error_bad_email_password">Wrong email or password.</string>
+    <string name="error_invalid_email">Invalid email.</string>
+
+    <!-- Strings related to the forgot password activity -->
+    <string name="label_recover_password">Recover password</string>
+    <string name="label_enter_email">Enter your email</string>
+    <string name="action_send_email">Send email</string>
+    <string name="email_sent_message_conent">
+<![CDATA[
+<html>
+ <head></head>
+ <body style="text-align:justify;color:#595959">
+  If the provided email matches our records you\'ll receive an email. Please check your email to recover your password.
+ </body>
+</html>
+]]>
+</string>
 </resources>

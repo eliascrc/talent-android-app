@@ -50,13 +50,15 @@ public class LandingViewActivity extends AppCompatActivity {
 
         this.signUpButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-               //TODO Go to Sign Up Activity
+                Intent startActivity = new Intent(LandingViewActivity.this, SignUpFirstStepActivity.class);
+                LandingViewActivity.this.startActivity(startActivity);
             }
         });
 
         this.logInButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //TODO Go to Log in Activity
+                Intent startActivity = new Intent(LandingViewActivity.this, EnterOrganizationIdActivity.class);
+                LandingViewActivity.this.startActivity(startActivity);
             }
         });
 

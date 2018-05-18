@@ -9,6 +9,8 @@
     <color name="dark_grey">#FF4E4E4E</color>
     <color name="medium_grey">#D7D7D7</color>
     <color name="content_body">#595959</color>
+    <color name="content_text">#595959</color>
+
     <!-- Color palette -->
     <!-- Primary colors -->
     <color name="beige">#E7E6D1</color>
@@ -17,6 +19,7 @@
     <color name="grey">#B6B7B2</color>
     <color name="test">#9A9A9A</color>
     <color name="blue">#294261</color>
+
     <!-- Secondary colors -->
     <color name="light_beige">#F6FBF5</color>
     <color name="light_orange">#FBDE9D</color>

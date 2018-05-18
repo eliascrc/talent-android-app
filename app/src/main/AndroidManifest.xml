@@ -15,15 +15,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Launcher">
-        <activity
-            android:name=".LoginActivity"
-            android:label="@string/title_activity_login" />
+
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".EnterOrganizationIdActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".SignInActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity android:name=".SignUpFirstStepActivity" />
+
+        <activity android:name=".ForgotPasswordActivity"
+            android:theme="@style/AppTheme.NoActionBar" ></activity>
+
         <activity
             android:name=".TermsOfServiceActivity"
             android:label="@string/title_activity_terms_of_service" />
@@ -37,5 +49,4 @@
         <meta-data android:name="preloaded_fonts" android:resource="@array/preloaded_fonts" />
         <activity android:name=".ContentOptionActivity"/>
     </application>
-
 </manifest>
