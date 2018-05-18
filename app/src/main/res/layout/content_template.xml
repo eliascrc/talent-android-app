@@ -86,10 +86,8 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto"
                 android:text="@string/contact_us"
-                android:textColor="@color/link_text" />
-                android:textColor="@color/hrefText"
+                android:textColor="@color/link_text"
                 android:textSize="@dimen/font_content_web_view_text_size" />
-
         </LinearLayout>
     </android.support.constraint.ConstraintLayout>
 </android.support.constraint.ConstraintLayout>

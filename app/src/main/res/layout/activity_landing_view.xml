@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:id="@+id/landing_scroll_view">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:scrollbars="vertical">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/landing_view_pager"
+            android:layout_width="@dimen/layout_zero"
+            android:layout_height="@dimen/view_pager_height"
+            android:layout_marginBottom="@dimen/layout_margin_bottom"
+            app:layout_constraintBottom_toTopOf="@+id/landing_view_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/landing_view_index"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/landing_view_index_marginBottom"
+            android:layout_marginEnd="@dimen/landing_view_index_marginEnd"
+            android:layout_marginStart="@dimen/landing_view_index_marginStart"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/landing_view_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.448"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="@dimen/view_pager_index_marginEnd"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="@dimen/view_pager_index_marginEnd"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/landing_view_title"
+            android:layout_width="@dimen/landing_view_title_width"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/landing_view_title_marginBottom"
+            android:text="@string/landing_view_title"
+            android:textColor="@color/dark_grey"
+            android:textSize="@dimen/font_landing_view_title"
+            app:layout_constraintBottom_toTopOf="@+id/landing_view_subtitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/landing_view_subtitle"
+            android:layout_width="@dimen/landing_view_subtitle_width"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/landing_view_subtitle_marginBottom"
+            android:layout_marginStart="@dimen/layout_margin_bottom"
+            android:text="@string/landing_view_subtitle"
+            android:textColor="@color/dark_grey"
+            android:textSize="@dimen/font_landing_view_bottom"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/explore_the_app"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/landing_view_bottom_marginBottom"
+            android:text="@string/explore_app"
+            android:textColor="@color/link_text"
+            android:textSize="@dimen/font_landing_view_bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/landing_view_buttons"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <Button
+                android:id="@+id/sign_up_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/layout_margin_bottom"
+                android:background="@drawable/landing_primary_button"
+                android:text="@string/title_activity_sign_up"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_content_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/log_in_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/layout_margin_bottom"
+                android:layout_marginStart="@dimen/content_bottom_layout_marginStart"
+                android:background="@drawable/landing_secondary_button"
+                android:text="@string/title_activity_log_in"
+                android:textAllCaps="false"
+                android:textColor="@color/dark_grey"
+                android:textSize="@dimen/font_content_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/sign_up_button"
+                app:layout_constraintTop_toTopOf="parent" />
+        </android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

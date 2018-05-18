@@ -3,9 +3,15 @@
 
     <!-- Activity titles -->
     <string name="title_activity_terms_of_service">Terms of Service</string>
+    <string name="title_activity_sign_up">Sign up</string>
+    <string name="title_activity_log_in">Log in</string>
+    <string name="title_activity_landing_view">Landing View</string>
     <string name="title_activity_privacy_policy">Privacy Policy</string>
     <string name="title_activity_sign_in">Sign In</string>
     <string name="title_activity_enter_organization_id">Enter Organization Id</string>
+
+    <!-- Strings related to login -->
+    <string name="action_sign_in_short">Sign in</string>
 
     <!-- Strings related to the no network connection layout -->
     <string name="error_no_network_connection">There\'s no network connection</string>
@@ -14,7 +20,15 @@
     <!-- Strings related to the terms of service activity -->
     <string name="contact_us"><u>Contact us</u></string>
     <string name="contact_us_email">contact@talent.cr</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="explore_app">Not ready to Sign up? Explore the app.</string>
     <string name="have_any_questions">"Have any questions? "</string>
+    <string name="landing_view_title">Your company\'s biggest assets</string>
+    <string name="landing_view_subtitle">Let us help you keep track on the talent of your company.</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."</string>
 
     <!-- Strings related to entering organization id during sign in -->
     <string name="talent_logo">Talent! Logo</string>string>
@@ -46,5 +60,4 @@
 </html>
 ]]>
 </string>
-
 </resources>

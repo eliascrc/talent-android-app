@@ -18,7 +18,8 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_splash);
-        Intent enterOrgIDActivity = new Intent(SplashActivity.this, EnterOrganizationIdActivity.class);
-        startActivity(enterOrgIDActivity);
+
+        Intent startActivity = new Intent(SplashActivity.this, LandingViewActivity.class);
+        SplashActivity.this.startActivity(startActivity);
     }
 }
