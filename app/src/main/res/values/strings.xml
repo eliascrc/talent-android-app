@@ -36,6 +36,7 @@
     <string name="label_organization_id">.talent.cr</string>
     <string name="prompt_organization_id">Organization\'s id</string>
     <string name="action_enter_organization_id">Next</string>string>
+    <string name="error_invalid_organization_id">Invalid organization id.</string>
 
     <!-- Strings related to the sign in activity -->
     <string name="label_no_account_sign_up">Don\'t have an account? Sign up</string>
@@ -50,7 +51,7 @@
     <string name="label_recover_password">Recover password</string>
     <string name="label_enter_email">Enter your email</string>
     <string name="action_send_email">Send email</string>
-    <string name="email_sent_message_conent">
+    <string name="email_sent_message_content">
 <![CDATA[
 <html>
  <head></head>
@@ -60,4 +61,5 @@
 </html>
 ]]>
 </string>
+
 </resources>
