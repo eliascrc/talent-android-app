@@ -15,6 +15,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 
+import java.net.HttpURLConnection;
+
 import common.SessionStorage;
 import networking.BaseResponse;
 import networking.NetworkConstants;
@@ -69,6 +71,9 @@ public class EnterOrganizationIdActivity extends AppCompatActivity {
                 Log.d(TAG, "The method onSuccessResponse was executed.");
                 Log.d(TAG, "The method onSuccessResponse received the " + baseResponse.getHttpStatusCode()+" HTTP status code.");
 
+                // Hide error message in case user goes back
+                invalidOrganizationIdTextView.setVisibility(INVISIBLE);
+
                 // Proceed to next activity, sending the info obtained
                 String organizationJson = baseResponse.getResponse();
                 Intent signInActivity = new Intent(EnterOrganizationIdActivity.this, SignInActivity.class);
@@ -85,7 +90,7 @@ public class EnterOrganizationIdActivity extends AppCompatActivity {
                     noNetworkConnectionErrorLayout.setVisibility(VISIBLE);
                     enterOrganizationIdView.setVisibility(GONE);
                     invalidOrganizationIdTextView.setVisibility(INVISIBLE);
-                } else if (error.getErrorCode() == 404) {
+                } else if (error.getErrorCode() == HttpURLConnection.HTTP_NOT_FOUND) {
                     Log.d(TAG, "ERROR: 404 NOT FOUND");
                     invalidOrganizationIdTextView.setVisibility(VISIBLE);
                 }
