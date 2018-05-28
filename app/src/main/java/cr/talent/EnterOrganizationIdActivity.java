@@ -14,6 +14,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 
+import java.net.HttpURLConnection;
+
 import common.SessionStorage;
 import networking.BaseResponse;
 import networking.NetworkConstants;
@@ -41,7 +43,9 @@ public class EnterOrganizationIdActivity extends AppCompatActivity {
     private ServiceCallback serviceCallback;
 
     // Constant TAG, for the DEBUG log messages
-    private static final String TAG = "EnterOrganizationId";
+    private static final String TAG = "EnterOrganizationIdActivity";
+
+    private static final String ORGANIZATION_JSON = "ORGANIZATION_JSON";
 
     // Visibility constants
     private static final int GONE = View.GONE;
@@ -69,7 +73,7 @@ public class EnterOrganizationIdActivity extends AppCompatActivity {
                 // Proceed to next activity, sending the info obtained
                 String organizationJson = baseResponse.getResponse();
                 Intent signInActivity = new Intent(EnterOrganizationIdActivity.this, SignInActivity.class);
-                signInActivity.putExtra("ORGANIZATION_JSON",organizationJson);
+                signInActivity.putExtra(ORGANIZATION_JSON,organizationJson);
                 startActivity(signInActivity);
             }
 
@@ -81,7 +85,7 @@ public class EnterOrganizationIdActivity extends AppCompatActivity {
                     // Make organization id form invisible, display no network connection error layout
                     noNetworkConnectionErrorLayout.setVisibility(VISIBLE);
                     enterOrganizationIdView.setVisibility(GONE);
-                } else if (error.getErrorCode() == 401) {
+                } else if (error.getErrorCode() == HttpURLConnection.HTTP_UNAUTHORIZED) {
                     Log.d(TAG, "ERROR: 404 NOT FOUND");
                     // TODO Display incorrect organization id message
                     // Not in the currently approved design
@@ -90,9 +94,9 @@ public class EnterOrganizationIdActivity extends AppCompatActivity {
         };
 
         setContentView(R.layout.activity_enter_organization_id);
-        enterOrganizationIdView = findViewById(R.id.enter_organization_id_sv_enter_organization_id);
-        organizationIdEditText = findViewById(R.id.enter_organization_id_et_organization_id);
-        enterOrganizationIdButton = findViewById(R.id.enter_organization_id_btn_action_enter_organization_id);
+        enterOrganizationIdView = findViewById(R.id.sv_enter_organization_id);
+        organizationIdEditText = findViewById(R.id.et_organization_id);
+        enterOrganizationIdButton = findViewById(R.id.btn_action_enter_organization_id);
         enterOrganizationIdButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

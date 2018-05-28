@@ -68,6 +68,9 @@ public class SignInActivity extends AppCompatActivity {
 
     private static final int SPAN_EXCLUSIVE = Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
 
+    private static final String USERNAME = "username";
+    private static final String PASSWORD = "password";
+
     // Visibility constants
     private static final int GONE = View.GONE;
     private static final int VISIBLE = View.VISIBLE;
@@ -166,9 +169,7 @@ public class SignInActivity extends AppCompatActivity {
                 } else if (error.getErrorCode() == 401) {
                     Log.d(TAG, "ERROR: 401 UNAUTHORIZED");
                     // Display invalid credentials error message
-                    badEmailOrPasswordTextView.setVisibility(VISIBLE);
-                    invalidEmailTextView.setVisibility(INVISIBLE);
-                    setEmailEditTextColor(R.color.dark_orange);
+                    toggleCredentialsError(true);
                 }
             }
         };
@@ -181,12 +182,23 @@ public class SignInActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // Hide the no network connectivity layout and error messages in case they were visible
                 noNetworkConnectionErrorLayout.setVisibility(GONE);
-                badEmailOrPasswordTextView.setVisibility(INVISIBLE);
-                invalidEmailTextView.setVisibility(INVISIBLE);
-                setEmailEditTextColor(R.color.dark_orange);
+                toggleCredentialsError(false);
                 signInView.setVisibility(VISIBLE);
             }
         });
+    }
+
+    private void toggleCredentialsError (boolean show){
+        if (show){
+            badEmailOrPasswordTextView.setVisibility(VISIBLE);
+            invalidEmailTextView.setVisibility(INVISIBLE);
+            setEmailEditTextColor(R.color.dark_orange);
+        }
+        else{
+            badEmailOrPasswordTextView.setVisibility(INVISIBLE);
+            invalidEmailTextView.setVisibility(INVISIBLE);
+            setEmailEditTextColor(R.color.dark_orange);
+        }
     }
 
     private void startForgotPasswordActivity(View view){
@@ -231,8 +243,8 @@ public class SignInActivity extends AppCompatActivity {
 
             // Form the request's body
             HashMap<String,String> parameters = new HashMap<>();
-            parameters.put("username", email);
-            parameters.put("password",password);
+            parameters.put(USERNAME, email);
+            parameters.put(PASSWORD,password);
             String body = "";
             try {
                 // Encodes the parameters with the ParameterEncoder class declared in common

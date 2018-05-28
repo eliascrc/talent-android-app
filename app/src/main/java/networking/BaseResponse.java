@@ -10,12 +10,12 @@ import java.util.HashMap;
 public class BaseResponse<T> {
 
     protected HashMap<String, String> httpHeaders;
-    protected String httpStatusCode;
+    protected int httpStatusCode;
     protected T response;
 
     public BaseResponse() {
         this.httpHeaders = new HashMap<>();
-        this.httpStatusCode = "";
+        this.httpStatusCode = 0;
     }
 
     public HashMap<String, String> getHttpHeaders() {
@@ -26,11 +26,11 @@ public class BaseResponse<T> {
         this.httpHeaders = httpHeaders;
     }
 
-    public String getHttpStatusCode() {
+    public int getHttpStatusCode() {
         return httpStatusCode;
     }
 
-    public void setHttpStatusCode(String httpStatusCode) {
+    public void setHttpStatusCode(int httpStatusCode) {
         this.httpStatusCode = httpStatusCode;
     }
 

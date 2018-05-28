@@ -38,11 +38,12 @@ public class EncodedPostRequest extends BaseRequest<BaseResponse<String>> {
         // The login webservice does not return any content, simply handle the http status code
 
         // Get the Status code from the NetworkResponse (volley class)
-        String statusCode = Integer.toString(networkResponse.statusCode);
+        int statusCode = networkResponse.statusCode;
 
-        // Make new BaseReponse<String> and set the status code
+        // Make new BaseResponse<String> and set the status code
         BaseResponse<String> baseResponse = new BaseResponse<>();
         baseResponse.setHttpStatusCode(statusCode);
+
 
         // Create new Response from our BaseResponse and return it
         Response<BaseResponse<String>> response = Response.success(baseResponse,
