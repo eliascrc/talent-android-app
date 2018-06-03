@@ -13,6 +13,7 @@ import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -217,7 +218,7 @@ public class SignInActivity extends AppCompatActivity {
 
         if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
 
-            if(!email.contains("@")) {
+            if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                 // Show invalid email error message, hide others and return
                 invalidEmailTextView.setVisibility(VISIBLE);
                 setEmailEditTextColor(R.color.error_text);

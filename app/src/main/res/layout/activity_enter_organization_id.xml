@@ -151,10 +151,10 @@
                 android:layout_marginEnd="8dp"
                 android:text="@string/error_invalid_organization_id"
                 android:visibility="invisible"
-                app:layout_constraintBottom_toTopOf="@+id/enter_organization_id_tv_organization_id"
+                app:layout_constraintBottom_toTopOf="@+id/tv_organization_id"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/enter_organization_id_tv_organization_id" />
+                app:layout_constraintStart_toStartOf="@+id/tv_organization_id" />
 
 
         </android.support.constraint.ConstraintLayout>
