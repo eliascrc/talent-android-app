@@ -34,7 +34,7 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="64dp"
                 android:layout_marginStart="66dp"
-                android:layout_marginTop="39dp"
+                android:layout_marginTop="16dp"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/talent_logo"
                 android:minHeight="100dp"
@@ -49,7 +49,7 @@
                 android:id="@+id/btn_action_enter_organization_id"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="38dp"
+                android:layout_marginBottom="32dp"
                 android:layout_marginEnd="31dp"
                 android:layout_marginStart="31dp"
                 android:background="@drawable/rounded_solid_orange_rectangle"
@@ -63,7 +63,7 @@
                 style="@style/PromptLabel"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="25dp"
+                android:layout_marginBottom="8dp"
                 android:layout_marginEnd="107dp"
                 android:layout_marginStart="37dp"
                 android:lineSpacingMultiplier="1.29"
@@ -78,7 +78,7 @@
                 style="@style/EditText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="58dp"
+                android:layout_marginBottom="24dp"
                 android:layout_marginEnd="108dp"
                 android:layout_marginStart="32dp"
                 android:background="@drawable/rounded_orange_border_rectangle"
@@ -100,7 +100,6 @@
                 style="@style/EnterOrganizationIdEnding"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="56dp"
                 android:layout_marginEnd="31dp"
                 android:layout_marginStart="6dp"
                 android:lineSpacingMultiplier="1.25"
@@ -142,6 +141,20 @@
                 app:layout_constraintEnd_toEndOf="@+id/btn_action_enter_organization_id"
                 app:layout_constraintStart_toStartOf="@+id/btn_action_enter_organization_id"
                 app:layout_constraintTop_toTopOf="@+id/btn_action_enter_organization_id" />
+
+            <TextView
+                android:id="@+id/tv_invalid_organization_id"
+                style="@style/ErrorMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/error_invalid_organization_id"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toTopOf="@+id/enter_organization_id_tv_organization_id"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/enter_organization_id_tv_organization_id" />
 
 
         </android.support.constraint.ConstraintLayout>

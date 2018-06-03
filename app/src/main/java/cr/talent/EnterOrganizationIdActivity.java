@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -35,6 +36,7 @@ public class EnterOrganizationIdActivity extends AppCompatActivity {
     private View enterOrganizationIdView;
     private Button enterOrganizationIdButton;
     private EditText organizationIdEditText;
+    private TextView invalidOrganizationIdTextView;
 
     // UI references from no_network_connection_error.xml
     private View noNetworkConnectionErrorLayout;
@@ -50,6 +52,7 @@ public class EnterOrganizationIdActivity extends AppCompatActivity {
     // Visibility constants
     private static final int GONE = View.GONE;
     private static final int VISIBLE = View.VISIBLE;
+    private static final int INVISIBLE = View.INVISIBLE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +73,9 @@ public class EnterOrganizationIdActivity extends AppCompatActivity {
                 Log.d(TAG, "The method onSuccessResponse was executed.");
                 Log.d(TAG, "The method onSuccessResponse received the " + baseResponse.getHttpStatusCode()+" HTTP status code.");
 
+                // Hide error message in case user goes back
+                invalidOrganizationIdTextView.setVisibility(INVISIBLE);
+
                 // Proceed to next activity, sending the info obtained
                 String organizationJson = baseResponse.getResponse();
                 Intent signInActivity = new Intent(EnterOrganizationIdActivity.this, SignInActivity.class);
@@ -87,8 +93,7 @@ public class EnterOrganizationIdActivity extends AppCompatActivity {
                     enterOrganizationIdView.setVisibility(GONE);
                 } else if (error.getErrorCode() == HttpURLConnection.HTTP_UNAUTHORIZED) {
                     Log.d(TAG, "ERROR: 404 NOT FOUND");
-                    // TODO Display incorrect organization id message
-                    // Not in the currently approved design
+                    invalidOrganizationIdTextView.setVisibility(VISIBLE);
                 }
             }
         };
@@ -104,6 +109,10 @@ public class EnterOrganizationIdActivity extends AppCompatActivity {
             }
         });
 
+        invalidOrganizationIdTextView = findViewById(R.id.tv_invalid_organization_id);
+        // Hide the error message
+        invalidOrganizationIdTextView.setVisibility(INVISIBLE);
+
         retryConnectionButton = findViewById(R.id.retry_connection_button);
         noNetworkConnectionErrorLayout = findViewById(R.id.no_network_connection_error_layout);
         // Implement a method for the button in the no network connectivity layout
@@ -113,6 +122,7 @@ public class EnterOrganizationIdActivity extends AppCompatActivity {
                 // Hide the no network connectivity layout and error messages in case they were visible
                 noNetworkConnectionErrorLayout.setVisibility(GONE);
                 enterOrganizationIdView.setVisibility(View.VISIBLE);
+                invalidOrganizationIdTextView.setVisibility(INVISIBLE);
             }
         });
     }
