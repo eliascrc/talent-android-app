@@ -32,6 +32,7 @@ import java.util.HashMap;
 
 import common.ParameterEncoder;
 import common.SessionStorage;
+import common.UserSharedPreference;
 import networking.BaseResponse;
 import networking.NetworkConstants;
 import networking.NetworkError;
@@ -45,6 +46,7 @@ import request.EncodedPostRequest;
  */
 
 public class SignInActivity extends AppCompatActivity {
+
 
     // UI references from activity_sign_in.xml
     private View signInView;
@@ -80,7 +82,6 @@ public class SignInActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_sign_in);
         organizationLogoImageView = findViewById(R.id.sign_in_iv_organization_logo);
         organizationLogoImageView.setVisibility(INVISIBLE);
@@ -155,6 +156,9 @@ public class SignInActivity extends AppCompatActivity {
                 Log.d(TAG, "The method onSuccessResponse was executed.");
                 Log.d(TAG, "The method onSuccessResponse received the " + baseResponse.getHttpStatusCode()+" HTTP status code.");
                 // Proceed to next activity with a logged in user
+                UserSharedPreference.setAccount(getApplicationContext(), emailEditText.getText().toString(), passwordEditText.getText().toString());
+                Intent startActivity = new Intent(SignInActivity.this, LoggedInActivity.class);
+                SignInActivity.this.startActivity(startActivity);
 
             }
 
