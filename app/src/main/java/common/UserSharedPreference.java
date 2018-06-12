@@ -25,7 +25,7 @@ public class UserSharedPreference {
     public static void removeToken(Context context){
         SharedPreferences account = getSharedPreferences(context.getApplicationContext());
         SharedPreferences.Editor editor = account.edit();
-        editor.remove(USERNAME);
+        editor.remove(TOKEN);
         editor.commit();
     }
 

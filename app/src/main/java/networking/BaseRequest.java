@@ -42,7 +42,7 @@ public abstract class BaseRequest<T> extends JsonRequest<T> {
         this.setRetryPolicy(defaultRetryPolicy);
         this.listener = listener;
         this.errorListener = errorListener;
-        this.sessionStorage = new SessionStorage();
+        this.sessionStorage = sessionStorage;
     }
 
     public SessionStorage getSessionStorage() {

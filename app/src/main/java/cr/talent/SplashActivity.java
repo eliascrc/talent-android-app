@@ -23,8 +23,11 @@ import common.UserSharedPreference;
 import networking.BaseResponse;
 import networking.NetworkConstants;
 import networking.NetworkError;
+import request.AuthenticatedRequest;
 import request.EncodedPostRequest;
 import request.ServiceCallback;
+
+import static networking.NetworkConstants.USER_AUTHENTICATED;
 
 
 /**
@@ -37,6 +40,8 @@ public class SplashActivity extends AppCompatActivity {
 
     private static final String TOKEN = "token";
     private static final String TAG = "SplashActivity";
+    private static final String COOKIE_HEADER_KEY = "Set-Cookie";
+    private static final String SEMICOLON = ";";
 
     private ServiceCallback serviceCallback;
     private SessionStorage sessionStorage;
@@ -53,6 +58,7 @@ public class SplashActivity extends AppCompatActivity {
         if (token.equals("")){
             Intent startActivity = new Intent(SplashActivity.this, LandingViewActivity.class);
             SplashActivity.this.startActivity(startActivity);
+            return;
         }
         // Instantiate listeners to send to the request instance
         Response.Listener<BaseResponse<String>> listener = new Response.Listener<BaseResponse<String>>() {
@@ -66,10 +72,13 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 NetworkError networkError = new NetworkError();
-                Log.d("SplashActivity", error.networkResponse.allHeaders.toString());
-                if (error.networkResponse != null) {
-                    networkError.setErrorCode(error.networkResponse.statusCode);
-                    networkError.setErrorMessage(error.getMessage());
+                networkError.setErrorCode(error.networkResponse.statusCode);
+                networkError.setErrorMessage(error.networkResponse.toString());
+                if(error.networkResponse.headers.containsKey(COOKIE_HEADER_KEY)){
+                    String cookie = error.networkResponse.headers.get(COOKIE_HEADER_KEY);
+                    cookie = cookie.substring(0, cookie.indexOf(SEMICOLON));
+                    Log.d(TAG, cookie);
+                    sessionStorage.setCookieValue(cookie);
                 }
                 serviceCallback.onErrorResponse(networkError);
             }
@@ -120,9 +129,44 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(NetworkError error) {
                 Log.d(TAG, "The method onErrorResponse was executed with error code " + error.getErrorCode());
-                Intent startActivity = new Intent(SplashActivity.this, LandingViewActivity.class);
-                SplashActivity.this.startActivity(startActivity);
+                int errorCode = error.getErrorCode();
+                if (errorCode == 0) {
+                    Log.d(TAG, "ERROR: NO NETWORK CONNECTION");
+                } else if (errorCode == HttpURLConnection.HTTP_MOVED_TEMP) {
+                    createRedirectRequest();
+                }
+                else if (errorCode == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                    Log.d(TAG, "ERROR: 401 UNAUTHORIZED");
+                    Intent startActivity = new Intent(SplashActivity.this, LandingViewActivity.class);
+                    SplashActivity.this.startActivity(startActivity);
+                }
+
             }
         };
+    }
+
+    private void createRedirectRequest(){
+        // Instantiate listeners to send to the request instance
+        final Response.Listener<BaseResponse<Object>> listener = new Response.Listener<BaseResponse<Object>>() {
+            @Override
+            public void onResponse(BaseResponse<Object> response) {
+                Log.d(TAG,Integer.toString(response.getHttpStatusCode()));
+                serviceCallback.onSuccessResponse(response);
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                NetworkError networkError = new NetworkError();
+                networkError.setErrorCode(error.networkResponse.statusCode);
+                networkError.setErrorMessage(error.networkResponse.toString());
+                serviceCallback.onErrorResponse(networkError);
+            }
+        };
+        AuthenticatedRequest redirectRequest = new AuthenticatedRequest(USER_AUTHENTICATED, "",
+                listener, errorListener, sessionStorage);
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(redirectRequest);
     }
 }
