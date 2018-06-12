@@ -1,9 +1,13 @@
 package request;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import common.SessionStorage;
 import networking.BaseRequest;
@@ -25,6 +29,14 @@ public class EncodedPostRequest extends BaseRequest<BaseResponse<String>> {
         super(Request.Method.POST, url, requestBody, listener, errorListener, sessionStorage);
     }
 
+    @Override
+    public Map<String, String> getHeaders(){
+        Map<String,String> params = new HashMap<String, String>();
+        params.put("Origin", "Android");
+
+        return params;
+    }
+
     // BaseRequest extends JsonRequest, which returns the json content type
     // Overwrite this method to send the content type needed for our sign in implementation
     @Override
@@ -33,7 +45,7 @@ public class EncodedPostRequest extends BaseRequest<BaseResponse<String>> {
     }
 
     @Override
-    protected Response<BaseResponse<String>> parseNetworkResponse(NetworkResponse networkResponse) {
+    public Response<BaseResponse<String>> parseNetworkResponse(NetworkResponse networkResponse) {
         super.parseNetworkResponse(networkResponse);
         // The login webservice does not return any content, simply handle the http status code
 
@@ -41,8 +53,10 @@ public class EncodedPostRequest extends BaseRequest<BaseResponse<String>> {
         int statusCode = networkResponse.statusCode;
 
         // Make new BaseResponse<String> and set the status code
-        BaseResponse<String> baseResponse = new BaseResponse<>();
+        BaseResponse<String> baseResponse = new BaseResponse<>(this.getSessionStorage());
         baseResponse.setHttpStatusCode(statusCode);
+        baseResponse.setHttpHeaders(networkResponse.headers);
+        baseResponse.setCookie();
 
 
         // Create new Response from our BaseResponse and return it
@@ -50,4 +64,6 @@ public class EncodedPostRequest extends BaseRequest<BaseResponse<String>> {
                 HttpHeaderParser.parseCacheHeaders(networkResponse));
         return response;
     }
+
+
 }

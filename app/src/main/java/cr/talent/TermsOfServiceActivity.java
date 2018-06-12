@@ -100,10 +100,8 @@ public class TermsOfServiceActivity extends AppCompatActivity {
         contactUs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
-                String email = getResources().getString(R.string.contact_us_email);
-                emailIntent.setData(Uri.parse("mailto:" + email));
-                startActivity(emailIntent);
+                Intent contactUsActivity = new Intent(TermsOfServiceActivity.this, ContactUsActivity.class);
+                TermsOfServiceActivity.this.startActivity(contactUsActivity);
             }
         });
 

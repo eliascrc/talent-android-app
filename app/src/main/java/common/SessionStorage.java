@@ -2,6 +2,7 @@ package common;
 
 
 import android.os.Bundle;
+import android.support.design.widget.BottomSheetBehavior;
 
 import javax.inject.Singleton;
 
@@ -22,12 +23,26 @@ public class SessionStorage {
     @State
     protected String cookieValue;
 
+    @State
+    protected String token;
+
     public String getCookieValue() {
         return cookieValue;
     }
 
     public void setCookieValue(String cookieValue) {
         this.cookieValue = cookieValue;
+    }
+
+    public String getToken(){
+        if (token != null){
+            return token;
+        }
+        return "";
+    }
+
+    public void setToken(String tokenString){
+        this.token = tokenString;
     }
 
     /**

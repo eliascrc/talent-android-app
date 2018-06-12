@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import common.SessionStorage;
 import common.UserSharedPreference;
 
 /**
@@ -21,10 +22,13 @@ public class LoggedInActivity extends AppCompatActivity {
 
     private Button logoutButton;
 
+    private SessionStorage sessionStorage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
+        sessionStorage = new SessionStorage();
         getSupportActionBar().hide();
         setContentView(R.layout.activity_logged_in);
 
@@ -32,7 +36,7 @@ public class LoggedInActivity extends AppCompatActivity {
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UserSharedPreference.removeAccount(getApplicationContext());
+                UserSharedPreference.removeToken(LoggedInActivity.this);
                 Intent landingViewActivity = new Intent(LoggedInActivity.this, LandingViewActivity.class);
                 LoggedInActivity.this.startActivity(landingViewActivity);
             }

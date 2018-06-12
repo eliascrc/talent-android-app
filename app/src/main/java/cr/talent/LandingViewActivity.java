@@ -4,12 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import common.SessionStorage;
 
 /**
  * This class displays Talent’s Landing View layout, with the option to Sign up and Log in.
@@ -24,13 +27,20 @@ public class LandingViewActivity extends AppCompatActivity {
     private Button logInButton;
     private TextView exploreAppText;
 
+
+
+    private SessionStorage sessionStorage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
+        sessionStorage = new SessionStorage();
         setContentView(R.layout.activity_landing_view);
         getSupportActionBar().hide();
-
+        if(sessionStorage.getToken() != null){
+            Log.d("LandingViewActivity", sessionStorage.getToken());
+        }
         this.viewPager = findViewById(R.id.landing_view_pager);
         this.linearLayout = findViewById(R.id.landing_view_index);
         final ScrollView SCROLLVIEW = findViewById(R.id.landing_scroll_view);

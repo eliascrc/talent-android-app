@@ -20,25 +20,36 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.Header;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
+import com.android.volley.toolbox.HurlStack;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 
 import common.ParameterEncoder;
 import common.SessionStorage;
 import common.UserSharedPreference;
+import icepick.Icepick;
 import networking.BaseResponse;
 import networking.NetworkConstants;
 import networking.NetworkError;
+import request.AuthenticatedRequest;
 import request.ServiceCallback;
 import request.EncodedPostRequest;
+
+import static networking.NetworkConstants.USER_AUTHENTICATED;
 
 /**
  * The screen in which the user signs in to an organization
@@ -53,6 +64,7 @@ public class SignInActivity extends AppCompatActivity {
     private View signInView;
     private TextView signUpTextView;
     private TextView forgotPasswordTextView;
+    private TextView getForgotPasswordTextView;
     private TextView badEmailOrPasswordTextView;
     private TextView invalidEmailTextView;
     private ImageView organizationLogoImageView;
@@ -65,14 +77,18 @@ public class SignInActivity extends AppCompatActivity {
     private Button retryConnectionButton;
 
     private ServiceCallback serviceCallback;
+    private SessionStorage sessionStorage;
 
     // Constant TAG, for the DEBUG log messages
     private static final String TAG = "SignInActivity";
 
     private static final int SPAN_EXCLUSIVE = Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
-
+    private static final String USER_JSON = "USER_JSON";
+    private static final String COOKIE_HEADER_KEY = "Set-Cookie";
+    private static final String SEMICOLON = ";";
     private static final String USERNAME = "username";
     private static final String PASSWORD = "password";
+    private static final String TOKEN = "token";
 
     // Visibility constants
     private static final int GONE = View.GONE;
@@ -86,6 +102,7 @@ public class SignInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_in);
         organizationLogoImageView = findViewById(R.id.sign_in_iv_organization_logo);
         organizationLogoImageView.setVisibility(INVISIBLE);
+        sessionStorage = new SessionStorage();
         // Set the organization's logo in the appropriate ImageView
         // For this, first access the organization sent by the previous activity
         String organizationJson = getIntent().getStringExtra("ORGANIZATION_JSON");
@@ -100,7 +117,6 @@ public class SignInActivity extends AppCompatActivity {
         Log.d(TAG, "Organization's logo is "+logoUrl);
         // Load the logo asynchronously
         new GetOrganizationLogoTask(organizationLogoImageView).execute(logoUrl);
-
         signInView = findViewById(R.id.sign_in_sv_sign_in_form);
         emailEditText = findViewById(R.id.sign_in_et_email);
         passwordEditText = findViewById(R.id.sign_in_et_password);
@@ -145,7 +161,8 @@ public class SignInActivity extends AppCompatActivity {
         // Implement inline the onPreExecute, onSuccess and onFailure methods of the ServiceCallback instance
         // They will be called when the sign in webservice returns
         serviceCallback = new ServiceCallback<BaseResponse<String>,NetworkError>() {
-            private BaseResponse<String> listener;
+            public BaseResponse<String> listener;
+
 
             @Override
             public void onPreExecute(BaseResponse<String> listener) {
@@ -157,25 +174,38 @@ public class SignInActivity extends AppCompatActivity {
                 Log.d(TAG, "The method onSuccessResponse was executed.");
                 Log.d(TAG, "The method onSuccessResponse received the " + baseResponse.getHttpStatusCode()+" HTTP status code.");
                 // Proceed to next activity with a logged in user
-                UserSharedPreference.setAccount(getApplicationContext(), emailEditText.getText().toString(), passwordEditText.getText().toString());
-                Intent startActivity = new Intent(SignInActivity.this, LoggedInActivity.class);
-                SignInActivity.this.startActivity(startActivity);
-
+                Intent loggedInActivity = new Intent(SignInActivity.this, LoggedInActivity.class);
+                String userJson = baseResponse.getResponse();
+                try {
+                    JSONObject reader = new JSONObject(userJson);
+                    String token = reader.getString(TOKEN);
+                    Log.d(TAG, token);
+                    UserSharedPreference.setToken(SignInActivity.this, token);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                loggedInActivity.putExtra(USER_JSON,userJson);
+                SignInActivity.this.startActivity(loggedInActivity);
             }
 
             @Override
             public void onErrorResponse(NetworkError error) {
-                Log.d(TAG, "The method onErrorResponse was executed with error code " + error.getErrorCode());
-                if (error.getErrorCode() == 0) {
+                int errorCode = error.getErrorCode();
+                if (errorCode == 0) {
                     Log.d(TAG, "ERROR: NO NETWORK CONNECTION");
                     // Make login form invisible, display no network connection error layout
                     noNetworkConnectionErrorLayout.setVisibility(VISIBLE);
                     signInView.setVisibility(GONE);
-                } else if (error.getErrorCode() == 401) {
+                } else if (errorCode == HttpURLConnection.HTTP_MOVED_TEMP) {
+                    createRedirectRequest();
+
+                }
+                else if (errorCode == HttpURLConnection.HTTP_UNAUTHORIZED) {
                     Log.d(TAG, "ERROR: 401 UNAUTHORIZED");
                     // Display invalid credentials error message
                     toggleCredentialsError(true);
                 }
+
             }
         };
 
@@ -211,9 +241,10 @@ public class SignInActivity extends AppCompatActivity {
         startActivity(forgotPasswordActivity);
     }
 
+
     // Get data in the et_email and et_password EditTexts and attempt to sign in with it
     private void signIn(View view) {
-        String email = emailEditText.getText().toString();
+        final String email = emailEditText.getText().toString();
         String password = passwordEditText.getText().toString();
 
         if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
@@ -227,29 +258,37 @@ public class SignInActivity extends AppCompatActivity {
             }
 
             // Instantiate listeners to send to the request instance
-            Response.Listener<BaseResponse<String>> listener = new Response.Listener<BaseResponse<String>>() {
+            final Response.Listener<BaseResponse<String>> listener = new Response.Listener<BaseResponse<String>>() {
                 @Override
                 public void onResponse(BaseResponse<String> response) {
+                    Log.d(TAG,Integer.toString(response.getHttpStatusCode()));
                     serviceCallback.onSuccessResponse(response);
                 }
             };
 
-            Response.ErrorListener errorListener = new Response.ErrorListener() {
+
+            final Response.ErrorListener errorListener = new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     NetworkError networkError = new NetworkError();
-                    if (error.networkResponse != null) {
-                        networkError.setErrorCode(error.networkResponse.statusCode);
-                        networkError.setErrorMessage(error.getMessage());
+                    networkError.setErrorCode(error.networkResponse.statusCode);
+                    networkError.setErrorMessage(error.networkResponse.toString());
+                    if(error.networkResponse.headers.containsKey(COOKIE_HEADER_KEY)){
+                        String cookie = error.networkResponse.headers.get(COOKIE_HEADER_KEY);
+                        cookie = cookie.substring(0, cookie.indexOf(SEMICOLON));
+                        sessionStorage.setCookieValue(cookie);
                     }
+
+
                     serviceCallback.onErrorResponse(networkError);
+
                 }
             };
 
             // Form the request's body
             HashMap<String,String> parameters = new HashMap<>();
-            parameters.put(USERNAME, email);
             parameters.put(PASSWORD,password);
+            parameters.put(USERNAME, email);
             String body = "";
             try {
                 // Encodes the parameters with the ParameterEncoder class declared in common
@@ -259,12 +298,46 @@ public class SignInActivity extends AppCompatActivity {
             }
 
             // Create and send request
-            EncodedPostRequest signInRequest = new EncodedPostRequest(NetworkConstants.SIGN_IN_URL, body,
-                    listener, errorListener, new SessionStorage());
+            EncodedPostRequest signInRequest = new EncodedPostRequest(NetworkConstants.SIGN_IN_URL,body,
+                    listener, errorListener, sessionStorage);
+            Log.d(TAG, signInRequest.getHeaders().toString());
+            RequestQueue requestQueue = Volley.newRequestQueue(this, new HurlStack() {
+                @Override
+                protected HttpURLConnection createConnection(URL url) throws IOException {
+                    HttpURLConnection connection = super.createConnection(url);
+                    connection.setInstanceFollowRedirects(false);
 
-            RequestQueue requestQueue = Volley.newRequestQueue(this);
+                    return connection;
+                }
+            });
             requestQueue.add(signInRequest);
+
         }
+    }
+
+    private void createRedirectRequest(){
+        // Instantiate listeners to send to the request instance
+        final Response.Listener<BaseResponse<Object>> listener = new Response.Listener<BaseResponse<Object>>() {
+            @Override
+            public void onResponse(BaseResponse<Object> response) {
+                Log.d(TAG,Integer.toString(response.getHttpStatusCode()));
+                serviceCallback.onSuccessResponse(response);
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                NetworkError networkError = new NetworkError();
+                networkError.setErrorCode(error.networkResponse.statusCode);
+                networkError.setErrorMessage(error.networkResponse.toString());
+                serviceCallback.onErrorResponse(networkError);
+            }
+        };
+        AuthenticatedRequest redirectRequest = new AuthenticatedRequest(USER_AUTHENTICATED, "",
+                listener, errorListener, sessionStorage);
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(redirectRequest);
     }
 
     // Set the email edit text's color

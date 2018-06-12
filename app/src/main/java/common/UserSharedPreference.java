@@ -8,35 +8,30 @@ import android.preference.PreferenceManager;
 public class UserSharedPreference {
     static final String USERNAME = "username";
     static final String PASSWORD = "password";
+    static final String TOKEN = "token";
 
     static SharedPreferences getSharedPreferences(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context);
     }
 
-    public static void setAccount(Context context, String userName, String password)
+    public static void setToken(Context context, String token)
     {
         SharedPreferences account = getSharedPreferences(context.getApplicationContext());
         SharedPreferences.Editor editor = account.edit();
-        editor.putString(USERNAME, userName);
-        editor.putString(PASSWORD, password);
+        editor.putString(TOKEN, token);
         editor.commit();
     }
 
-    public static void removeAccount(Context context){
+    public static void removeToken(Context context){
         SharedPreferences account = getSharedPreferences(context.getApplicationContext());
         SharedPreferences.Editor editor = account.edit();
         editor.remove(USERNAME);
-        editor.remove(PASSWORD);
         editor.commit();
     }
 
-    public static String getUserName(Context context)
+    public static String getToken(Context context)
     {
-        return getSharedPreferences(context).getString(USERNAME, "");
+        return getSharedPreferences(context).getString(TOKEN, "");
     }
 
-    public static String getPassword(Context context)
-    {
-        return getSharedPreferences(context).getString(PASSWORD, "");
-    }
 }

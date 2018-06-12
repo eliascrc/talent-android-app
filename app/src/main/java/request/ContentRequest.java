@@ -30,11 +30,11 @@ public class ContentRequest extends BaseRequest<BaseResponse<String>> {
     }
 
     @Override
-    protected Response<BaseResponse<String>> parseNetworkResponse(NetworkResponse networkResponse) {
+    public Response<BaseResponse<String>> parseNetworkResponse(NetworkResponse networkResponse) {
         super.parseNetworkResponse(networkResponse);
         try {
             String content = new String(networkResponse.data, HttpHeaderParser.parseCharset(networkResponse.headers));
-            BaseResponse<String> baseResponse = new BaseResponse<>();
+            BaseResponse<String> baseResponse = new BaseResponse<>(getSessionStorage());
             baseResponse.setResponse(content);
             Response<BaseResponse<String>> response = Response.success(baseResponse,
                     HttpHeaderParser.parseCacheHeaders(networkResponse));

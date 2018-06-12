@@ -1,5 +1,7 @@
 package request;
 
+import android.util.Log;
+
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
 import com.android.volley.Response;
@@ -10,6 +12,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
+import java.util.HashMap;
 
 import common.SessionStorage;
 import networking.BaseRequest;
@@ -22,6 +25,8 @@ import networking.BaseResponse;
  */
 public class AuthenticatedRequest extends BaseRequest<BaseResponse<Object>> {
 
+        String TAG = "AuthenticatedRequest";
+
     /**
      * This constructor creates a AuthenticatedRequest, specifying the URL, request body, listener, error listener and session storage.
      * The HTTP method is defined to be GET.
@@ -32,16 +37,25 @@ public class AuthenticatedRequest extends BaseRequest<BaseResponse<Object>> {
     }
 
     @Override
-    protected Response<BaseResponse<Object>> parseNetworkResponse(NetworkResponse networkResponse) {
+    public Response<BaseResponse<Object>> parseNetworkResponse(NetworkResponse networkResponse) {
         super.parseNetworkResponse(networkResponse);
         try {
             String json = new String(networkResponse.data, HttpHeaderParser.parseCharset(networkResponse.headers));
             Type baseResponseType = new TypeToken<BaseResponse<Object>>() {}.getType();
             GsonBuilder gsonBuilder = new GsonBuilder();
-            BaseResponse<Object> baseResponse = gsonBuilder.create().fromJson(json, baseResponseType);
+
+            // Get the Status code from the NetworkResponse (volley class)
+            int statusCode = networkResponse.statusCode;
+
+            BaseResponse<Object> baseResponse = new BaseResponse<>(this.getSessionStorage());
+            baseResponse.setHttpStatusCode(statusCode);
+            baseResponse.setHttpHeaders(networkResponse.headers);
+            baseResponse.setCookie();
+            baseResponse.setResponse(json);
             Response<BaseResponse<Object>> response = Response.success(baseResponse,
                     HttpHeaderParser.parseCacheHeaders(networkResponse));
             return response;
+
         } catch (UnsupportedEncodingException e) {
             VolleyError volleyError = new ParseError(e);
             Response<BaseResponse<Object>> response = Response.error(volleyError);

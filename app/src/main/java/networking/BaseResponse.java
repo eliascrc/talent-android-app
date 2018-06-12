@@ -1,6 +1,9 @@
 package networking;
 
-import java.util.HashMap;
+
+import java.util.Map;
+import common.SessionStorage;
+
 
 /**
  * This class is for network responses, contains the HTTP status codes and headers
@@ -9,20 +12,25 @@ import java.util.HashMap;
  */
 public class BaseResponse<T> {
 
-    protected HashMap<String, String> httpHeaders;
-    protected int httpStatusCode;
+    private Map<String, String> httpHeaders;
+    private int httpStatusCode;
     protected T response;
 
-    public BaseResponse() {
-        this.httpHeaders = new HashMap<>();
+    private SessionStorage sessionStorage;
+
+    private static final String COOKIE_HEADER_KEY = "Set-Cookie";
+    private static final String SEMICOLON = ";";
+
+    public BaseResponse(SessionStorage sessionStorage) {
         this.httpStatusCode = 0;
+        this.sessionStorage = sessionStorage;
     }
 
-    public HashMap<String, String> getHttpHeaders() {
+    public Map<String, String> getHttpHeaders() {
         return httpHeaders;
     }
 
-    public void setHttpHeaders(HashMap<String, String> httpHeaders) {
+    public void setHttpHeaders(Map<String, String> httpHeaders) {
         this.httpHeaders = httpHeaders;
     }
 
@@ -42,13 +50,29 @@ public class BaseResponse<T> {
         this.response = response;
     }
 
+    public void setCookie(){
+        if (this.httpHeaders.containsKey(COOKIE_HEADER_KEY)) {
+            String cookie = this.getHttpHeaderValue(COOKIE_HEADER_KEY);
+            cookie = cookie.substring(0, cookie.indexOf(SEMICOLON));
+            sessionStorage.setCookieValue(cookie);
+        }
+    }
+
+    public SessionStorage getSessionStorage() {
+        return sessionStorage;
+    }
+
+    public void setSessionStorage(SessionStorage sessionStorage) {
+        this.sessionStorage = sessionStorage;
+    }
+
     /**
      * Return the HTTP header value of a respective HTTP header name.
      *
      * @param httpHeader, is the name number of a HTTP header.
      * @return the value of the HTTP header.
      */
-    private String getHttpHeaderValue(String httpHeader) {
+    public String getHttpHeaderValue(String httpHeader) {
         String httpHeaderValue = null;
         if (this.httpHeaders.containsKey(httpHeader)) {
             httpHeaderValue = this.httpHeaders.get(httpHeader);
