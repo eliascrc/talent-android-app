@@ -8,19 +8,19 @@ import android.util.Log;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.Volley;
 
-import java.io.IOException;
+
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.HashMap;
+
 
 import common.ParameterEncoder;
 import common.SessionStorage;
 import common.UserSharedPreference;
 import networking.BaseResponse;
+import networking.HurlStackNoRedirect;
 import networking.NetworkConstants;
 import networking.NetworkError;
 import request.AuthenticatedRequest;
@@ -100,14 +100,7 @@ public class SplashActivity extends AppCompatActivity {
         EncodedPostRequest signInTokenRequest = new EncodedPostRequest(NetworkConstants.SIGN_IN_TOKEN_URL, body,
                 listener, errorListener, sessionStorage);
 
-        RequestQueue requestQueue = Volley.newRequestQueue(this, new HurlStack(){
-            @Override
-            protected HttpURLConnection createConnection (URL url) throws IOException {
-            HttpURLConnection connection = super.createConnection(url);
-            connection.setInstanceFollowRedirects(false);
-            return connection;
-        }
-        });
+        RequestQueue requestQueue = Volley.newRequestQueue(this, new HurlStackNoRedirect());
         requestQueue.add(signInTokenRequest);
 
         serviceCallback = new ServiceCallback<BaseResponse<String>,NetworkError>() {

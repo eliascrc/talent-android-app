@@ -20,29 +20,28 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.Header;
+
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
-import com.android.volley.toolbox.HurlStack;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
+
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.HashMap;
-import java.util.List;
+
 
 import common.ParameterEncoder;
 import common.SessionStorage;
 import common.UserSharedPreference;
-import icepick.Icepick;
 import networking.BaseResponse;
+import networking.HurlStackNoRedirect;
 import networking.NetworkConstants;
 import networking.NetworkError;
 import request.AuthenticatedRequest;
@@ -100,9 +99,9 @@ public class SignInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
+        sessionStorage = new SessionStorage();
         organizationLogoImageView = findViewById(R.id.sign_in_iv_organization_logo);
         organizationLogoImageView.setVisibility(INVISIBLE);
-        sessionStorage = new SessionStorage();
         // Set the organization's logo in the appropriate ImageView
         // For this, first access the organization sent by the previous activity
         String organizationJson = getIntent().getStringExtra("ORGANIZATION_JSON");
@@ -301,15 +300,7 @@ public class SignInActivity extends AppCompatActivity {
             EncodedPostRequest signInRequest = new EncodedPostRequest(NetworkConstants.SIGN_IN_URL,body,
                     listener, errorListener, sessionStorage);
             Log.d(TAG, signInRequest.getHeaders().toString());
-            RequestQueue requestQueue = Volley.newRequestQueue(this, new HurlStack() {
-                @Override
-                protected HttpURLConnection createConnection(URL url) throws IOException {
-                    HttpURLConnection connection = super.createConnection(url);
-                    connection.setInstanceFollowRedirects(false);
-
-                    return connection;
-                }
-            });
+            RequestQueue requestQueue = Volley.newRequestQueue(this, new HurlStackNoRedirect());
             requestQueue.add(signInRequest);
 
         }

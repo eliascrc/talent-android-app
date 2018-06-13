@@ -38,9 +38,6 @@ public class LandingViewActivity extends AppCompatActivity {
         sessionStorage = new SessionStorage();
         setContentView(R.layout.activity_landing_view);
         getSupportActionBar().hide();
-        if(sessionStorage.getToken() != null){
-            Log.d("LandingViewActivity", sessionStorage.getToken());
-        }
         this.viewPager = findViewById(R.id.landing_view_pager);
         this.linearLayout = findViewById(R.id.landing_view_index);
         final ScrollView SCROLLVIEW = findViewById(R.id.landing_scroll_view);

@@ -1,6 +1,5 @@
 package request;
 
-import android.util.Log;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
@@ -12,7 +11,6 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
-import java.util.HashMap;
 
 import common.SessionStorage;
 import networking.BaseRequest;
@@ -24,8 +22,6 @@ import networking.BaseResponse;
  * @author Renato Mainieri Sáenz.
  */
 public class AuthenticatedRequest extends BaseRequest<BaseResponse<Object>> {
-
-        String TAG = "AuthenticatedRequest";
 
     /**
      * This constructor creates a AuthenticatedRequest, specifying the URL, request body, listener, error listener and session storage.

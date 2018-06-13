@@ -2,8 +2,8 @@ package common;
 
 
 import android.os.Bundle;
-import android.support.design.widget.BottomSheetBehavior;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import icepick.State;
@@ -34,16 +34,6 @@ public class SessionStorage {
         this.cookieValue = cookieValue;
     }
 
-    public String getToken(){
-        if (token != null){
-            return token;
-        }
-        return "";
-    }
-
-    public void setToken(String tokenString){
-        this.token = tokenString;
-    }
 
     /**
      * Restore and save a old state of the cookieValue.
