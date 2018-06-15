@@ -34,6 +34,9 @@
             android:name=".ForgotPasswordActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".AboutUsActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".TermsOfServiceActivity"
             android:label="@string/title_activity_terms_of_service" />
 

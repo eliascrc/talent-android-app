@@ -66,6 +66,16 @@
     <string name="contact_us_thanks_message">Thanks for Getting in Touch</string>
     <string name="contact_us_email_send">You will receive an email shortly, in the meantime we invite you to explore our site.</string>
 
+    <!-- Strings related to the about us activity -->
+    <string name="label_about_us">About us</string>
+    <string name="label_about_talent">About Talent!</string>
+    <string name="label_purpose">Purpose</string>
+    <string name="label_people">People</string>
+    <string name="content_text1">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas est turpis, feugiat et elementum at, pretium quis mi. Aenean vehicula, metus a finibus maximus, nisi lectus fringilla urna, vehicula pulvinar massa eros commodo orci. Proin sit amet dui pellentesque, blandit felis accumsan, rhoncus mi. </string>
+    <string name="content_text2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas est turpis, feugiat et elementum at, pretium quis mi. Aenean vehicula, metus a finibus maximus, nisi lectus fringilla urna, vehicula pulvinar massa eros commodo orci. Proin sit amet dui pellentesque, blandit felis accumsan, rhoncus mi. Donec ut neque eget arcu efficitur accumsan non eu nisi. Maecenas sed feugiat diam. Donec odio mi, porttitor molestie lorem vel, ullamcorper placerat orci. Nunc lacinia volutpat felis non bibendum.</string>
+    <string name="content_text3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas est turpis, feugiat et elementum at, pretium quis mi. Aenean vehicula, metus a finibus maximus, nisi lectus fringilla urna, vehicula pulvinar massa eros commodo orci. </string>
+    <string name="content_text4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas est turpis, feugiat et elementum.</string>
+
     <!-- Strings related to the forgot password activity -->
     <string name="label_recover_password">Recover password</string>
     <string name="label_enter_email">Enter your email</string>

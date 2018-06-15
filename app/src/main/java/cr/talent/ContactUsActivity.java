@@ -3,10 +3,7 @@ package cr.talent;
 import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -28,7 +25,6 @@ import java.net.HttpURLConnection;
 import java.util.HashMap;
 
 import javax.ejb.EJB;
-import javax.inject.Inject;
 
 import common.ParameterEncoder;
 import common.SessionStorage;

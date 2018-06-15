@@ -38,4 +38,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_logout" />
 
+    <TextView
+        android:id="@+id/logged_in_about_us"
+        android:layout_width="wrap_content"
+        android:layout_height="14dp"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/roboto"
+        android:text="@string/label_about_us"
+        android:textColor="@color/link_text"
+        android:textSize="@dimen/font_content_web_view_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_logout" />
+
 </android.support.constraint.ConstraintLayout>

@@ -48,6 +48,7 @@ public class LoggedInActivity extends AppCompatActivity {
 
     private Button logoutButton;
     private TextView contactUs;
+    private TextView aboutUs;
 
     @EJB
     private SessionStorage sessionStorage;
@@ -61,6 +62,14 @@ public class LoggedInActivity extends AppCompatActivity {
         sessionStorage = new SessionStorage();
         getSupportActionBar().hide();
         setContentView(R.layout.activity_logged_in);
+        aboutUs = findViewById(R.id.logged_in_about_us);
+        aboutUs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent aboutUsActivity = new Intent(LoggedInActivity.this, AboutUsActivity.class);
+                LoggedInActivity.this.startActivity(aboutUsActivity);
+            }
+        });
         contactUs = findViewById(R.id.logged_in_contact_us);
         contactUs.setOnClickListener(new View.OnClickListener(){
             @Override
