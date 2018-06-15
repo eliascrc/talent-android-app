@@ -28,8 +28,8 @@
     <TextView
         android:id="@+id/logged_in_contact_us"
         android:layout_width="wrap_content"
-        android:layout_height="14dp"
-        android:layout_marginTop="32dp"
+        android:layout_height="18dp"
+        android:layout_marginTop="46dp"
         android:fontFamily="@font/roboto"
         android:text="@string/contact_us"
         android:textColor="@color/link_text"
@@ -41,8 +41,8 @@
     <TextView
         android:id="@+id/logged_in_about_us"
         android:layout_width="wrap_content"
-        android:layout_height="14dp"
-        android:layout_marginTop="15dp"
+        android:layout_height="18dp"
+        android:layout_marginTop="18dp"
         android:fontFamily="@font/roboto"
         android:text="@string/label_about_us"
         android:textColor="@color/link_text"
