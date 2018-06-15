@@ -24,6 +24,11 @@ public abstract class BaseRequest<T> extends JsonRequest<T> {
     public static final int DEFAULT_TIMEOUT_MS = 2500;
     public static final int DEFAULT_MAX_RETRIES = 0;
     public static final float DEFAULT_BACKOFF = 1f;
+
+    public static final String COOKIE = "cookie";
+    public static final String ORIGIN = "origin";
+    public static final String ANDROID = "android";
+
     private SessionStorage sessionStorage;
     private Response.ErrorListener errorListener;
     protected Response.Listener<T> listener;
@@ -55,8 +60,8 @@ public abstract class BaseRequest<T> extends JsonRequest<T> {
     @Override
     public Map<String, String> getHeaders(){
         Map<String,String> params = new HashMap<String, String>();
-        params.put("Origin", "Android");
-        params.put("Cookie", sessionStorage.getCookieValue());
+        params.put(ORIGIN, ANDROID);
+        params.put(COOKIE, sessionStorage.getCookieValue());
         return params;
     }
 

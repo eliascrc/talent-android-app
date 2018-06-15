@@ -12,6 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import javax.ejb.EJB;
+
 import common.SessionStorage;
 
 /**
@@ -28,7 +30,7 @@ public class LandingViewActivity extends AppCompatActivity {
     private TextView exploreAppText;
 
 
-
+    @EJB
     private SessionStorage sessionStorage;
 
     @Override

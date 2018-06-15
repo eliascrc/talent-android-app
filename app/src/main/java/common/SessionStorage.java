@@ -3,8 +3,7 @@ package common;
 
 import android.os.Bundle;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
+import javax.ejb.Singleton;
 
 import icepick.State;
 

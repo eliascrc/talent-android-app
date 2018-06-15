@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 
 import com.android.volley.RequestQueue;
@@ -15,12 +16,15 @@ import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.Volley;
 
 
+
 import java.io.IOException;
 
 
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+
+import javax.ejb.EJB;
 
 import common.SessionStorage;
 import common.UserSharedPreference;
@@ -43,7 +47,9 @@ public class LoggedInActivity extends AppCompatActivity {
     private static final String TAG = "LoggedInActivity";
 
     private Button logoutButton;
+    private TextView contactUs;
 
+    @EJB
     private SessionStorage sessionStorage;
     private ServiceCallback serviceCallback;
 
@@ -55,6 +61,14 @@ public class LoggedInActivity extends AppCompatActivity {
         sessionStorage = new SessionStorage();
         getSupportActionBar().hide();
         setContentView(R.layout.activity_logged_in);
+        contactUs = findViewById(R.id.logged_in_contact_us);
+        contactUs.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent contactUsActivity = new Intent(LoggedInActivity.this, ContactUsActivity.class);
+                LoggedInActivity.this.startActivity(contactUsActivity);
+            }
+        });
         logoutButton = findViewById(R.id.btn_logout);
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override

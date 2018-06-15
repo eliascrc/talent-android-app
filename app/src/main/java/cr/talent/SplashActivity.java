@@ -16,6 +16,8 @@ import java.net.HttpURLConnection;
 import java.util.HashMap;
 
 
+import javax.ejb.EJB;
+
 import common.ParameterEncoder;
 import common.SessionStorage;
 import common.UserSharedPreference;
@@ -44,6 +46,7 @@ public class SplashActivity extends AppCompatActivity {
     private static final String SEMICOLON = ";";
 
     private ServiceCallback serviceCallback;
+    @EJB
     private SessionStorage sessionStorage;
 
     @Override
@@ -130,6 +133,7 @@ public class SplashActivity extends AppCompatActivity {
                 }
                 else if (errorCode == HttpURLConnection.HTTP_UNAUTHORIZED) {
                     Log.d(TAG, "ERROR: 401 UNAUTHORIZED");
+                    UserSharedPreference.removeToken(SplashActivity.this);
                     Intent startActivity = new Intent(SplashActivity.this, LandingViewActivity.class);
                     SplashActivity.this.startActivity(startActivity);
                 }

@@ -22,7 +22,7 @@
     <string name="contact_us_email">contact@talent.cr</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_field_required">This field is required</string>
+    <string name="error_field_required">This field is required.</string>
     <string name="explore_app">Not ready to Sign up? Explore the app.</string>
     <string name="have_any_questions">"Have any questions? "</string>
     <string name="landing_view_title">Your company\'s biggest assets</string>
@@ -47,11 +47,32 @@
     <string name="error_bad_email_password">Wrong email or password.</string>
     <string name="error_invalid_email">Invalid email.</string>
 
+    <!-- Strings related to the contact us -->
+    <string name="label_contact_us">Contact us</string>
+    <string name="label_first_name">First name</string>
+    <string name="label_email">Email</string>
+    <string name="label_issue">Issue</string>
+    <string name="label_issue_type">Issue type</string>
+    <string name="label_last_name">Last name</string>
+    <string name="prompt_first_name">First name</string>
+    <string name="spinner_title">Authentication issues</string>
+    <string-array name="issue_array">
+        <item >Authentication issues</item>
+        <item >Account closing</item>
+        <item >Other</item>
+    </string-array>
+    <string name="action_submit">Submit</string>
+    <string name="action_confirm">Ok</string>
+    <string name="contact_us_thanks_message">Thanks for Getting in Touch</string>
+    <string name="contact_us_email_send">You will receive an email shortly, in the meantime we invite you to explore our site.</string>
+
     <!-- Strings related to the forgot password activity -->
     <string name="label_recover_password">Recover password</string>
     <string name="label_enter_email">Enter your email</string>
     <string name="action_send_email">Send email</string>
     <string name="email_sent_message_content">
+
+
 <![CDATA[
 <html>
  <head></head>
@@ -61,5 +82,6 @@
 </html>
 ]]>
 </string>
+    <string name="action_settings">Settings</string>
 
 </resources>

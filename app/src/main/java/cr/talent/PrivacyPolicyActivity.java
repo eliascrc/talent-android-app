@@ -85,6 +85,13 @@ public class PrivacyPolicyActivity extends AppCompatActivity {
         contentTitle = (TextView) findViewById(R.id.content_title);
         contentTitle.setText(R.string.title_activity_privacy_policy);
         contactUs = (TextView) findViewById(R.id.contact_us);
+        contactUs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent contactUsActivity = new Intent(PrivacyPolicyActivity.this, ContactUsActivity.class);
+                startActivity(contactUsActivity);
+            }
+        });
         htmlCode = "";
         getSupportActionBar().hide();
 

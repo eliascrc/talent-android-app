@@ -29,13 +29,6 @@ public class EncodedPostRequest extends BaseRequest<BaseResponse<String>> {
         super(Request.Method.POST, url, requestBody, listener, errorListener, sessionStorage);
     }
 
-    @Override
-    public Map<String, String> getHeaders(){
-        Map<String,String> params = new HashMap<String, String>();
-        params.put("Origin", "Android");
-
-        return params;
-    }
 
     // BaseRequest extends JsonRequest, which returns the json content type
     // Overwrite this method to send the content type needed for our sign in implementation
@@ -57,7 +50,6 @@ public class EncodedPostRequest extends BaseRequest<BaseResponse<String>> {
         baseResponse.setHttpStatusCode(statusCode);
         baseResponse.setHttpHeaders(networkResponse.headers);
         baseResponse.setCookie();
-
 
         // Create new Response from our BaseResponse and return it
         Response<BaseResponse<String>> response = Response.success(baseResponse,

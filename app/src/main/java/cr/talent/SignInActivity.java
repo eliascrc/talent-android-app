@@ -12,6 +12,7 @@ import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
@@ -36,6 +37,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.util.HashMap;
 
+
+import javax.ejb.EJB;
 
 import common.ParameterEncoder;
 import common.SessionStorage;
@@ -76,6 +79,7 @@ public class SignInActivity extends AppCompatActivity {
     private Button retryConnectionButton;
 
     private ServiceCallback serviceCallback;
+    @EJB
     private SessionStorage sessionStorage;
 
     // Constant TAG, for the DEBUG log messages
@@ -334,7 +338,7 @@ public class SignInActivity extends AppCompatActivity {
     // Set the email edit text's color
     private void setEmailEditTextColor(int color) {
         GradientDrawable drawable = (GradientDrawable) emailEditText.getBackground();
-        drawable.setStroke(1, getResources().getColor(color));
+        drawable.setStroke(dpToPx(1), getResources().getColor(color));
     }
 
     // Used to get the organization-s log asynchronously 
@@ -362,6 +366,10 @@ public class SignInActivity extends AppCompatActivity {
             logoImageView.setImageBitmap(result);
             logoImageView.setVisibility(VISIBLE);
         }
+    }
+    public int dpToPx(int dp) {
+        DisplayMetrics displayMetrics = SignInActivity.this.getResources().getDisplayMetrics();
+        return Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
     }
 }
 

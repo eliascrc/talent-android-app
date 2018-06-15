@@ -10,4 +10,7 @@ public final class NetworkConstants {
     public static final String GET_ORGANIZATION_URL = BASE_URL + "/ws/login/organization?uniqueIdentifier=";
     public static final String FORGOT_PASSWORD_SEND_EMAIL_URL = BASE_URL + "/ws/passwordReset/forgotPassword";
     public static final String USER_AUTHENTICATED = BASE_URL + "/ws/user/authenticated";
+    public static final String CONTACT_US_AUTHENTICATED = BASE_URL + "/ws/contactUs/authenticated";
+    public static final String CONTACT_US_UNAUTHENTICATED = BASE_URL + "/ws/contactUs/unauthenticated";
+
 }

@@ -1,5 +1,6 @@
 package cr.talent;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -84,6 +85,13 @@ public class TermsOfServiceActivity extends AppCompatActivity {
         contentTitle = (TextView) findViewById(R.id.content_title);
         contentTitle.setText(R.string.title_activity_terms_of_service);
         contactUs = (TextView) findViewById(R.id.contact_us);
+        contactUs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent contactUsActivity = new Intent(TermsOfServiceActivity.this, ContactUsActivity.class);
+                startActivity(contactUsActivity);
+            }
+        });
         htmlCode = "";
         getSupportActionBar().hide();
 

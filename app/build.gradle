@@ -38,4 +38,5 @@ dependencies {
     annotationProcessor 'frankiesardo:icepick-processor:3.2.0'
     implementation 'com.android.volley:volley:1.1.0'
     implementation 'com.google.code.gson:gson:2.8.1'
+    implementation group: 'javax.ejb', name: 'javax.ejb-api', version: '3.2'
 }

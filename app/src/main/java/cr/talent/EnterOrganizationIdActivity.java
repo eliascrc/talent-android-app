@@ -17,6 +17,8 @@ import com.android.volley.toolbox.Volley;
 
 import java.net.HttpURLConnection;
 
+import javax.ejb.EJB;
+
 import common.SessionStorage;
 import networking.BaseResponse;
 import networking.NetworkConstants;
@@ -43,9 +45,11 @@ public class EnterOrganizationIdActivity extends AppCompatActivity {
     private Button retryConnectionButton;
 
     private ServiceCallback serviceCallback;
+    @EJB
+    private SessionStorage sessionStorage;
 
     // Constant TAG, for the DEBUG log messages
-    private static final String TAG = "EnterOrganizationIdActivity";
+    private static final String TAG = "OrganizationActivity";
 
     private static final String ORGANIZATION_JSON = "ORGANIZATION_JSON";
 
@@ -57,7 +61,7 @@ public class EnterOrganizationIdActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        sessionStorage = new SessionStorage();
         // Implement inline the onPreExecute, onSuccess and onFailure methods of the ServiceCallback instance
         // They will be called when the sign in webservice returns
         serviceCallback = new ServiceCallback<BaseResponse<String>,NetworkError>() {
@@ -156,7 +160,7 @@ public class EnterOrganizationIdActivity extends AppCompatActivity {
             String url = NetworkConstants.GET_ORGANIZATION_URL+organizationId;
 
             // Create and send request
-            ContentRequest getOrganizationRequest = new ContentRequest(url, "", listener, errorListener, new SessionStorage());
+            ContentRequest getOrganizationRequest = new ContentRequest(url, "", listener, errorListener, sessionStorage);
             RequestQueue requestQueue = Volley.newRequestQueue(this);
             requestQueue.add(getOrganizationRequest);
         }
