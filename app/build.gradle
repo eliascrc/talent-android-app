@@ -38,5 +38,5 @@ dependencies {
     annotationProcessor 'frankiesardo:icepick-processor:3.2.0'
     implementation 'com.android.volley:volley:1.1.0'
     implementation 'com.google.code.gson:gson:2.8.1'
-    compileOnly group: 'javax', name: 'javaee-api', version: '7.0'
+    compileOnly 'javax:javaee-api:7.0'
 }
