@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Logged In" />
+
+    <Button
+        android:id="@+id/btn_logout"
+        style="@style/ButtonText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="388dp"
+        android:background="@drawable/rounded_solid_orange_rectangle"
+        android:text="Logout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/logged_in_contact_us"
+        android:layout_width="wrap_content"
+        android:layout_height="18dp"
+        android:layout_marginTop="46dp"
+        android:fontFamily="@font/roboto"
+        android:text="@string/contact_us"
+        android:textColor="@color/link_text"
+        android:textSize="@dimen/font_content_web_view_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_logout" />
+
+    <TextView
+        android:id="@+id/logged_in_about_us"
+        android:layout_width="wrap_content"
+        android:layout_height="18dp"
+        android:layout_marginTop="18dp"
+        android:fontFamily="@font/roboto"
+        android:text="@string/label_about_us"
+        android:textColor="@color/link_text"
+        android:textSize="@dimen/font_content_web_view_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_logout" />
+
+</android.support.constraint.ConstraintLayout>

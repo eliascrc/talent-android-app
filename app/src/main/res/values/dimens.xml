@@ -30,7 +30,7 @@
     <dimen name="landing_view_index_marginBottom">31dp</dimen>
     <dimen name="landing_view_index_marginEnd">159dp</dimen>
     <dimen name="landing_view_index_marginStart">171dp</dimen>
-    
+
     <dimen name="landing_view_buttons">78dp</dimen>
     <dimen name="landing_view_bottom_marginBottom">31dp</dimen>
     <dimen name="landing_view_title_marginBottom">6dp</dimen>
@@ -50,5 +50,8 @@
     <dimen name="sign_up_button_height">46dp</dimen>
     <dimen name="radius_button">10dp</dimen>
     <dimen name="stroke_button_width">2dp</dimen>
+    <dimen name="app_bar_height">180dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
 
 </resources>

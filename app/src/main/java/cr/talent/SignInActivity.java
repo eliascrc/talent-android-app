@@ -12,31 +12,46 @@ import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 
+
+import org.json.JSONException;
 import org.json.JSONObject;
+
 
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
 import java.util.HashMap;
+
+
+import javax.ejb.EJB;
 
 import common.ParameterEncoder;
 import common.SessionStorage;
+import common.UserSharedPreference;
 import networking.BaseResponse;
+import networking.HurlStackNoRedirect;
 import networking.NetworkConstants;
 import networking.NetworkError;
+import request.AuthenticatedRequest;
 import request.ServiceCallback;
 import request.EncodedPostRequest;
+
+import static networking.NetworkConstants.USER_AUTHENTICATED;
 
 /**
  * The screen in which the user signs in to an organization
@@ -46,10 +61,12 @@ import request.EncodedPostRequest;
 
 public class SignInActivity extends AppCompatActivity {
 
+
     // UI references from activity_sign_in.xml
     private View signInView;
     private TextView signUpTextView;
     private TextView forgotPasswordTextView;
+    private TextView getForgotPasswordTextView;
     private TextView badEmailOrPasswordTextView;
     private TextView invalidEmailTextView;
     private ImageView organizationLogoImageView;
@@ -62,11 +79,19 @@ public class SignInActivity extends AppCompatActivity {
     private Button retryConnectionButton;
 
     private ServiceCallback serviceCallback;
+    @EJB
+    private SessionStorage sessionStorage;
 
     // Constant TAG, for the DEBUG log messages
     private static final String TAG = "SignInActivity";
 
     private static final int SPAN_EXCLUSIVE = Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
+    private static final String USER_JSON = "USER_JSON";
+    private static final String COOKIE_HEADER_KEY = "Set-Cookie";
+    private static final String SEMICOLON = ";";
+    private static final String USERNAME = "username";
+    private static final String PASSWORD = "password";
+    private static final String TOKEN = "token";
 
     // Visibility constants
     private static final int GONE = View.GONE;
@@ -77,8 +102,8 @@ public class SignInActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_sign_in);
+        sessionStorage = new SessionStorage();
         organizationLogoImageView = findViewById(R.id.sign_in_iv_organization_logo);
         organizationLogoImageView.setVisibility(INVISIBLE);
         // Set the organization's logo in the appropriate ImageView
@@ -95,7 +120,6 @@ public class SignInActivity extends AppCompatActivity {
         Log.d(TAG, "Organization's logo is "+logoUrl);
         // Load the logo asynchronously
         new GetOrganizationLogoTask(organizationLogoImageView).execute(logoUrl);
-
         signInView = findViewById(R.id.sign_in_sv_sign_in_form);
         emailEditText = findViewById(R.id.sign_in_et_email);
         passwordEditText = findViewById(R.id.sign_in_et_password);
@@ -140,7 +164,8 @@ public class SignInActivity extends AppCompatActivity {
         // Implement inline the onPreExecute, onSuccess and onFailure methods of the ServiceCallback instance
         // They will be called when the sign in webservice returns
         serviceCallback = new ServiceCallback<BaseResponse<String>,NetworkError>() {
-            private BaseResponse<String> listener;
+            public BaseResponse<String> listener;
+
 
             @Override
             public void onPreExecute(BaseResponse<String> listener) {
@@ -152,24 +177,38 @@ public class SignInActivity extends AppCompatActivity {
                 Log.d(TAG, "The method onSuccessResponse was executed.");
                 Log.d(TAG, "The method onSuccessResponse received the " + baseResponse.getHttpStatusCode()+" HTTP status code.");
                 // Proceed to next activity with a logged in user
-
+                Intent loggedInActivity = new Intent(SignInActivity.this, LoggedInActivity.class);
+                String userJson = baseResponse.getResponse();
+                try {
+                    JSONObject reader = new JSONObject(userJson);
+                    String token = reader.getString(TOKEN);
+                    Log.d(TAG, token);
+                    UserSharedPreference.setToken(SignInActivity.this, token);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                loggedInActivity.putExtra(USER_JSON,userJson);
+                SignInActivity.this.startActivity(loggedInActivity);
             }
 
             @Override
             public void onErrorResponse(NetworkError error) {
-                Log.d(TAG, "The method onErrorResponse was executed with error code " + error.getErrorCode());
-                if (error.getErrorCode() == 0) {
+                int errorCode = error.getErrorCode();
+                if (errorCode == 0) {
                     Log.d(TAG, "ERROR: NO NETWORK CONNECTION");
                     // Make login form invisible, display no network connection error layout
                     noNetworkConnectionErrorLayout.setVisibility(VISIBLE);
                     signInView.setVisibility(GONE);
-                } else if (error.getErrorCode() == 401) {
+                } else if (errorCode == HttpURLConnection.HTTP_MOVED_TEMP) {
+                    createRedirectRequest();
+
+                }
+                else if (errorCode == HttpURLConnection.HTTP_UNAUTHORIZED) {
                     Log.d(TAG, "ERROR: 401 UNAUTHORIZED");
                     // Display invalid credentials error message
-                    badEmailOrPasswordTextView.setVisibility(VISIBLE);
-                    invalidEmailTextView.setVisibility(INVISIBLE);
-                    setEmailEditTextColor(R.color.dark_orange);
+                    toggleCredentialsError(true);
                 }
+
             }
         };
 
@@ -181,12 +220,23 @@ public class SignInActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // Hide the no network connectivity layout and error messages in case they were visible
                 noNetworkConnectionErrorLayout.setVisibility(GONE);
-                badEmailOrPasswordTextView.setVisibility(INVISIBLE);
-                invalidEmailTextView.setVisibility(INVISIBLE);
-                setEmailEditTextColor(R.color.dark_orange);
+                toggleCredentialsError(false);
                 signInView.setVisibility(VISIBLE);
             }
         });
+    }
+
+    private void toggleCredentialsError (boolean show){
+        if (show){
+            badEmailOrPasswordTextView.setVisibility(VISIBLE);
+            invalidEmailTextView.setVisibility(INVISIBLE);
+            setEmailEditTextColor(R.color.dark_orange);
+        }
+        else{
+            badEmailOrPasswordTextView.setVisibility(INVISIBLE);
+            invalidEmailTextView.setVisibility(INVISIBLE);
+            setEmailEditTextColor(R.color.dark_orange);
+        }
     }
 
     private void startForgotPasswordActivity(View view){
@@ -194,14 +244,15 @@ public class SignInActivity extends AppCompatActivity {
         startActivity(forgotPasswordActivity);
     }
 
+
     // Get data in the et_email and et_password EditTexts and attempt to sign in with it
     private void signIn(View view) {
-        String email = emailEditText.getText().toString();
+        final String email = emailEditText.getText().toString();
         String password = passwordEditText.getText().toString();
 
         if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
 
-            if(!email.contains("@")) {
+            if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                 // Show invalid email error message, hide others and return
                 invalidEmailTextView.setVisibility(VISIBLE);
                 setEmailEditTextColor(R.color.error_text);
@@ -210,29 +261,37 @@ public class SignInActivity extends AppCompatActivity {
             }
 
             // Instantiate listeners to send to the request instance
-            Response.Listener<BaseResponse<String>> listener = new Response.Listener<BaseResponse<String>>() {
+            final Response.Listener<BaseResponse<String>> listener = new Response.Listener<BaseResponse<String>>() {
                 @Override
                 public void onResponse(BaseResponse<String> response) {
+                    Log.d(TAG,Integer.toString(response.getHttpStatusCode()));
                     serviceCallback.onSuccessResponse(response);
                 }
             };
 
-            Response.ErrorListener errorListener = new Response.ErrorListener() {
+
+            final Response.ErrorListener errorListener = new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     NetworkError networkError = new NetworkError();
-                    if (error.networkResponse != null) {
-                        networkError.setErrorCode(error.networkResponse.statusCode);
-                        networkError.setErrorMessage(error.getMessage());
+                    networkError.setErrorCode(error.networkResponse.statusCode);
+                    networkError.setErrorMessage(error.networkResponse.toString());
+                    if(error.networkResponse.headers.containsKey(COOKIE_HEADER_KEY)){
+                        String cookie = error.networkResponse.headers.get(COOKIE_HEADER_KEY);
+                        cookie = cookie.substring(0, cookie.indexOf(SEMICOLON));
+                        sessionStorage.setCookieValue(cookie);
                     }
+
+
                     serviceCallback.onErrorResponse(networkError);
+
                 }
             };
 
             // Form the request's body
             HashMap<String,String> parameters = new HashMap<>();
-            parameters.put("username", email);
-            parameters.put("password",password);
+            parameters.put(PASSWORD,password);
+            parameters.put(USERNAME, email);
             String body = "";
             try {
                 // Encodes the parameters with the ParameterEncoder class declared in common
@@ -242,18 +301,44 @@ public class SignInActivity extends AppCompatActivity {
             }
 
             // Create and send request
-            EncodedPostRequest signInRequest = new EncodedPostRequest(NetworkConstants.SIGN_IN_URL, body,
-                    listener, errorListener, new SessionStorage());
-
-            RequestQueue requestQueue = Volley.newRequestQueue(this);
+            EncodedPostRequest signInRequest = new EncodedPostRequest(NetworkConstants.SIGN_IN_URL,body,
+                    listener, errorListener, sessionStorage);
+            Log.d(TAG, signInRequest.getHeaders().toString());
+            RequestQueue requestQueue = Volley.newRequestQueue(this, new HurlStackNoRedirect());
             requestQueue.add(signInRequest);
+
         }
+    }
+
+    private void createRedirectRequest(){
+        // Instantiate listeners to send to the request instance
+        final Response.Listener<BaseResponse<Object>> listener = new Response.Listener<BaseResponse<Object>>() {
+            @Override
+            public void onResponse(BaseResponse<Object> response) {
+                Log.d(TAG,Integer.toString(response.getHttpStatusCode()));
+                serviceCallback.onSuccessResponse(response);
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                NetworkError networkError = new NetworkError();
+                networkError.setErrorCode(error.networkResponse.statusCode);
+                networkError.setErrorMessage(error.networkResponse.toString());
+                serviceCallback.onErrorResponse(networkError);
+            }
+        };
+        AuthenticatedRequest redirectRequest = new AuthenticatedRequest(USER_AUTHENTICATED, "",
+                listener, errorListener, sessionStorage);
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(redirectRequest);
     }
 
     // Set the email edit text's color
     private void setEmailEditTextColor(int color) {
         GradientDrawable drawable = (GradientDrawable) emailEditText.getBackground();
-        drawable.setStroke(1, getResources().getColor(color));
+        drawable.setStroke(dpToPx(1), getResources().getColor(color));
     }
 
     // Used to get the organization-s log asynchronously 
@@ -281,6 +366,10 @@ public class SignInActivity extends AppCompatActivity {
             logoImageView.setImageBitmap(result);
             logoImageView.setVisibility(VISIBLE);
         }
+    }
+    public int dpToPx(int dp) {
+        DisplayMetrics displayMetrics = SignInActivity.this.getResources().getDisplayMetrics();
+        return Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
     }
 }
 

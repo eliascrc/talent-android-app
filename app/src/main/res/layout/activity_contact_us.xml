@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="640dp">
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/contact_us_layout"
+        android:layout_width="match_parent"
+        android:layout_height="640dp"
+        android:background="@color/white"
+        tools:context=".ContactUsActivity">
+
+        <ImageView
+            android:id="@+id/contact_us_talent_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="301dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="15dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/talent_logo"
+            android:maxHeight="41dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/logo"
+            android:width="80dp"/>
+
+        <TextView
+            android:id="@+id/contact_us_tv_title"
+            style="@style/TitleLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="141dp"
+            android:layout_marginStart="139dp"
+            android:layout_marginTop="59dp"
+            android:gravity="start"
+            android:lineSpacingMultiplier="1.38"
+            android:text="@string/label_contact_us"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/contact_us_tv_first_name"
+            style="@style/PromptLabel"
+            android:layout_width="82dp"
+            android:layout_height="18dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="95dp"
+            android:text="@string/label_first_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/contact_us_et_first_name"
+            style="@style/EditText"
+            android:layout_width="0dp"
+            android:layout_height="41dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/rounded_orange_border_rectangle"
+            android:drawableStart="@drawable/ic_user"
+            android:ems="10"
+            android:hint="@string/label_first_name"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/contact_us_tv_first_name"
+            app:layout_constraintTop_toBottomOf="@+id/contact_us_tv_first_name" />
+
+        <TextView
+            android:id="@+id/contact_us_tv_last_name"
+            style="@style/PromptLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="18dp"
+            android:layout_marginTop="19dp"
+            android:text="@string/label_last_name"
+            app:layout_constraintStart_toStartOf="@+id/contact_us_et_first_name"
+            app:layout_constraintTop_toBottomOf="@+id/contact_us_et_first_name" />
+
+        <EditText
+            android:id="@+id/contact_us_et_last_name"
+            style="@style/EditText"
+            android:layout_width="0dp"
+            android:layout_height="41dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/rounded_orange_border_rectangle"
+            android:drawableStart="@drawable/ic_user"
+            android:ems="10"
+            android:hint="@string/label_last_name"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/contact_us_tv_last_name"
+            app:layout_constraintTop_toBottomOf="@+id/contact_us_tv_last_name" />
+
+        <TextView
+            android:id="@+id/contact_us_tv_email"
+            style="@style/PromptLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="18dp"
+            android:layout_marginTop="22dp"
+            android:text="@string/label_email"
+            app:layout_constraintStart_toStartOf="@+id/contact_us_et_last_name"
+            app:layout_constraintTop_toBottomOf="@+id/contact_us_et_last_name" />
+
+        <EditText
+            android:id="@+id/contact_us_et_email"
+            style="@style/EditText"
+            android:layout_width="0dp"
+            android:layout_height="41dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/rounded_orange_border_rectangle"
+            android:drawableStart="@drawable/ic_mail"
+            android:ems="10"
+            android:hint="@string/label_email"
+            android:inputType="textEmailAddress"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/contact_us_tv_email"
+            app:layout_constraintTop_toBottomOf="@+id/contact_us_tv_email" />
+
+        <TextView
+            android:id="@+id/contact_us_tv_issue_type"
+            style="@style/PromptLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="18dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="351dp"
+            android:text="@string/label_issue_type"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+            <Spinner
+                android:id="@+id/contact_us_sp_issue"
+                style="@style/SpinnerStyle"
+                android:layout_width="0dp"
+                android:layout_height="41dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginTop="5dp"
+                android:entries="@array/issue_array"
+                android:prompt="@string/spinner_title"
+                android:spinnerMode="dropdown"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/contact_us_tv_issue_type"
+                app:layout_constraintTop_toBottomOf="@+id/contact_us_tv_issue_type" />
+
+            <TextView
+                android:id="@+id/contact_us_tv_issue"
+                style="@style/PromptLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="18dp"
+                android:layout_marginTop="18dp"
+                android:text="@string/label_issue"
+                app:layout_constraintStart_toStartOf="@+id/contact_us_sp_issue"
+                app:layout_constraintTop_toBottomOf="@+id/contact_us_sp_issue" />
+
+        <EditText
+            android:id="@+id/contact_us_et_issue"
+            style="@style/EditText"
+            android:layout_width="0dp"
+            android:layout_height="67dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="5dp"
+            android:gravity="top|left"
+            android:background="@drawable/rounded_orange_border_rectangle"
+            android:inputType="textMultiLine"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/contact_us_tv_issue" />
+
+        <Button
+            android:id="@+id/contact_us_btn_submit"
+            style="@style/ButtonText"
+            android:layout_width="0dp"
+            android:layout_height="49dp"
+            android:layout_marginBottom="44dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="29dp"
+            android:background="@drawable/rounded_solid_orange_rectangle"
+            android:text="@string/action_submit"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/contact_us_et_issue" />
+
+            <TextView
+                android:id="@+id/contact_us_tv_first_name_required"
+                style="@style/ErrorMessage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="113dp"
+                android:layout_marginTop="2dp"
+                android:text="@string/error_field_required"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/contact_us_et_first_name"
+                app:layout_constraintTop_toBottomOf="@+id/contact_us_et_first_name" />
+
+            <TextView
+                android:id="@+id/contact_us_tv_last_name_required"
+                style="@style/ErrorMessage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="113dp"
+                android:layout_marginTop="2dp"
+                android:text="@string/error_field_required"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/contact_us_et_last_name"
+                app:layout_constraintTop_toBottomOf="@+id/contact_us_et_last_name" />
+
+            <TextView
+                android:id="@+id/contact_us_tv_email_required"
+                style="@style/ErrorMessage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="113dp"
+                android:text="@string/error_field_required"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/contact_us_et_email"
+                app:layout_constraintTop_toBottomOf="@+id/contact_us_et_email" />
+
+        <TextView
+            android:id="@+id/contact_us_tv_email_invalid"
+            style="@style/ErrorMessage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="113dp"
+            android:text="@string/error_invalid_email"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/contact_us_et_email"
+            app:layout_constraintTop_toBottomOf="@+id/contact_us_et_email" />
+
+        <TextView
+        android:id="@+id/contact_us_tv_issue_required"
+        style="@style/ErrorMessage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="113dp"
+        android:layout_marginTop="2dp"
+        android:text="@string/error_field_required"
+            android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/contact_us_et_issue"
+        app:layout_constraintTop_toBottomOf="@+id/contact_us_et_issue" />
+
+        <TextView
+            android:id="@+id/contact_us_tv_issue_type_required"
+            style="@style/ErrorMessage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="113dp"
+            android:layout_marginTop="2dp"
+            android:visibility="invisible"
+            android:text="@string/error_field_required"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/contact_us_sp_issue"
+            app:layout_constraintTop_toBottomOf="@+id/contact_us_sp_issue" />
+
+
+
+
+
+
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

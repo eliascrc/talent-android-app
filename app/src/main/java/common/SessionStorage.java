@@ -3,7 +3,7 @@ package common;
 
 import android.os.Bundle;
 
-import javax.inject.Singleton;
+import javax.ejb.Singleton;
 
 import icepick.State;
 
@@ -22,6 +22,9 @@ public class SessionStorage {
     @State
     protected String cookieValue;
 
+    @State
+    protected String token;
+
     public String getCookieValue() {
         return cookieValue;
     }
@@ -29,6 +32,7 @@ public class SessionStorage {
     public void setCookieValue(String cookieValue) {
         this.cookieValue = cookieValue;
     }
+
 
     /**
      * Restore and save a old state of the cookieValue.

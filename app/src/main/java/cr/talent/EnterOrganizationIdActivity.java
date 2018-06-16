@@ -17,6 +17,8 @@ import com.android.volley.toolbox.Volley;
 
 import java.net.HttpURLConnection;
 
+import javax.ejb.EJB;
+
 import common.SessionStorage;
 import networking.BaseResponse;
 import networking.NetworkConstants;
@@ -43,9 +45,13 @@ public class EnterOrganizationIdActivity extends AppCompatActivity {
     private Button retryConnectionButton;
 
     private ServiceCallback serviceCallback;
+    @EJB
+    private SessionStorage sessionStorage;
 
     // Constant TAG, for the DEBUG log messages
-    private static final String TAG = "EnterOrganizationId";
+    private static final String TAG = "OrganizationActivity";
+
+    private static final String ORGANIZATION_JSON = "ORGANIZATION_JSON";
 
     // Visibility constants
     private static final int GONE = View.GONE;
@@ -55,7 +61,7 @@ public class EnterOrganizationIdActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        sessionStorage = new SessionStorage();
         // Implement inline the onPreExecute, onSuccess and onFailure methods of the ServiceCallback instance
         // They will be called when the sign in webservice returns
         serviceCallback = new ServiceCallback<BaseResponse<String>,NetworkError>() {
@@ -77,7 +83,7 @@ public class EnterOrganizationIdActivity extends AppCompatActivity {
                 // Proceed to next activity, sending the info obtained
                 String organizationJson = baseResponse.getResponse();
                 Intent signInActivity = new Intent(EnterOrganizationIdActivity.this, SignInActivity.class);
-                signInActivity.putExtra("ORGANIZATION_JSON",organizationJson);
+                signInActivity.putExtra(ORGANIZATION_JSON,organizationJson);
                 startActivity(signInActivity);
             }
 
@@ -89,8 +95,7 @@ public class EnterOrganizationIdActivity extends AppCompatActivity {
                     // Make organization id form invisible, display no network connection error layout
                     noNetworkConnectionErrorLayout.setVisibility(VISIBLE);
                     enterOrganizationIdView.setVisibility(GONE);
-                    invalidOrganizationIdTextView.setVisibility(INVISIBLE);
-                } else if (error.getErrorCode() == HttpURLConnection.HTTP_NOT_FOUND) {
+                } else if (error.getErrorCode() == HttpURLConnection.HTTP_UNAUTHORIZED) {
                     Log.d(TAG, "ERROR: 404 NOT FOUND");
                     invalidOrganizationIdTextView.setVisibility(VISIBLE);
                 }
@@ -98,9 +103,9 @@ public class EnterOrganizationIdActivity extends AppCompatActivity {
         };
 
         setContentView(R.layout.activity_enter_organization_id);
-        enterOrganizationIdView = findViewById(R.id.enter_organization_id_sv_enter_organization_id);
-        organizationIdEditText = findViewById(R.id.enter_organization_id_et_organization_id);
-        enterOrganizationIdButton = findViewById(R.id.enter_organization_id_btn_action_enter_organization_id);
+        enterOrganizationIdView = findViewById(R.id.sv_enter_organization_id);
+        organizationIdEditText = findViewById(R.id.et_organization_id);
+        enterOrganizationIdButton = findViewById(R.id.btn_action_enter_organization_id);
         enterOrganizationIdButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -155,7 +160,7 @@ public class EnterOrganizationIdActivity extends AppCompatActivity {
             String url = NetworkConstants.GET_ORGANIZATION_URL+organizationId;
 
             // Create and send request
-            ContentRequest getOrganizationRequest = new ContentRequest(url, "", listener, errorListener, new SessionStorage());
+            ContentRequest getOrganizationRequest = new ContentRequest(url, "", listener, errorListener, sessionStorage);
             RequestQueue requestQueue = Volley.newRequestQueue(this);
             requestQueue.add(getOrganizationRequest);
         }
