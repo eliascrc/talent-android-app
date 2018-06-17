@@ -78,6 +78,9 @@ public class SignInActivity extends AppCompatActivity {
     private View noNetworkConnectionErrorLayout;
     private Button retryConnectionButton;
 
+    //Instead of this variable we will import the Organization model class.
+    private String organizationId;
+
     private ServiceCallback serviceCallback;
     @EJB
     private SessionStorage sessionStorage;
@@ -91,6 +94,7 @@ public class SignInActivity extends AppCompatActivity {
     private static final String SEMICOLON = ";";
     private static final String USERNAME = "username";
     private static final String PASSWORD = "password";
+    private static final String ORGANIZATION_IDENTIFIER = "organizationIdentifier";
     private static final String TOKEN = "token";
 
     // Visibility constants
@@ -118,6 +122,14 @@ public class SignInActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         Log.d(TAG, "Organization's logo is "+logoUrl);
+        //Get the uniqueIdentifier, this parsing will only be done once in the EnterOrganizationIdActivity.
+        organizationId = "";
+        try {
+            JSONObject organizationJsonObject = new JSONObject(organizationJson);
+            organizationId = organizationJsonObject.getString("uniqueIdentifier");
+        } catch (org.json.JSONException e) {
+            e.printStackTrace();
+        }
         // Load the logo asynchronously
         new GetOrganizationLogoTask(organizationLogoImageView).execute(logoUrl);
         signInView = findViewById(R.id.sign_in_sv_sign_in_form);
@@ -128,7 +140,7 @@ public class SignInActivity extends AppCompatActivity {
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signIn(v);
+                createRequestBody(v);
             }
         });
 
@@ -246,68 +258,81 @@ public class SignInActivity extends AppCompatActivity {
 
 
     // Get data in the et_email and et_password EditTexts and attempt to sign in with it
-    private void signIn(View view) {
-        final String email = emailEditText.getText().toString();
-        String password = passwordEditText.getText().toString();
-
-        if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
-
-            if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                // Show invalid email error message, hide others and return
-                invalidEmailTextView.setVisibility(VISIBLE);
-                setEmailEditTextColor(R.color.error_text);
-                badEmailOrPasswordTextView.setVisibility(INVISIBLE);
-                return;
+    private void signInRequest(HashMap<String, String> parameters) {
+        // Instantiate listeners to send to the request instance
+        final Response.Listener<BaseResponse<String>> listener = new Response.Listener<BaseResponse<String>>() {
+            @Override
+            public void onResponse(BaseResponse<String> response) {
+                Log.d(TAG,Integer.toString(response.getHttpStatusCode()));
+                serviceCallback.onSuccessResponse(response);
             }
-
-            // Instantiate listeners to send to the request instance
-            final Response.Listener<BaseResponse<String>> listener = new Response.Listener<BaseResponse<String>>() {
-                @Override
-                public void onResponse(BaseResponse<String> response) {
-                    Log.d(TAG,Integer.toString(response.getHttpStatusCode()));
-                    serviceCallback.onSuccessResponse(response);
+        };
+        final Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error)
+            {NetworkError networkError = new NetworkError();
+            networkError.setErrorCode(error.networkResponse.statusCode);
+            networkError.setErrorMessage(error.networkResponse.toString());
+            if(error.networkResponse.headers.containsKey(COOKIE_HEADER_KEY)){
+                String cookie = error.networkResponse.headers.get(COOKIE_HEADER_KEY);
+                cookie = cookie.substring(0, cookie.indexOf(SEMICOLON));
+                sessionStorage.setCookieValue(cookie);
                 }
-            };
+                serviceCallback.onErrorResponse(networkError);
+            }
+        };
+
+        // Form the request's body
+
+        String body = "";
+        try {
+            // Encodes the parameters with the ParameterEncoder class declared in common
+            body = ParameterEncoder.encodeHashmap(parameters);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        // Create and send request
+        EncodedPostRequest signInRequest = new EncodedPostRequest(NetworkConstants.SIGN_IN_URL,body,
+                listener, errorListener, sessionStorage);
+        Log.d(TAG, signInRequest.getHeaders().toString());
+        RequestQueue requestQueue = Volley.newRequestQueue(this, new HurlStackNoRedirect());
+        requestQueue.add(signInRequest);
+    }
 
 
-            final Response.ErrorListener errorListener = new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    NetworkError networkError = new NetworkError();
-                    networkError.setErrorCode(error.networkResponse.statusCode);
-                    networkError.setErrorMessage(error.networkResponse.toString());
-                    if(error.networkResponse.headers.containsKey(COOKIE_HEADER_KEY)){
-                        String cookie = error.networkResponse.headers.get(COOKIE_HEADER_KEY);
-                        cookie = cookie.substring(0, cookie.indexOf(SEMICOLON));
-                        sessionStorage.setCookieValue(cookie);
-                    }
-
-
-                    serviceCallback.onErrorResponse(networkError);
-
-                }
-            };
-
-            // Form the request's body
+    private void createRequestBody(View v){
+        String email = emailEditText.getText().toString();
+        String password = passwordEditText.getText().toString();
+        if(validFields(email, password)){
             HashMap<String,String> parameters = new HashMap<>();
             parameters.put(PASSWORD,password);
             parameters.put(USERNAME, email);
-            String body = "";
-            try {
-                // Encodes the parameters with the ParameterEncoder class declared in common
-                body = ParameterEncoder.encodeHashmap(parameters);
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-
-            // Create and send request
-            EncodedPostRequest signInRequest = new EncodedPostRequest(NetworkConstants.SIGN_IN_URL,body,
-                    listener, errorListener, sessionStorage);
-            Log.d(TAG, signInRequest.getHeaders().toString());
-            RequestQueue requestQueue = Volley.newRequestQueue(this, new HurlStackNoRedirect());
-            requestQueue.add(signInRequest);
-
+            //when the model is created we will get this parameter from the Organization model class.
+            parameters.put(ORGANIZATION_IDENTIFIER, organizationId);
+            signInRequest(parameters);
+            Log.d(TAG, parameters.toString());
         }
+
+
+
+    }
+
+    private boolean validFields(String email, String password) {
+        boolean valid = true;
+        if (TextUtils.isEmpty(email)) {
+            valid = false;
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            valid = false;
+            invalidEmailTextView.setVisibility(VISIBLE);
+            setEmailEditTextColor(R.color.error_text);
+            badEmailOrPasswordTextView.setVisibility(INVISIBLE);
+        }
+        if (TextUtils.isEmpty(password)) {
+            valid = false;
+        }
+        return valid;
+
     }
 
     private void createRedirectRequest(){
