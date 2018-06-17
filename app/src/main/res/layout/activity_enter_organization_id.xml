@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -14,7 +13,7 @@
         android:visibility="gone" />
 
     <ScrollView
-        android:id="@+id/enter_organization_id_sv_enter_organization_id"
+        android:id="@+id/sv_enter_organization_id"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fillViewport="true"
@@ -28,7 +27,7 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/enter_organization_id_iv_talent_logo"
+                android:id="@+id/iv_talent_logo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
@@ -39,14 +38,14 @@
                 android:contentDescription="@string/talent_logo"
                 android:minHeight="100dp"
                 android:minWidth="491dp"
-                app:layout_constraintBottom_toTopOf="@+id/tv_invalid_organization_id"
+                app:layout_constraintBottom_toTopOf="@+id/tv_organization_id"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/logo" />
 
             <Button
-                android:id="@+id/enter_organization_id_btn_action_enter_organization_id"
+                android:id="@+id/btn_action_enter_organization_id"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="32dp"
@@ -59,7 +58,7 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
-                android:id="@+id/enter_organization_id_tv_organization_id"
+                android:id="@+id/tv_organization_id"
                 style="@style/PromptLabel"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -68,13 +67,13 @@
                 android:layout_marginStart="37dp"
                 android:lineSpacingMultiplier="1.29"
                 android:text="@string/label_enter_organization_id"
-                app:layout_constraintBottom_toTopOf="@+id/enter_organization_id_et_organization_id"
+                app:layout_constraintBottom_toTopOf="@+id/et_organization_id"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.006"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <EditText
-                android:id="@+id/enter_organization_id_et_organization_id"
+                android:id="@+id/et_organization_id"
                 style="@style/EditText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -91,12 +90,12 @@
                 android:paddingRight="14dp"
                 android:paddingTop="10.5dp"
                 android:selectAllOnFocus="false"
-                app:layout_constraintBottom_toTopOf="@+id/enter_organization_id_btn_action_enter_organization_id"
+                app:layout_constraintBottom_toTopOf="@+id/btn_action_enter_organization_id"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
-                android:id="@+id/enter_organization_id_tv_organization_id_ending"
+                android:id="@+id/tv_organization_id_ending"
                 style="@style/EnterOrganizationIdEnding"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -104,12 +103,12 @@
                 android:layout_marginStart="6dp"
                 android:lineSpacingMultiplier="1.25"
                 android:text="@string/label_organization_id"
-                app:layout_constraintBottom_toBottomOf="@+id/enter_organization_id_et_organization_id"
+                app:layout_constraintBottom_toTopOf="@+id/btn_action_enter_organization_id"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/enter_organization_id_et_organization_id" />
+                app:layout_constraintStart_toEndOf="@+id/et_organization_id" />
 
             <ImageView
-                android:id="@+id/enter_organization_id_iv_button_arrow"
+                android:id="@+id/iv_button_arrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
@@ -117,16 +116,16 @@
                 android:layout_marginStart="6dp"
                 android:layout_marginTop="8dp"
                 android:elevation="10dp"
-                app:layout_constraintBottom_toBottomOf="@+id/enter_organization_id_btn_action_enter_organization_id"
-                app:layout_constraintEnd_toEndOf="@+id/enter_organization_id_btn_action_enter_organization_id"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_action_enter_organization_id"
+                app:layout_constraintEnd_toEndOf="@+id/btn_action_enter_organization_id"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/enter_organization_id_tv_button_next"
-                app:layout_constraintTop_toTopOf="@+id/enter_organization_id_btn_action_enter_organization_id"
+                app:layout_constraintStart_toEndOf="@+id/tv_button_next"
+                app:layout_constraintTop_toTopOf="@+id/btn_action_enter_organization_id"
                 app:layout_constraintVertical_bias="0.6"
                 app:srcCompat="@drawable/icon_arrow_right" />
 
             <TextView
-                android:id="@+id/enter_organization_id_tv_button_next"
+                android:id="@+id/tv_button_next"
                 style="@style/ButtonText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -137,10 +136,10 @@
                 android:elevation="10dp"
                 android:text="@string/action_enter_organization_id"
                 android:textColor="@color/white"
-                app:layout_constraintBottom_toBottomOf="@+id/enter_organization_id_btn_action_enter_organization_id"
-                app:layout_constraintEnd_toEndOf="@+id/enter_organization_id_btn_action_enter_organization_id"
-                app:layout_constraintStart_toStartOf="@+id/enter_organization_id_btn_action_enter_organization_id"
-                app:layout_constraintTop_toTopOf="@+id/enter_organization_id_btn_action_enter_organization_id" />
+                app:layout_constraintBottom_toBottomOf="@+id/btn_action_enter_organization_id"
+                app:layout_constraintEnd_toEndOf="@+id/btn_action_enter_organization_id"
+                app:layout_constraintStart_toStartOf="@+id/btn_action_enter_organization_id"
+                app:layout_constraintTop_toTopOf="@+id/btn_action_enter_organization_id" />
 
             <TextView
                 android:id="@+id/tv_invalid_organization_id"
@@ -151,10 +150,10 @@
                 android:layout_marginEnd="8dp"
                 android:text="@string/error_invalid_organization_id"
                 android:visibility="invisible"
-                app:layout_constraintBottom_toTopOf="@+id/enter_organization_id_tv_organization_id"
+                app:layout_constraintBottom_toTopOf="@+id/tv_organization_id"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/enter_organization_id_tv_organization_id" />
+                app:layout_constraintStart_toStartOf="@+id/tv_organization_id" />
 
 
         </android.support.constraint.ConstraintLayout>

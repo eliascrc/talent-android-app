@@ -4,6 +4,7 @@
     <color name="light_white">#00FFFFFF</color>
     <color name="white">#ffffff</color>
     <color name="error_text">#C4183C</color>
+
     <color name="link_text">#4083ff</color>
     <color name="hint_text">#FFB9BBBE</color>
     <color name="text">#495057</color>
@@ -11,6 +12,7 @@
     <color name="medium_grey">#D7D7D7</color>
     <color name="content_body">#595959</color>
     <color name="content_text">#595959</color>
+    <color name="greyed_text">#B9BBBE</color>
 
     <!-- Color palette -->
     <!-- Primary colors -->

@@ -1,10 +1,15 @@
 package networking;
 
+
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonRequest;
+
+
+import java.util.Map;
+import java.util.HashMap;
 
 import common.SessionStorage;
 
@@ -19,9 +24,14 @@ public abstract class BaseRequest<T> extends JsonRequest<T> {
     public static final int DEFAULT_TIMEOUT_MS = 2500;
     public static final int DEFAULT_MAX_RETRIES = 0;
     public static final float DEFAULT_BACKOFF = 1f;
-    protected SessionStorage sessionStorage;
+
+    public static final String COOKIE = "cookie";
+    public static final String ORIGIN = "origin";
+    public static final String ANDROID = "android";
+
+    private SessionStorage sessionStorage;
+    private Response.ErrorListener errorListener;
     protected Response.Listener<T> listener;
-    protected Response.ErrorListener errorListener;
 
     public BaseRequest(int method, String url, String requestBody, Response.Listener<T> listener, Response.ErrorListener errorListener) {
         super(method, url, requestBody, listener, errorListener);
@@ -29,7 +39,6 @@ public abstract class BaseRequest<T> extends JsonRequest<T> {
         this.setRetryPolicy(defaultRetryPolicy);
         this.listener = listener;
         this.errorListener = errorListener;
-        this.sessionStorage = new SessionStorage();
     }
 
     public BaseRequest(int method, String url, String requestBody, Response.Listener<T> listener, Response.ErrorListener errorListener, SessionStorage sessionStorage) {
@@ -48,6 +57,13 @@ public abstract class BaseRequest<T> extends JsonRequest<T> {
     public void setSessionStorage(SessionStorage sessionStorage) {
         this.sessionStorage = sessionStorage;
     }
+    @Override
+    public Map<String, String> getHeaders(){
+        Map<String,String> params = new HashMap<String, String>();
+        params.put(ORIGIN, ANDROID);
+        params.put(COOKIE, sessionStorage.getCookieValue());
+        return params;
+    }
 
     /**
      * Encapsulates a parsed response for delivery.
@@ -59,10 +75,11 @@ public abstract class BaseRequest<T> extends JsonRequest<T> {
     protected Response<T> parseNetworkResponse(NetworkResponse response) {
         String headers = response.headers.get("Set-Cookie");
         if (headers != null) {
-            headers = headers.split("=")[1];
+            headers = headers.substring(0, headers.indexOf(";"));
             this.sessionStorage.setCookieValue(headers);
         }
         return null;
+
     }
 
     /**
@@ -75,4 +92,6 @@ public abstract class BaseRequest<T> extends JsonRequest<T> {
     protected VolleyError parseNetworkError(VolleyError volleyError) {
         return volleyError;
     }
+
+
 }
