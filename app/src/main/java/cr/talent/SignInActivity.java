@@ -89,9 +89,6 @@ public class SignInActivity extends AppCompatActivity {
 
     private static final int SPAN_EXCLUSIVE = Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
     private static final String USER_JSON = "USER_JSON";
-    private static final String USERNAME = "username";
-    private static final String PASSWORD = "password";
-    private static final String ORGANIZATION_IDENTIFIER = "organizationIdentifier";
 
     // Visibility constants
     private static final int GONE = View.GONE;
@@ -294,10 +291,10 @@ public class SignInActivity extends AppCompatActivity {
         String password = passwordEditText.getText().toString();
         if(validFields(email, password)){
             HashMap<String,String> parameters = new HashMap<>();
-            parameters.put(PASSWORD,password);
-            parameters.put(USERNAME, email);
+            parameters.put(NetworkConstants.PASSWORD,password);
+            parameters.put(NetworkConstants.USERNAME, email);
             //when the model is created we will get this parameter from the Organization model class.
-            parameters.put(ORGANIZATION_IDENTIFIER, organizationId);
+            parameters.put(NetworkConstants.ORGANIZATION_IDENTIFIER, organizationId);
             signInRequest(parameters);
             Log.d(TAG, parameters.toString());
         }

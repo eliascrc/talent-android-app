@@ -69,11 +69,6 @@ public class ContactUsActivity extends AppCompatActivity {
 
     // Constant TAG, for the DEBUG log messages
     private static final String TAG = "ContactUsActivity";
-    private static final String FIRSTNAME = "firstName";
-    private static final String LASTNAME = "lastName";
-    private static final String EMAIL = "email";
-    private static final String ISSUETYPE = "issueType";
-    private static final String ISSUE = "issue";
 
     boolean submitted;
     boolean authenticated;
@@ -219,11 +214,11 @@ public class ContactUsActivity extends AppCompatActivity {
         String issue = issueEditText.getText().toString();
         if (!authenticated && validFields(firstName, lastName, email, issueType, issue)){
             HashMap<String,String> parameters = new HashMap<>();
-            parameters.put(FIRSTNAME, firstName);
-            parameters.put(LASTNAME, lastName);
-            parameters.put(EMAIL, email);
-            parameters.put(ISSUETYPE, issueType);
-            parameters.put(ISSUE, issue);
+            parameters.put(NetworkConstants.FIRSTNAME, firstName);
+            parameters.put(NetworkConstants.LASTNAME, lastName);
+            parameters.put(NetworkConstants.EMAIL, email);
+            parameters.put(NetworkConstants.ISSUE_TYPE, issueType);
+            parameters.put(NetworkConstants.ISSUE, issue);
             contactUsRequest(parameters);
             Log.d(TAG, parameters.toString());
         }
