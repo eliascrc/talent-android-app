@@ -39,7 +39,6 @@ public class PrivacyPolicyActivity extends AppCompatActivity {
 
     // Constant TAG, for the DEBUG log messages
     private static final String TAG = "PrivacyPolicyActivity";
-    private static final String PLATFORM = "android";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -104,15 +103,6 @@ public class PrivacyPolicyActivity extends AppCompatActivity {
                 requestContent();
             }
         });
-
-        contactUs.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent contactUsActivity = new Intent(PrivacyPolicyActivity.this, ContactUsActivity.class);
-                PrivacyPolicyActivity.this.startActivity(contactUsActivity);
-            }
-        });
-
         requestContent();
     }
 
@@ -140,7 +130,7 @@ public class PrivacyPolicyActivity extends AppCompatActivity {
             }
         };
         ContentRequest contentRequest =
-                new ContentRequest(NetworkConstants.PRIVACY_POLICY_URL, "", listener, errorListener, new SessionStorage());
+                new ContentRequest(NetworkConstants.PRIVACY_POLICY_URL, "", listener, errorListener, SessionStorage.getInstance());
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(contentRequest);

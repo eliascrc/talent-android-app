@@ -1,13 +1,9 @@
 package request;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import common.SessionStorage;
 import networking.BaseRequest;
@@ -46,10 +42,9 @@ public class EncodedPostRequest extends BaseRequest<BaseResponse<String>> {
         int statusCode = networkResponse.statusCode;
 
         // Make new BaseResponse<String> and set the status code
-        BaseResponse<String> baseResponse = new BaseResponse<>(this.getSessionStorage());
+        BaseResponse<String> baseResponse = new BaseResponse<>();
         baseResponse.setHttpStatusCode(statusCode);
         baseResponse.setHttpHeaders(networkResponse.headers);
-        baseResponse.setCookie();
 
         // Create new Response from our BaseResponse and return it
         Response<BaseResponse<String>> response = Response.success(baseResponse,

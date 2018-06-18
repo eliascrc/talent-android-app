@@ -11,7 +11,6 @@ import android.preference.PreferenceManager;
  *
  * @author Otto Mena Kikut
  */
-
 public class UserSharedPreference {
     static final String TOKEN = "token";
 

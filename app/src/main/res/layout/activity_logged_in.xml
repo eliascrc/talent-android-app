@@ -9,7 +9,7 @@
         android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Logged In" />
+        android:text= "@string/label_logged_in"/>
 
     <Button
         android:id="@+id/btn_logout"
@@ -19,7 +19,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginTop="388dp"
         android:background="@drawable/rounded_solid_orange_rectangle"
-        android:text="Logout"
+        android:text="@string/label_logout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

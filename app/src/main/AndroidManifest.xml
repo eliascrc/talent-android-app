@@ -29,7 +29,7 @@
             android:name=".SignInActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".SignUpFirstStepActivity" />
-        <activity android:name=".LoggedInActivity" />
+        <activity android:name=".DashboardActivity" />
         <activity
             android:name=".ForgotPasswordActivity"
             android:theme="@style/AppTheme.NoActionBar" />

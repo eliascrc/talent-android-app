@@ -1,9 +1,8 @@
 package common;
 
 
+import android.content.Context;
 import android.os.Bundle;
-
-import javax.ejb.Singleton;
 
 import icepick.State;
 
@@ -16,14 +15,21 @@ import static icepick.Icepick.saveInstanceState;
  *
  * @author Renato Mainieri Sáenz.
  */
-@Singleton
 public class SessionStorage {
+
+    private static SessionStorage instance;
 
     @State
     protected String cookieValue;
 
-    @State
-    protected String token;
+    private SessionStorage(){}
+
+    public static synchronized SessionStorage getInstance(){
+        if(instance == null){
+            instance = new SessionStorage();
+        }
+        return instance;
+    }
 
     public String getCookieValue() {
         return cookieValue;
@@ -33,7 +39,16 @@ public class SessionStorage {
         this.cookieValue = cookieValue;
     }
 
-
+    public boolean isLoggedIn(Context context){
+        boolean loggedIn;
+        if(UserSharedPreference.getToken(context).equals("")){
+            loggedIn = false;
+        }
+        else{
+            loggedIn = true;
+        }
+        return loggedIn;
+    }
     /**
      * Restore and save a old state of the cookieValue.
      *

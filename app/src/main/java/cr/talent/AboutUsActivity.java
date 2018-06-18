@@ -3,7 +3,11 @@ package cr.talent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-
+/**
+ * This activity displays the about us view.
+ *
+ * @author Otto Mena Kikut
+ */
 public class AboutUsActivity extends AppCompatActivity {
 
     @Override
