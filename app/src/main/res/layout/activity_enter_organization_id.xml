@@ -99,13 +99,12 @@
                 style="@style/EnterOrganizationIdEnding"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="31dp"
-                android:layout_marginStart="6dp"
+                android:layout_marginBottom="24dp"
+                android:layout_marginEnd="28dp"
                 android:lineSpacingMultiplier="1.25"
                 android:text="@string/label_organization_id"
                 app:layout_constraintBottom_toTopOf="@+id/btn_action_enter_organization_id"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/et_organization_id" />
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <ImageView
                 android:id="@+id/iv_button_arrow"

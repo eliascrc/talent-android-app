@@ -1,11 +1,9 @@
 package cr.talent;
 
 import android.content.Intent;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
@@ -28,6 +26,7 @@ import javax.ejb.EJB;
 
 import common.ParameterEncoder;
 import common.SessionStorage;
+import common.ViewFormatUtil;
 import common.UserSharedPreference;
 import networking.BaseResponse;
 import networking.HurlStackNoRedirect;
@@ -39,9 +38,14 @@ import request.ServiceCallback;
 
 import static networking.NetworkConstants.USER_AUTHENTICATED;
 
+/**
+ * This activity displays the Contact Us view, it also manages the respective error messages and
+ * requests done to the ContactUs webservice.
+ *
+ * @author Otto Mena Kikut
+ */
 public class ContactUsActivity extends AppCompatActivity {
 
-    private View contactUsView;
     private EditText firstNameEditText;
     private EditText lastNameEditText;
     private EditText emailEditText;
@@ -62,29 +66,18 @@ public class ContactUsActivity extends AppCompatActivity {
 
 
     private ServiceCallback serviceCallback;
-    @EJB
-    private SessionStorage sessionStorage;
 
     // Constant TAG, for the DEBUG log messages
     private static final String TAG = "ContactUsActivity";
-    private static final String COOKIE_HEADER_KEY = "Set-Cookie";
-    private static final String SEMICOLON = ";";
-    private static final String TOKEN = "token";
-    private static final String FIRSTNAME = "firstName";
-    private static final String LASTNAME = "lastName";
-    private static final String EMAIL = "email";
-    private static final String ISSUETYPE = "issueType";
-    private static final String ISSUE = "issue";
 
-    boolean authenticated;
     boolean submitted;
+    boolean authenticated;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         submitted = false;
-        authenticated = false;
-        sessionStorage = new SessionStorage();
+        authenticated = SessionStorage.getInstance().isLoggedIn(ContactUsActivity.this);
         setContentView(R.layout.activity_contact_us);
         initializeViews();
         String token = UserSharedPreference.getToken(ContactUsActivity.this);
@@ -107,24 +100,7 @@ public class ContactUsActivity extends AppCompatActivity {
             public void onSuccessResponse(BaseResponse<String> baseResponse) {
                 Log.d(TAG, "The method onSuccessResponse was executed.");
                 Log.d(TAG, "The method onSuccessResponse received the " + baseResponse.getHttpStatusCode()+" HTTP status code.");
-                if(submitted){
-                    setContentView(R.layout.contact_us_confirmation);
-                    confirmButton = findViewById(R.id.contact_us_btn_confirm);
-                    confirmButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            if(authenticated){
-                                Intent loggedInActivity = new Intent(ContactUsActivity.this, LoggedInActivity.class);
-                                ContactUsActivity.this.startActivity(loggedInActivity);
-                            } else{
-                                Intent landingViewActivity = new Intent(ContactUsActivity.this, LandingViewActivity.class);
-                                ContactUsActivity.this.startActivity(landingViewActivity);
-                            }
-                        }
-                    });
-                } else{
-                    loggedInView();
-                }
+                showSuccessMessage();
             }
 
             @Override
@@ -141,10 +117,10 @@ public class ContactUsActivity extends AppCompatActivity {
                 }
             }
         };
-        if (token.equals("")){
-            loggedInRequest(token);
-        }else{
-            loggedInRequest(token);
+        if(authenticated){
+            loggedInView();
+        } else{
+            nonLoggedInView();
         }
     }
     private void createRedirectRequest(){
@@ -167,67 +143,20 @@ public class ContactUsActivity extends AppCompatActivity {
             }
         };
         AuthenticatedRequest redirectRequest = new AuthenticatedRequest(USER_AUTHENTICATED, "",
-                listener, errorListener, sessionStorage);
+                listener, errorListener, SessionStorage.getInstance());
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        Log.d(TAG, "a");
         requestQueue.add(redirectRequest);
     }
 
-
-
-    private void loggedInRequest(String token){
-        // Instantiate listeners to send to the request instance
-        Response.Listener<BaseResponse<String>> listener = new Response.Listener<BaseResponse<String>>() {
-            @Override
-            public void onResponse(BaseResponse<String> response) {
-                serviceCallback.onSuccessResponse(response);
-            }
-        };
-        final Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                NetworkError networkError = new NetworkError();
-                networkError.setErrorCode(error.networkResponse.statusCode);
-                networkError.setErrorMessage(error.networkResponse.toString());
-                Log.d(TAG, error.networkResponse.allHeaders.toString());
-                if(error.networkResponse.headers.containsKey(COOKIE_HEADER_KEY)){
-                    String cookie = error.networkResponse.headers.get(COOKIE_HEADER_KEY);
-                    cookie = cookie.substring(0, cookie.indexOf(SEMICOLON));
-                    Log.d(TAG, cookie);
-                    sessionStorage.setCookieValue(cookie);
-                }
-                serviceCallback.onErrorResponse(networkError);
-            }
-        };
-
-        // Form the request's body
-        HashMap<String,String> parameters = new HashMap<>();
-        parameters.put(TOKEN , token);
-        String body = "";
-        try {
-            // Encodes the parameters with the ParameterEncoder class declared in common
-            body = ParameterEncoder.encodeHashmap(parameters);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-        // Create and send request
-        Log.d(TAG, body);
-        EncodedPostRequest signInTokenRequest = new EncodedPostRequest(NetworkConstants.SIGN_IN_TOKEN_URL, body,
-                listener, errorListener, sessionStorage);
-
-        RequestQueue requestQueue = Volley.newRequestQueue(this, new HurlStackNoRedirect());
-        requestQueue.add(signInTokenRequest);
-    }
 
     private void loggedInView(){
         authenticated = true;
         hideUserEditText();
         ViewGroup.MarginLayoutParams paramsLabel =   (ViewGroup.MarginLayoutParams) issueTypeLabel.getLayoutParams();
-        paramsLabel.topMargin = dpToPx(97);
+        paramsLabel.topMargin = ViewFormatUtil.dpToPx(97, ContactUsActivity.this);
         issueTypeLabel.setLayoutParams(paramsLabel);
         ViewGroup.MarginLayoutParams paramsEditText = (ViewGroup.MarginLayoutParams) issueEditText.getLayoutParams();
-        paramsEditText.height = dpToPx(319);
+        paramsEditText.height = ViewFormatUtil.dpToPx(309, ContactUsActivity.this);
         issueEditText.setLayoutParams(paramsEditText);
     }
 
@@ -265,10 +194,10 @@ public class ContactUsActivity extends AppCompatActivity {
         EncodedPostRequest contactUs;
         if(authenticated){
             contactUs = new EncodedPostRequest(NetworkConstants.CONTACT_US_AUTHENTICATED,body,
-                    listener, errorListener, sessionStorage);
+                    listener, errorListener, SessionStorage.getInstance());
         } else{
             contactUs = new EncodedPostRequest(NetworkConstants.CONTACT_US_UNAUTHENTICATED,body,
-                    listener, errorListener, sessionStorage);
+                    listener, errorListener, SessionStorage.getInstance());
         }
         Log.d(TAG, contactUs.getHeaders().toString());
         RequestQueue requestQueue = Volley.newRequestQueue(this, new HurlStackNoRedirect());
@@ -285,11 +214,11 @@ public class ContactUsActivity extends AppCompatActivity {
         String issue = issueEditText.getText().toString();
         if (!authenticated && validFields(firstName, lastName, email, issueType, issue)){
             HashMap<String,String> parameters = new HashMap<>();
-            parameters.put(FIRSTNAME, firstName);
-            parameters.put(LASTNAME, lastName);
-            parameters.put(EMAIL, email);
-            parameters.put(ISSUETYPE, issueType);
-            parameters.put(ISSUE, issue);
+            parameters.put(NetworkConstants.FIRSTNAME, firstName);
+            parameters.put(NetworkConstants.LASTNAME, lastName);
+            parameters.put(NetworkConstants.EMAIL, email);
+            parameters.put(NetworkConstants.ISSUE_TYPE, issueType);
+            parameters.put(NetworkConstants.ISSUE, issue);
             contactUsRequest(parameters);
             Log.d(TAG, parameters.toString());
         }
@@ -309,10 +238,10 @@ public class ContactUsActivity extends AppCompatActivity {
         emptyIssue.setVisibility(View.INVISIBLE);
         emptyIssueType.setVisibility(View.INVISIBLE);
         invalidEmailLabel.setVisibility(View.INVISIBLE);
-        setEditContainerColor(R.color.dark_orange, firstNameEditText);
-        setEditContainerColor(R.color.dark_orange, lastNameEditText);
-        setEditContainerColor(R.color.dark_orange, emailEditText);
-        setEditContainerColor(R.color.dark_orange, issueEditText);
+        ViewFormatUtil.setEditContainerColor(R.color.dark_orange, firstNameEditText, ContactUsActivity.this);
+        ViewFormatUtil.setEditContainerColor(R.color.dark_orange, lastNameEditText, ContactUsActivity.this);
+        ViewFormatUtil.setEditContainerColor(R.color.dark_orange, emailEditText, ContactUsActivity.this);
+        ViewFormatUtil.setEditContainerColor(R.color.dark_orange, issueEditText, ContactUsActivity.this);
     }
 
     private void hideUserEditText(){
@@ -330,26 +259,26 @@ public class ContactUsActivity extends AppCompatActivity {
         if(!authenticated && TextUtils.isEmpty(firstName)){
             valid = false;
             emptyFirstName.setVisibility(View.VISIBLE);
-            setEditContainerColor(R.color.error_text, firstNameEditText);
+            ViewFormatUtil.setEditContainerColor(R.color.error_text, firstNameEditText, ContactUsActivity.this);
         } if(!authenticated && TextUtils.isEmpty(lastName)){
             valid = false;
             emptyLastName.setVisibility(View.VISIBLE);
-            setEditContainerColor(R.color.error_text, lastNameEditText);
+            ViewFormatUtil.setEditContainerColor(R.color.error_text, lastNameEditText, ContactUsActivity.this);
         } if(!authenticated && TextUtils.isEmpty(email)){
             valid = false;
             emptyEmail.setVisibility(View.VISIBLE);
-            setEditContainerColor(R.color.error_text, emailEditText);
+            ViewFormatUtil.setEditContainerColor(R.color.error_text, emailEditText, ContactUsActivity.this);
         } else if (!authenticated && !Patterns.EMAIL_ADDRESS.matcher(email).matches()){
             valid = false;
             invalidEmailLabel.setVisibility(View.VISIBLE);
-            setEditContainerColor(R.color.error_text, emailEditText);
+            ViewFormatUtil.setEditContainerColor(R.color.error_text, emailEditText, ContactUsActivity.this);
         } if(TextUtils.isEmpty(issueType)){
             valid = false;
             emptyIssueType.setVisibility(View.VISIBLE);
         } if(TextUtils.isEmpty(issue)){
             valid = false;
             emptyIssue.setVisibility(View.VISIBLE);
-            setEditContainerColor(R.color.error_text, issueEditText);
+            ViewFormatUtil.setEditContainerColor(R.color.error_text, issueEditText, ContactUsActivity.this);
         }
         return valid;
     }
@@ -358,7 +287,6 @@ public class ContactUsActivity extends AppCompatActivity {
         emailLabel = findViewById(R.id.contact_us_tv_email);
         firstNameLabel = findViewById(R.id.contact_us_tv_first_name);
         lastNameLabel = findViewById(R.id.contact_us_tv_last_name);
-        contactUsView = findViewById(R.id.contact_us_layout);
         firstNameEditText = findViewById(R.id.contact_us_et_first_name);
         lastNameEditText = findViewById(R.id.contact_us_et_last_name);
         emailEditText = findViewById(R.id.contact_us_et_email);
@@ -372,13 +300,21 @@ public class ContactUsActivity extends AppCompatActivity {
         submitButton = findViewById(R.id.contact_us_btn_submit);
         invalidEmailLabel = findViewById(R.id.contact_us_tv_email_invalid);
     }
-    public int dpToPx(int dp) {
-        DisplayMetrics displayMetrics = ContactUsActivity.this.getResources().getDisplayMetrics();
-        return Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+
+    private void showSuccessMessage(){
+        setContentView(R.layout.contact_us_confirmation);
+        confirmButton = findViewById(R.id.contact_us_btn_confirm);
+        confirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(authenticated){
+                    Intent loggedInActivity = new Intent(ContactUsActivity.this, DashboardActivity.class);
+                    ContactUsActivity.this.startActivity(loggedInActivity);
+                } else {
+                    Intent landingViewActivity = new Intent(ContactUsActivity.this, LandingViewActivity.class);
+                    ContactUsActivity.this.startActivity(landingViewActivity); }
+            }
+        });
     }
 
-    private void setEditContainerColor(int color, EditText container) {
-        GradientDrawable drawable = (GradientDrawable) container.getBackground();
-        drawable.setStroke(dpToPx(1), getResources().getColor(color));
-    }
 }

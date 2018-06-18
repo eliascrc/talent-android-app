@@ -43,10 +43,9 @@ public class AuthenticatedRequest extends BaseRequest<BaseResponse<Object>> {
             // Get the Status code from the NetworkResponse (volley class)
             int statusCode = networkResponse.statusCode;
 
-            BaseResponse<Object> baseResponse = new BaseResponse<>(this.getSessionStorage());
+            BaseResponse<Object> baseResponse = new BaseResponse<>();
             baseResponse.setHttpStatusCode(statusCode);
             baseResponse.setHttpHeaders(networkResponse.headers);
-            baseResponse.setCookie();
             baseResponse.setResponse(json);
             Response<BaseResponse<Object>> response = Response.success(baseResponse,
                     HttpHeaderParser.parseCacheHeaders(networkResponse));

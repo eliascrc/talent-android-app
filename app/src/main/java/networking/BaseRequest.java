@@ -25,11 +25,7 @@ public abstract class BaseRequest<T> extends JsonRequest<T> {
     public static final int DEFAULT_MAX_RETRIES = 0;
     public static final float DEFAULT_BACKOFF = 1f;
 
-    public static final String COOKIE = "cookie";
-    public static final String ORIGIN = "origin";
-    public static final String ANDROID = "android";
 
-    private SessionStorage sessionStorage;
     private Response.ErrorListener errorListener;
     protected Response.Listener<T> listener;
 
@@ -47,21 +43,13 @@ public abstract class BaseRequest<T> extends JsonRequest<T> {
         this.setRetryPolicy(defaultRetryPolicy);
         this.listener = listener;
         this.errorListener = errorListener;
-        this.sessionStorage = sessionStorage;
     }
 
-    public SessionStorage getSessionStorage() {
-        return sessionStorage;
-    }
-
-    public void setSessionStorage(SessionStorage sessionStorage) {
-        this.sessionStorage = sessionStorage;
-    }
     @Override
     public Map<String, String> getHeaders(){
         Map<String,String> params = new HashMap<String, String>();
-        params.put(ORIGIN, ANDROID);
-        params.put(COOKIE, sessionStorage.getCookieValue());
+        params.put(NetworkConstants.ORIGIN, NetworkConstants.ANDROID);
+        params.put(NetworkConstants.COOKIE, SessionStorage.getInstance().getCookieValue());
         return params;
     }
 
@@ -73,11 +61,6 @@ public abstract class BaseRequest<T> extends JsonRequest<T> {
      */
     @Override
     protected Response<T> parseNetworkResponse(NetworkResponse response) {
-        String headers = response.headers.get("Set-Cookie");
-        if (headers != null) {
-            headers = headers.substring(0, headers.indexOf(";"));
-            this.sessionStorage.setCookieValue(headers);
-        }
         return null;
 
     }
@@ -90,8 +73,12 @@ public abstract class BaseRequest<T> extends JsonRequest<T> {
      */
     @Override
     protected VolleyError parseNetworkError(VolleyError volleyError) {
+        if(volleyError.networkResponse.headers.containsKey(NetworkConstants.COOKIE_HEADER_KEY)){
+            String cookie = volleyError.networkResponse.headers.get(NetworkConstants.COOKIE_HEADER_KEY);
+            cookie = cookie.substring(0, cookie.indexOf(NetworkConstants.SEMICOLON));
+            SessionStorage.getInstance().setCookieValue(cookie);
+        }
         return volleyError;
     }
-
 
 }

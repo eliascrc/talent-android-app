@@ -54,4 +54,8 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
 
+    <!-- EditText -->
+    <dimen name="issue_et_top_margin">97</dimen>
+    <dimen name="issue_et_height">319</dimen>
+
 </resources>

@@ -12,5 +12,18 @@ public final class NetworkConstants {
     public static final String USER_AUTHENTICATED = BASE_URL + "/ws/user/authenticated";
     public static final String CONTACT_US_AUTHENTICATED = BASE_URL + "/ws/contactUs/authenticated";
     public static final String CONTACT_US_UNAUTHENTICATED = BASE_URL + "/ws/contactUs/unauthenticated";
-
+    public static final String COOKIE_HEADER_KEY = "Set-Cookie";
+    public static final String SEMICOLON = ";";
+    public static final String TOKEN = "token";
+    public static final String COOKIE = "cookie";
+    public static final String ORIGIN = "origin";
+    public static final String ANDROID = "android";
+    public static final String USERNAME = "username";
+    public static final String PASSWORD = "password"
+    public static final String ORGANIZATION_IDENTIFIER = "organizationIdentifier";
+    public static final String FIRSTNAME = "firstName";
+    public static final String LASTNAME = "lastName";
+    public static final String EMAIL = "email";
+    public static final String ISSUE_TYPE = "issueType";
+    public static final String ISSUE = "issue";
 }

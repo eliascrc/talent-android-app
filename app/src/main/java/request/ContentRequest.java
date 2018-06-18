@@ -34,7 +34,7 @@ public class ContentRequest extends BaseRequest<BaseResponse<String>> {
         super.parseNetworkResponse(networkResponse);
         try {
             String content = new String(networkResponse.data, HttpHeaderParser.parseCharset(networkResponse.headers));
-            BaseResponse<String> baseResponse = new BaseResponse<>(getSessionStorage());
+            BaseResponse<String> baseResponse = new BaseResponse<>();
             baseResponse.setResponse(content);
             Response<BaseResponse<String>> response = Response.success(baseResponse,
                     HttpHeaderParser.parseCacheHeaders(networkResponse));
