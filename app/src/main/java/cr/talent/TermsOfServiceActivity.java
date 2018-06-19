@@ -1,8 +1,6 @@
 package cr.talent;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -104,15 +102,6 @@ public class TermsOfServiceActivity extends AppCompatActivity {
                 requestContent();
             }
         });
-
-        contactUs.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent contactUsActivity = new Intent(TermsOfServiceActivity.this, ContactUsActivity.class);
-                TermsOfServiceActivity.this.startActivity(contactUsActivity);
-            }
-        });
-
         requestContent();
     }
 
@@ -140,7 +129,7 @@ public class TermsOfServiceActivity extends AppCompatActivity {
             }
         };
         ContentRequest contentRequest =
-                new ContentRequest(NetworkConstants.TERMS_OF_SERVICE_URL, "", listener, errorListener, new SessionStorage());
+                new ContentRequest(NetworkConstants.TERMS_OF_SERVICE_URL, "", listener, errorListener, SessionStorage.getInstance());
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(contentRequest);

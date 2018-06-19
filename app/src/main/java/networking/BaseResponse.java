@@ -16,14 +16,8 @@ public class BaseResponse<T> {
     private int httpStatusCode;
     protected T response;
 
-    private SessionStorage sessionStorage;
-
-    private static final String COOKIE_HEADER_KEY = "Set-Cookie";
-    private static final String SEMICOLON = ";";
-
-    public BaseResponse(SessionStorage sessionStorage) {
+    public BaseResponse() {
         this.httpStatusCode = 0;
-        this.sessionStorage = sessionStorage;
     }
 
     public Map<String, String> getHttpHeaders() {
@@ -50,21 +44,6 @@ public class BaseResponse<T> {
         this.response = response;
     }
 
-    public void setCookie(){
-        if (this.httpHeaders.containsKey(COOKIE_HEADER_KEY)) {
-            String cookie = this.getHttpHeaderValue(COOKIE_HEADER_KEY);
-            cookie = cookie.substring(0, cookie.indexOf(SEMICOLON));
-            sessionStorage.setCookieValue(cookie);
-        }
-    }
-
-    public SessionStorage getSessionStorage() {
-        return sessionStorage;
-    }
-
-    public void setSessionStorage(SessionStorage sessionStorage) {
-        this.sessionStorage = sessionStorage;
-    }
 
     /**
      * Return the HTTP header value of a respective HTTP header name.

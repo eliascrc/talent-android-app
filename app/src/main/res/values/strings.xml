@@ -62,7 +62,7 @@
         <item >Other</item>
     </string-array>
     <string name="action_submit">Submit</string>
-    <string name="action_confirm">Ok</string>
+    <string name="action_confirm">OK</string>
     <string name="contact_us_thanks_message">Thanks for Getting in Touch</string>
     <string name="contact_us_email_send">You will receive an email shortly, in the meantime we invite you to explore our site.</string>
 
@@ -77,12 +77,14 @@
     <string name="content_text4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas est turpis, feugiat et elementum.</string>
 
     <!-- Strings related to the forgot password activity -->
+    <string name="label_logged_in">Login works!</string>
+    <string name="label_logout">Logout</string>
+
+    <!-- Strings related to the forgot password activity -->
     <string name="label_recover_password">Recover password</string>
     <string name="label_enter_email">Enter your email</string>
     <string name="action_send_email">Send email</string>
     <string name="email_sent_message_content">
-
-
 <![CDATA[
 <html>
  <head></head>

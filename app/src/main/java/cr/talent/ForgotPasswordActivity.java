@@ -21,6 +21,7 @@ import java.util.HashMap;
 
 import common.ParameterEncoder;
 import common.SessionStorage;
+import common.ViewFormatUtil;
 import networking.BaseResponse;
 import networking.NetworkConstants;
 import networking.NetworkError;
@@ -92,7 +93,8 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                 // Hide the no network connectivity layout and error messages in case they were visible
                 noNetworkConnectionErrorLayout.setVisibility(GONE);
                 invalidEmailTextView.setVisibility(INVISIBLE);
-                setEmailEditTextColor(R.color.dark_orange);
+                ViewFormatUtil.setEditContainerColor(R.color.dark_orange, emailEditText, ForgotPasswordActivity.this);
+
                 forgotPasswordView.setVisibility(VISIBLE);
             }
         });
@@ -130,21 +132,16 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         };
     }
 
-    // Set the email edit text's color
-    private void setEmailEditTextColor(int color) {
-        GradientDrawable drawable = (GradientDrawable) emailEditText.getBackground();
-        drawable.setStroke(1, getResources().getColor(color));
-    }
 
     private void sendEmail(View view) {
         String email = emailEditText.getText().toString();
-
+        ViewFormatUtil.setEditContainerColor(R.color.dark_orange, emailEditText, ForgotPasswordActivity.this);
         if(!TextUtils.isEmpty(email)) {
 
             if(!email.contains("@")) {
                 // Show invalid email error message return
                 invalidEmailTextView.setVisibility(VISIBLE);
-                setEmailEditTextColor(R.color.error_text);
+                ViewFormatUtil.setEditContainerColor(R.color.error_text, emailEditText, ForgotPasswordActivity.this);
                 return;
             }
 
@@ -181,7 +178,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
             // Create and send request
             EncodedPostRequest sendEmailRequest = new EncodedPostRequest(NetworkConstants.FORGOT_PASSWORD_SEND_EMAIL_URL,
-                    body, listener, errorListener, new SessionStorage());
+                    body, listener, errorListener, SessionStorage.getInstance());
 
             RequestQueue requestQueue = Volley.newRequestQueue(this);
             requestQueue.add(sendEmailRequest);
