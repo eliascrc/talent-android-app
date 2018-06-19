@@ -12,14 +12,6 @@ import java.util.Date;
  */
 public class User extends BasicEntity {
 
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
     public enum Status {ACTIVE, INACTIVE, SUSPENDED}
 
     /**
@@ -164,4 +156,11 @@ public class User extends BasicEntity {
         this.status = status;
     }
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 }

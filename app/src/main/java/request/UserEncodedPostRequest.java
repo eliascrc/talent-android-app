@@ -23,7 +23,7 @@ import networking.BaseResponse;
 /**
  * This class makes a request to the server with correctly encoded parameters, that returns the information of a user.
  *
- * @author Fabián Roberto Leandro
+ * @author Elias Calderon
  */
 public class UserEncodedPostRequest extends EncodedPostRequest<User> {
 

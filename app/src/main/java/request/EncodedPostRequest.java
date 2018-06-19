@@ -12,7 +12,7 @@ import networking.BaseResponse;
 /**
  * This class makes a request to the server with correctly encoded parameters.
  *
- * @author Fabián Roberto Leandro
+ * @author Elias Calderon
  */
 public class EncodedPostRequest<T> extends BaseRequest<BaseResponse<T>> {
     /**

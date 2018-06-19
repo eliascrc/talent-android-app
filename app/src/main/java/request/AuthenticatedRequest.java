@@ -25,7 +25,7 @@ import networking.BaseResponse;
 /**
  * This class makes a request to the server to know if the current mobile app user is authenticated.
  *
- * @author Renato Mainieri Sáenz.
+ * @author Elias Calderon
  */
 public class AuthenticatedRequest extends BaseRequest<BaseResponse<User>> {
 
