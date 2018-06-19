@@ -28,6 +28,7 @@ import javax.ejb.EJB;
 
 import common.SessionStorage;
 import common.UserSharedPreference;
+import model.User;
 import networking.BaseResponse;
 import networking.NetworkConstants;
 import networking.NetworkError;
@@ -82,17 +83,18 @@ public class DashboardActivity extends AppCompatActivity {
                 logOut(v);
             }
         });
-        serviceCallback = new ServiceCallback<BaseResponse<String>,NetworkError>() {
-            public BaseResponse<String> listener;
+        serviceCallback = new ServiceCallback<BaseResponse<User>,NetworkError>() {
+            public BaseResponse<User> listener;
 
 
             @Override
-            public void onPreExecute(BaseResponse<String> listener) {
+            public void onPreExecute(BaseResponse<User> listener) {
                 Log.d(TAG, "The method onPreExecute was executed.");
                 this.listener = listener;
             }
+
             @Override
-            public void onSuccessResponse(BaseResponse<String> baseResponse) {
+            public void onSuccessResponse(BaseResponse<User> baseResponse) {
                 Log.d(TAG, "The method onSuccessResponse was executed.");
                 Log.d(TAG, "The method onSuccessResponse received the " + baseResponse.getHttpStatusCode()+" HTTP status code.");
                 // Proceed to next activity with a logged in user
@@ -119,9 +121,9 @@ public class DashboardActivity extends AppCompatActivity {
     private void logOut(View view) {
 
             // Instantiate listeners to send to the request instance
-        final Response.Listener<BaseResponse<Object>> listener = new Response.Listener<BaseResponse<Object>>() {
+        final Response.Listener<BaseResponse<User>> listener = new Response.Listener<BaseResponse<User>>() {
             @Override
-            public void onResponse(BaseResponse<Object> response) {
+            public void onResponse(BaseResponse<User> response) {
                 Log.d(TAG,Integer.toString(response.getHttpStatusCode()));
                 serviceCallback.onSuccessResponse(response);
             }

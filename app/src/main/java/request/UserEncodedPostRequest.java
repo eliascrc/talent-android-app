@@ -1,6 +1,5 @@
 package request;
 
-
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
 import com.android.volley.Response;
@@ -19,36 +18,32 @@ import java.util.Date;
 
 import common.SessionStorage;
 import model.User;
-import networking.BaseRequest;
 import networking.BaseResponse;
 
 /**
- * This class makes a request to the server to know if the current mobile app user is authenticated.
+ * This class makes a request to the server with correctly encoded parameters, that returns the information of a user.
  *
  * @author Elias Calderon
  */
-public class AuthenticatedRequest extends BaseRequest<BaseResponse<User>> {
+public class UserEncodedPostRequest extends EncodedPostRequest<User> {
 
     /**
-     * This constructor creates a AuthenticatedRequest, specifying the URL, request body, listener, error listener and session storage.
-     * The HTTP method is defined to be GET.
+     * This constructor creates a SignInRequest, specifying the URL, request body, listener, error listener and session storage.
+     * The HTTP method is defined to be POST.
      */
-    public AuthenticatedRequest(String url, String requestBody, Response.Listener<BaseResponse<User>> listener,
-                                Response.ErrorListener errorListener, SessionStorage sessionStorage) {
-        super(Method.GET, url, requestBody, listener, errorListener, sessionStorage);
+    public UserEncodedPostRequest(String url, String requestBody, Response.Listener<BaseResponse<User>> listener, Response.ErrorListener errorListener, SessionStorage sessionStorage) {
+        super(url, requestBody, listener, errorListener, sessionStorage);
     }
 
     /**
-     * Parses the user that returns the web service via a json.
+     * Overrides the parent method for creating a response that converts the json to the logged in User in BaseResponse.
      */
     @Override
     public Response<BaseResponse<User>> parseNetworkResponse(NetworkResponse networkResponse) {
         super.parseNetworkResponse(networkResponse);
         try {
-            // Authenticated web service always returns the information of an authenticated user
             String json = new String(networkResponse.data, HttpHeaderParser.parseCharset(networkResponse.headers));
             Type baseResponseType = new TypeToken<User>() {}.getType();
-
             GsonBuilder gsonBuilder = new GsonBuilder();
 
             // For millisecond Timestamps
@@ -78,4 +73,5 @@ public class AuthenticatedRequest extends BaseRequest<BaseResponse<User>> {
             return response;
         }
     }
+
 }
