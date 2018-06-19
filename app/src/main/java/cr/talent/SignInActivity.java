@@ -43,6 +43,7 @@ import javax.ejb.EJB;
 import common.ParameterEncoder;
 import common.SessionStorage;
 import common.UserSharedPreference;
+import model.User;
 import networking.BaseResponse;
 import networking.HurlStackNoRedirect;
 import networking.NetworkConstants;
@@ -163,31 +164,26 @@ public class SignInActivity extends AppCompatActivity {
 
         // Implement inline the onPreExecute, onSuccess and onFailure methods of the ServiceCallback instance
         // They will be called when the sign in webservice returns
-        serviceCallback = new ServiceCallback<BaseResponse<String>,NetworkError>() {
-            public BaseResponse<String> listener;
+        serviceCallback = new ServiceCallback<BaseResponse<User>,NetworkError>() {
+            public BaseResponse<User> listener;
 
 
             @Override
-            public void onPreExecute(BaseResponse<String> listener) {
+            public void onPreExecute(BaseResponse<User> listener) {
                 Log.d(TAG, "The method onPreExecute was executed.");
                 this.listener = listener;
             }
             @Override
-            public void onSuccessResponse(BaseResponse<String> baseResponse) {
+            public void onSuccessResponse(BaseResponse<User> baseResponse) {
                 Log.d(TAG, "The method onSuccessResponse was executed.");
                 Log.d(TAG, "The method onSuccessResponse received the " + baseResponse.getHttpStatusCode()+" HTTP status code.");
                 // Proceed to next activity with a logged in user
                 Intent loggedInActivity = new Intent(SignInActivity.this, LoggedInActivity.class);
-                String userJson = baseResponse.getResponse();
-                try {
-                    JSONObject reader = new JSONObject(userJson);
-                    String token = reader.getString(TOKEN);
-                    Log.d(TAG, token);
-                    UserSharedPreference.setToken(SignInActivity.this, token);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                loggedInActivity.putExtra(USER_JSON,userJson);
+                User user = baseResponse.getResponse();
+                String token = user.getToken();
+                Log.d(TAG, token);
+                UserSharedPreference.setToken(SignInActivity.this, token);
+                loggedInActivity.putExtra(USER_JSON,user);
                 SignInActivity.this.startActivity(loggedInActivity);
             }
 

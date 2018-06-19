@@ -11,6 +11,14 @@ import java.util.Date;
  */
 public abstract class User extends BasicEntity {
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
     public enum Status {ACTIVE, INACTIVE, SUSPENDED}
 
     /**
@@ -52,6 +60,11 @@ public abstract class User extends BasicEntity {
      * The status of the user account.
      */
     private Status status;
+
+    /**
+     * The user's token
+     */
+    private String token;
 
     public User (){}
 
