@@ -5,11 +5,12 @@ import java.util.Date;
 /**
  * Class that represents a User within the Talent system.
  * It contains the username, password, first name, last name and the information inherited from
- * {@link BasicEntity} class.
+ * {@link BasicEntity} class. The user is not abstract, because it is used for recovering
+ * the authenticated information.
  *
  * @author Elías Calderón
  */
-public abstract class User extends BasicEntity {
+public class User extends BasicEntity {
 
     public String getToken() {
         return token;

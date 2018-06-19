@@ -3,7 +3,6 @@ package cr.talent;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,7 +11,6 @@ import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
@@ -28,17 +26,15 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 
 import java.io.InputStream;
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.util.HashMap;
 
-
-import javax.ejb.EJB;
 
 import common.ParameterEncoder;
 import common.SessionStorage;
@@ -52,6 +48,7 @@ import networking.NetworkError;
 import request.AuthenticatedRequest;
 import request.ServiceCallback;
 import request.EncodedPostRequest;
+import request.UserEncodedPostRequest;
 
 import static networking.NetworkConstants.USER_AUTHENTICATED;
 
@@ -89,7 +86,7 @@ public class SignInActivity extends AppCompatActivity {
     private static final String TAG = "SignInActivity";
 
     private static final int SPAN_EXCLUSIVE = Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
-    private static final String USER_JSON = "USER_JSON";
+    private static final String USER = "USER";
 
     // Visibility constants
     private static final int GONE = View.GONE;
@@ -171,23 +168,25 @@ public class SignInActivity extends AppCompatActivity {
         serviceCallback = new ServiceCallback<BaseResponse<User>,NetworkError>() {
             public BaseResponse<User> listener;
 
-
             @Override
             public void onPreExecute(BaseResponse<User> listener) {
                 Log.d(TAG, "The method onPreExecute was executed.");
                 this.listener = listener;
             }
+
             @Override
             public void onSuccessResponse(BaseResponse<User> baseResponse) {
                 Log.d(TAG, "The method onSuccessResponse was executed.");
                 Log.d(TAG, "The method onSuccessResponse received the " + baseResponse.getHttpStatusCode()+" HTTP status code.");
                 // Proceed to next activity with a logged in user
-                Intent loggedInActivity = new Intent(SignInActivity.this, LoggedInActivity.class);
+                Intent loggedInActivity = new Intent(SignInActivity.this, DashboardActivity.class);
                 User user = baseResponse.getResponse();
                 String token = user.getToken();
                 Log.d(TAG, token);
                 UserSharedPreference.setToken(SignInActivity.this, token);
-                loggedInActivity.putExtra(USER_JSON,user);
+                // A user is temporarily put in the intent, nevertheless this may need changes for recovering
+                // the object in the loggedInActivity. For now, it's not necessary because it's not recovered.
+                loggedInActivity.putExtra(USER,user);
                 SignInActivity.this.startActivity(loggedInActivity);
             }
 
@@ -246,13 +245,14 @@ public class SignInActivity extends AppCompatActivity {
     // Get data in the et_email and et_password EditTexts and attempt to sign in with it
     private void signInRequest(HashMap<String, String> parameters) {
         // Instantiate listeners to send to the request instance
-        final Response.Listener<BaseResponse<String>> listener = new Response.Listener<BaseResponse<String>>() {
+        final Response.Listener<BaseResponse<User>> listener = new Response.Listener<BaseResponse<User>>() {
             @Override
-            public void onResponse(BaseResponse<String> response) {
+            public void onResponse(BaseResponse<User> response) {
                 Log.d(TAG,Integer.toString(response.getHttpStatusCode()));
                 serviceCallback.onSuccessResponse(response);
             }
         };
+
         final Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -274,7 +274,7 @@ public class SignInActivity extends AppCompatActivity {
         }
 
         // Create and send request
-        EncodedPostRequest signInRequest = new EncodedPostRequest(NetworkConstants.SIGN_IN_URL,body,
+        EncodedPostRequest signInRequest = new UserEncodedPostRequest(NetworkConstants.SIGN_IN_URL,body,
                 listener, errorListener, SessionStorage.getInstance());
         Log.d(TAG, signInRequest.getHeaders().toString());
         RequestQueue requestQueue = Volley.newRequestQueue(this, new HurlStackNoRedirect());
@@ -298,6 +298,7 @@ public class SignInActivity extends AppCompatActivity {
 
 
     }
+
     private boolean validFields(String email, String password) {
         ViewFormatUtil.setEditContainerColor(R.color.dark_orange, emailEditText, SignInActivity.this);
         boolean valid = true;
@@ -318,9 +319,9 @@ public class SignInActivity extends AppCompatActivity {
 
     private void createRedirectRequest(){
         // Instantiate listeners to send to the request instance
-        final Response.Listener<BaseResponse<Object>> listener = new Response.Listener<BaseResponse<Object>>() {
+        final Response.Listener<BaseResponse<User>> listener = new Response.Listener<BaseResponse<User>>() {
             @Override
-            public void onResponse(BaseResponse<Object> response) {
+            public void onResponse(BaseResponse<User> response) {
                 Log.d(TAG,Integer.toString(response.getHttpStatusCode()));
                 serviceCallback.onSuccessResponse(response);
             }

@@ -49,7 +49,7 @@ public class EnterOrganizationIdActivity extends AppCompatActivity {
     private ServiceCallback serviceCallback;
 
     // Constant TAG, for the DEBUG log messages
-    private static final String TAG = "EnterOrganizationIdActivity";
+    private static final String TAG = "EnterOrgIdActivity";
 
     private static final String ORGANIZATION_JSON = "ORGANIZATION_JSON";
 
@@ -71,6 +71,7 @@ public class EnterOrganizationIdActivity extends AppCompatActivity {
                 Log.d(TAG, "The method onPreExecute was executed.");
                 this.listener = listener;
             }
+
             @Override
             public void onSuccessResponse(BaseResponse<String> baseResponse) {
                 Log.d(TAG, "The method onSuccessResponse was executed.");

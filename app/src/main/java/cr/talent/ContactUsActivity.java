@@ -28,6 +28,7 @@ import common.ParameterEncoder;
 import common.SessionStorage;
 import common.ViewFormatUtil;
 import common.UserSharedPreference;
+import model.User;
 import networking.BaseResponse;
 import networking.HurlStackNoRedirect;
 import networking.NetworkConstants;
@@ -35,6 +36,7 @@ import networking.NetworkError;
 import request.AuthenticatedRequest;
 import request.EncodedPostRequest;
 import request.ServiceCallback;
+import request.UserEncodedPostRequest;
 
 import static networking.NetworkConstants.USER_AUTHENTICATED;
 
@@ -88,16 +90,16 @@ public class ContactUsActivity extends AppCompatActivity {
             }
         });
         Log.d(TAG, token);
-        serviceCallback = new ServiceCallback<BaseResponse<String>,NetworkError>() {
-            private BaseResponse<String> listener;
+        serviceCallback = new ServiceCallback<BaseResponse<User>,NetworkError>() {
+            private BaseResponse<User> listener;
             @Override
-            public void onPreExecute(BaseResponse<String> listener) {
+            public void onPreExecute(BaseResponse<User> listener) {
                 Log.d(TAG, "The method onPreExecute was executed.");
                 this.listener = listener;
             }
 
             @Override
-            public void onSuccessResponse(BaseResponse<String> baseResponse) {
+            public void onSuccessResponse(BaseResponse<User> baseResponse) {
                 Log.d(TAG, "The method onSuccessResponse was executed.");
                 Log.d(TAG, "The method onSuccessResponse received the " + baseResponse.getHttpStatusCode()+" HTTP status code.");
                 showSuccessMessage();
@@ -125,9 +127,9 @@ public class ContactUsActivity extends AppCompatActivity {
     }
     private void createRedirectRequest(){
         // Instantiate listeners to send to the request instance
-        final Response.Listener<BaseResponse<Object>> listener = new Response.Listener<BaseResponse<Object>>() {
+        final Response.Listener<BaseResponse<User>> listener = new Response.Listener<BaseResponse<User>>() {
             @Override
-            public void onResponse(BaseResponse<Object> response) {
+            public void onResponse(BaseResponse<User> response) {
                 Log.d(TAG,Integer.toString(response.getHttpStatusCode()));
                 serviceCallback.onSuccessResponse(response);
             }
@@ -166,9 +168,9 @@ public class ContactUsActivity extends AppCompatActivity {
 
     private void contactUsRequest(HashMap<String, String> parameters){
         // Instantiate listeners to send to the request instance
-        Response.Listener<BaseResponse<String>> listener = new Response.Listener<BaseResponse<String>>() {
+        Response.Listener<BaseResponse<User>> listener = new Response.Listener<BaseResponse<User>>() {
             @Override
-            public void onResponse(BaseResponse<String> response) {
+            public void onResponse(BaseResponse<User> response) {
                 serviceCallback.onSuccessResponse(response);
             }
         };
@@ -193,10 +195,10 @@ public class ContactUsActivity extends AppCompatActivity {
         // Create and send request
         EncodedPostRequest contactUs;
         if(authenticated){
-            contactUs = new EncodedPostRequest(NetworkConstants.CONTACT_US_AUTHENTICATED,body,
+            contactUs = new UserEncodedPostRequest(NetworkConstants.CONTACT_US_AUTHENTICATED,body,
                     listener, errorListener, SessionStorage.getInstance());
         } else{
-            contactUs = new EncodedPostRequest(NetworkConstants.CONTACT_US_UNAUTHENTICATED,body,
+            contactUs = new UserEncodedPostRequest(NetworkConstants.CONTACT_US_UNAUTHENTICATED,body,
                     listener, errorListener, SessionStorage.getInstance());
         }
         Log.d(TAG, contactUs.getHeaders().toString());
@@ -224,8 +226,8 @@ public class ContactUsActivity extends AppCompatActivity {
         }
         if(authenticated && validFields(firstName, lastName, email, issueType, issue)){
             HashMap<String,String> parameters = new HashMap<>();
-            parameters.put(ISSUETYPE, issueType);
-            parameters.put(ISSUE, issue);
+            parameters.put(NetworkConstants.ISSUE_TYPE, issueType);
+            parameters.put(NetworkConstants.ISSUE, issue);
             contactUsRequest(parameters);
             Log.d(TAG, parameters.toString());
         }

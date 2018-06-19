@@ -10,17 +10,16 @@ import networking.BaseRequest;
 import networking.BaseResponse;
 
 /**
- * This class makes a request to the server to log in a user.
+ * This class makes a request to the server with correctly encoded parameters.
  *
  * @author Fabián Roberto Leandro
  */
-
-public class EncodedPostRequest extends BaseRequest<BaseResponse<String>> {
+public class EncodedPostRequest<T> extends BaseRequest<BaseResponse<T>> {
     /**
      * This constructor creates a SignInRequest, specifying the URL, request body, listener, error listener and session storage.
      * The HTTP method is defined to be POST.
      */
-    public EncodedPostRequest(String url, String requestBody, Response.Listener<BaseResponse<String>> listener,
+    public EncodedPostRequest(String url, String requestBody, Response.Listener<BaseResponse<T>> listener,
                               Response.ErrorListener errorListener, SessionStorage sessionStorage) {
         super(Request.Method.POST, url, requestBody, listener, errorListener, sessionStorage);
     }
@@ -34,7 +33,7 @@ public class EncodedPostRequest extends BaseRequest<BaseResponse<String>> {
     }
 
     @Override
-    public Response<BaseResponse<String>> parseNetworkResponse(NetworkResponse networkResponse) {
+    public Response<BaseResponse<T>> parseNetworkResponse(NetworkResponse networkResponse) {
         super.parseNetworkResponse(networkResponse);
         // The login webservice does not return any content, simply handle the http status code
 
@@ -42,12 +41,12 @@ public class EncodedPostRequest extends BaseRequest<BaseResponse<String>> {
         int statusCode = networkResponse.statusCode;
 
         // Make new BaseResponse<String> and set the status code
-        BaseResponse<String> baseResponse = new BaseResponse<>();
+        BaseResponse<T> baseResponse = new BaseResponse<>();
         baseResponse.setHttpStatusCode(statusCode);
         baseResponse.setHttpHeaders(networkResponse.headers);
 
         // Create new Response from our BaseResponse and return it
-        Response<BaseResponse<String>> response = Response.success(baseResponse,
+        Response<BaseResponse<T>> response = Response.success(baseResponse,
                 HttpHeaderParser.parseCacheHeaders(networkResponse));
         return response;
     }
